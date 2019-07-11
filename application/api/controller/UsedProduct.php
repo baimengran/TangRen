@@ -6,11 +6,12 @@
  * Time: 15:25
  */
 
-namespace app\used\controller;
-use app\used\model\UsedProduct;
+namespace app\api\controller;
+use app\used\model\UsedProduct as UsedProductModel;
+use think\Controller;
 use think\Request;
 
-class UsedProduct
+class UsedProduct extends Controller
 {
     public function index()
     {
@@ -56,7 +57,7 @@ $data = [
 
     public function save()
     {
-        $used_Product = new UsedProduct();
+        $used_Product = new UsedProductModel();
         $used_Product->title = input('post.title');
         $used_Product->user_id = input('post.user_id');
         $used_Product->region = input('post.region');

@@ -8,3 +8,4 @@
 Route::get('used/index','api/UsedProduct/index');
 
 Route::post('used/save','api/UsedProduct/save');
+
