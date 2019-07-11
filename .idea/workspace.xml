@@ -1,54 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb684b8e-68f3-42ef-8ea5-311b6ecf6be4" name="默认的" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/00aa8c1502b6435826bfecbf27d3b226.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/0534d78f5849ba2616fb057f5d7f6dbf.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/0c8f777d9cf500a278ea0fe8fd9bcf87.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/14537efbb244a96b3d4e01335a5d4ded.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/18dcaedda1738c5f729a525a1bc684d7.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/2ddd3a0061606ea7ed7808ac63f37b4c.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/2de6aa725f92bce673a73e74058d3d68.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/30ee1bfb33a863fad33de717f9c9349a.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/31810d097d8d4f47f147def4f6ddcf19.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/32e6110c3d42fcbd6c8480a64a286709.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/372c85ace8a0b62385ab774217356889.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/452087498f9b43e1802128e5fbe7b6e5.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/4f0f6b5e68090d0fa7c2135852e91c9b.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/50819734fb6d72dc891bfb70432f3d0e.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/53b9c212127197abd7cf5c792bbe9a02.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/572044f98a5fcfcc4ea422567a9e21f5.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/574a5cf9158f9c1dae19931ac59152fe.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/5e109c71777a2c2051286858405706c1.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/77e48cbba43070fd33e8445ccdd19053.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/7efe39ae27b597769af724f222fd1216.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/810ec29742a898264297c5e7509bf556.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/859e7ed2f27c65208a5e3ecbf3c15ed9.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/8c483ecb2f556f9eee73d2204e4e6448.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/8ccbe43763349488c856434be300e988.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/91c82e720eae67f865ff6a4a5d2d1201.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/96686d6adc8de5dd0cf2bbcccd70e391.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/9d9747a71d720d0c8675963413b50c0e.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/af7bd0388e06ef9942ebd9c09ddf7dd8.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/b59ff342fcaa94aff7d5b15045aaf2d1.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/b9b8bcd44c488cc99592fcf0cb30ace4.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/bd4b6dbc2e658e27ea3fa1011f6b61ae.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/c050293baf73eca39ad1c9c14be5b23b.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/c5be5c3a400bf251da8b53c12aef00df.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/d06be0708a1b651a1dbc92c560c91a08.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/d06db2ef0d556d3827526770b9c4bdc0.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/d3766d35a8230f3ec1100103ff785d46.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/d8460598f3a4350a65d9a6b22fb4dc77.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/df9e325a43f85fa8ba33d29a10aa0453.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/e1999c5b73f8b970fe18538367d78558.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/e4d427ca14962ed4a5cef36cb0e10ccc.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/ecebe55fe09e5e46c8d0f24bd1af2878.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/f2e3efa08f54134657f72eadb2d78245.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/fe80aa06399e2d729f2ec81aa89a5a4d.php" beforeDir="false" />
-    </list>
+    <list default="true" id="fb684b8e-68f3-42ef-8ea5-311b6ecf6be4" name="默认的" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -101,7 +54,7 @@
         <entry file="file://$PROJECT_DIR$/application/config.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="133">
-              <caret line="7" column="23" lean-forward="true" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+              <caret line="7" selection-start-line="7" selection-end-line="8" />
             </state>
           </provider>
         </entry>
@@ -168,9 +121,9 @@
   <component name="PhpServers">
     <servers />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="284" />
-    <option name="y" value="150" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="109" />
+    <option name="y" value="41" />
     <option name="width" value="1143" />
     <option name="height" value="642" />
   </component>
@@ -205,37 +158,12 @@
             <path>
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="validate" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
               <item name="extend" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="runtime" type="462c0819:PsiDirectoryNode" />
+              <item name="vendor" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -253,13 +181,14 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen" />
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\adminThree\application" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\adminThree\application\api\model" />
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\adminThree\application\api\controller" />
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\adminThree\application\api" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\phpStudy2018\PHPTutorial\WWW\adminThree\application" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -286,12 +215,12 @@
       <updated>1562811919724</updated>
       <workItem from="1562811920972" duration="1884000" />
       <workItem from="1562815726022" duration="2766000" />
-      <workItem from="1562822781571" duration="2136000" />
+      <workItem from="1562822781571" duration="2471000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6786000" />
+    <option name="totallyTimeSpent" value="7121000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -304,7 +233,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="运行" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2579425" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2579425" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -376,13 +305,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/api/controller/UsedProduct.php" />
-    <entry file="file://$PROJECT_DIR$/thinkphp/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-start-column="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/view/login.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -496,10 +418,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thinkphp/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="9" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/config.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
-          <caret line="7" column="23" lean-forward="true" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+          <caret line="7" selection-start-line="7" selection-end-line="8" />
         </state>
       </provider>
     </entry>
