@@ -12,7 +12,7 @@ function uploadImage($files,$dir){
     $path = [];
     foreach($files as $file){
         // 移动到框架应用根目录/public/uploads/ 目录下
-        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads'.DS.$dir);
+        $info = $file->move(ROOT_PATH . 'public' . DS.$dir);
         if($info){
             // 输出 20160725/42a79759f284b767dfcb2a0197904287.jpg
             $path[] =$dir.$info->getSaveName();
