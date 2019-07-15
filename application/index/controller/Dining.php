@@ -1,0 +1,194 @@
+<?php
+namespace app\index\controller;
+
+use app\index\model\DiningcommentModel;
+use app\index\model\DiningModel;
+use think\Controller;
+use think\Db;
+use think\Request;
+
+class Dining extends Controller
+{
+    /**
+     * 美食首页接口
+     * 接收：区域名称
+     * 返回：美食首页所有可见信息 注：美食评论只显示最新5条记录
+     */
+    public function index(\think\Request $request)
+    {
+        //接收参数
+        $get = $request->get('region_name');
+
+        //实例化模型
+        $DiningModel = new DiningModel();
+        //查出一个默认地区分类
+        $address = $DiningModel->address();
+
+        $get = !empty($get) ? $get : $address['0']['region_name'];
+
+        //获取4个酒店精选
+        $elect = $DiningModel->select();
+
+        //获取区域分类
+        $region = $DiningModel->region();
+
+        //获取区域分类下的酒店
+        $dining = $DiningModel->dining($get);
+
+        $date = ['elect'=>$elect,'region'=>$region,'dining'=>$dining];
+
+        //将数据返回出去
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'美食首页信息查询成功','retData'=>$date],320);
+
+    }
+
+    /**
+     * 美食详情接口
+     * 接收：美食ID   dining_id
+     * 返回：美食详情所有可见信息 注：美食评论只显示最新5条记录
+     */
+    public function details(\think\Request $request)
+    {
+        //接收参数
+        $post = $request->post();
+
+        $rule =   [
+            'dining_id'              => 'require|number',
+        ];
+        $message  = [
+            'dining_id.require'      => '餐厅ID不能为空',
+            'dining_id.number'       => '餐厅ID类型错误',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
+        //查餐厅信息表，
+        $dining = Db::table('think_dining_list')
+            ->where('dining_id',$post['dining_id'])
+            ->select();
+
+        if(count($dining)<=0){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'餐厅信息不存在','retData'=>$dining],320);
+        }
+
+        //查餐厅详情图片
+        $images = Db::table('think_dining_images')
+            ->field('dining_images')
+            ->where('dining_id',$post['dining_id'])
+            ->where('dining_status',0)
+            ->select();
+
+        $dining['0']['images'] = $images;
+
+        //查询评论信息和用户头像,昵称(只显示5条)
+        $user_comment = Db::table('think_dining_user')->alias('a')
+            ->where('dining_id',$post['dining_id'])
+            ->join('think_member b','a.id=b.id')
+            ->field('a.dining_user_id,a.comment_time,a.comment_content,a.comment_images,a.comment_all,b.nickname,b.head_img')
+            ->order('comment_time desc')
+            ->limit(5)
+            ->select();
+
+        $date[] = ['dining'=>$dining,'user_comment'=>$user_comment];
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'餐厅信息查询成功','retData'=>$date],320);
+    }
+
+    /**
+     * 美食评论接口
+     * 接收：用户ID 用户评价餐厅表所有字段，用户评价餐厅图片
+     * 返回：评论成功信息或失败信息
+     */
+    public function comment(\think\Request $request)
+    {
+        //接收用户提交数据
+        $post = $request->post();
+
+        //验证数据
+        $rule =   [
+            'dining_id'                 => 'require|number',
+            'id'                        => 'require|number',
+            'comment_content'           => 'require|max:550',
+            'comment_service'           => 'require|number',
+            'comment_hygiene'           => 'require|number',
+            'comment_taste'             => 'require|number',
+        ];
+        $message  = [
+            'dining_id.require'         => '餐厅ID不能为空',
+            'dining_id.number'          => '餐厅ID类型错误',
+            'id.require'                => '用户ID不能为空',
+            'id.number'                 => '用户ID类型错误',
+            'comment_content.require'   => '用户评论不能为空',
+            'comment_content.max'       => '用户评论不能过长',
+            'comment_service.require'   => '服务评分不能为空',
+            'comment_service.number'    => '服务评分类型错误',
+            'comment_taste.require'     => '味道评分不能为空',
+            'comment_taste.number'      => '味道评分类型错误',
+            'comment_hygiene.require'   => '卫生评分不能为空',
+            'comment_hygiene.number'    => '卫生评分类型错误',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
+        //计算出综合评分
+        $taxi_all = round(($post['comment_service'] + $post['comment_hygiene'] + $post['comment_taste']) / 3);
+        //定义综合评分
+        $post['comment_all'] = $taxi_all;
+
+        //判断有无图片,有则上传
+        if($files = request()->file('comment_images')){
+            if(count($_FILES['comment_images']['name']) >= 10){
+                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片不能超过9张'],320);
+            }
+            $aa = uploadImage(
+                $files,
+                '/uploads/dining/'
+            );
+            //判断图片是否上传成功
+            if(!isset($aa['0'])){
+                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片没有上传成功'],320);
+            }
+            $post['comment_images'] = implode(",", $aa);
+        }else{
+            $post['comment_images'] = '';
+        }
+
+        //将数据填入数据库
+        $DiningcommentModel= new DiningcommentModel();
+        $date =  $DiningcommentModel->com_add($post);
+
+        //获取(平均值)
+        $dining_taste = $DiningcommentModel->ambient($post['dining_id']);
+
+        //获取评分(平均值)
+        $dining_hygiene= $DiningcommentModel->hygiene($post['dining_id']);
+
+        //获取评分(平均值)
+        $dining_service = $DiningcommentModel->services($post['dining_id']);
+
+        //获取综合评分(平均值)
+        $dining_all = $DiningcommentModel->select_comment($post['dining_id']);
+//        die;
+        //修改汽车公司列表的评分
+        $res = $DiningcommentModel->update_comment($post['dining_id'],$dining_taste,$dining_hygiene,$dining_service,$dining_all);
+
+        //将数据返回出去
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'评论成功','retData'=>$date],320);
+    }
+}
