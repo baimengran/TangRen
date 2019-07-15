@@ -9,6 +9,10 @@ class MemberModel extends Model
     protected $name = 'member';  
     protected $autoWriteTimestamp = true;   // 开启自动写入时间戳
 
+    public function UsedProduct(){
+        return $this->hasMany('UsedProductModel','user_id');
+    }
+
     /**
      * 根据搜索条件获取用户列表信息
      */
