@@ -6,6 +6,7 @@ use think\Model;
 
 class HotelcommentModel extends Model
 {
+
     public function com_add($post)
     {
         //执行添加操作

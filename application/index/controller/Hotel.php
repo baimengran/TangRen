@@ -30,8 +30,7 @@ class Hotel extends Controller
 
         //获取区域分类
         $region = $HotelModel->region();
-//        dump($get);
-//        die;
+
         //获取区域分类下的酒店
         $hotel = $HotelModel->hotel($get);
 
@@ -83,6 +82,7 @@ class Hotel extends Controller
         $images = Db::table('think_hotel_img')
             ->field('hotel_images')
             ->where('hotel_id',$post['hotel_id'])
+            ->where('img_status',0)
             ->select();
 
         $hotel['0']['images'] = $images;
@@ -126,7 +126,7 @@ class Hotel extends Controller
             ->limit(5)
             ->select();
 
-        $date[] = ['hotel'=>$hotel,'comment'=>$comment,'user_comment'=>$user_comment];
+        $date[] = ['hotel'=>$hotel,'user_comment'=>$user_comment];
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'酒店信息查询成功','retData'=>$date],320);
     }
@@ -167,7 +167,7 @@ class Hotel extends Controller
         $rule =   [
             'hotel_id'          => 'require|number',
             'id'                => 'require|number',
-            'comment_content'   => 'require',
+            'comment_content'   => 'require|max:550',
             'comment_service'   => 'require|number',
             'comment_ambient'   => 'require|number',
             'comment_hygiene'   => 'require|number',
@@ -178,6 +178,7 @@ class Hotel extends Controller
             'id.require'                => '用户ID不能为空',
             'id.number'                 => '用户ID类型错误',
             'comment_content.require'   => '用户评论不能为空',
+            'comment_content.max'       => '用户评论不能过长',
             'comment_service.require'   => '服务评分不能为空',
             'comment_service.number'    => '服务评分类型错误',
             'comment_ambient.require'   => '环境评分不能为空',
@@ -205,7 +206,9 @@ class Hotel extends Controller
 ;
         //判断有无图片,有则上传
         if($files = request()->file('images')){
-
+            if(count($_FILES['images']['name']) >= 10){
+                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片不能超过9张'],320);
+            }
             $aa = uploadImage(
                 $files,
                 '/uploads/hotel/'
@@ -218,10 +221,6 @@ class Hotel extends Controller
         }else{
             $post['images'] = '';
         }
-//        print_r($aa);die;
-
-
-
 
         //将数据填入数据库
         $HotelcommentModel = new HotelcommentModel();

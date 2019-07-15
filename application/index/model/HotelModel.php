@@ -34,7 +34,7 @@ class HotelModel extends Model
     {
         //查询品质优选酒店
         $date = Db::table('think_hotel_list')
-            ->field('hotel_logo,hotel_name,hotel_all')
+            ->field('hotel_id,hotel_logo,hotel_name,hotel_all')
             ->where('hotel_status',0)
             ->select();
         if(!$date){
@@ -167,4 +167,5 @@ class HotelModel extends Model
 
         return $res;
     }
+
 }
