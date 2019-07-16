@@ -17,18 +17,20 @@ use think\Log;
 class Community
 {
     /**
+     * 动态列表
      * @return \think\response\Json
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
      */
     public function index()
     {
         $order = request()->get('order');
-        $topic = request()->get('topic');
+        $topic = request()->get('topic_id');
 
         try {
             $community = Db::name('community');
+            $search = request()->get('search');
+            if ($search) {
+                $community->where('body', 'like', '%' . $search . '%');
+            }
             if ($topic) {
                 $community = $community->where('topic_id', 'eq', $topic);
             }
@@ -69,40 +71,17 @@ class Community
     }
 
     /**
-     * 创建二手商品
-     * 方法：POST
-     * 参数：
-     *      user_id     用户ID，
-     *      body        二手商品文字内容
-     *      region_id   区域ID
-     *      phone       电话
-     *      price       价格
-     *      sticky_num  置顶天数
-     *      images      图片
+     * 动态新增
      * @return \think\response\Json
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
      */
     public function save()
     {
-//TODO:图片处理
 
-        $path = [];
-        if (isset($_FILES['images'])) {
-            // 获取表单上传文件 例如上传了001.jpg
-            $files = request()->file('images');
-            //图片上传处理
-//           return $uploads = uploadImage($files, 'used');
-            if (is_array($uploads = uploadImage($files, 'community'))) {
-                foreach ($uploads as $value) {
-                    $path[] = ['path' => $value];
-                }
-            } else {
-                return jsone($uploads, [], 1, 'error');
-            }
-        }
         $data = request()->post();
+
+        //获取用户ID
+        $id = getUserId();
+        $data['user_id'] = $id;
         $validate = validate('Community');
         if (!$validate->check($data)) {
             return jsone($validate->getError(), [], 1, 'error');
@@ -117,7 +96,7 @@ class Community
         }
         try {
             $community = new CommunityModel();
-            $community->user_id = input('post.user_id');
+            $community->user_id = $data['user_id'];
             $community->body = input('post.body');
             $community->topic_id = input('post.topic_id');
             $community->sticky_create_time = $sticky_create_time;
@@ -126,9 +105,12 @@ class Community
             $community->status = 0;
             $community->save();
             //保存图片
-            if (count($path)) {
-                $community->communityFile()->saveAll($path);
-
+            if (array_key_exists('path', $data)) {
+                $path = [];
+                foreach ($data['path'] as $value) {
+                    $value ? $path[]['path'] = $value : null;
+                }
+                count($path) ? $community->communityFile()->saveAll($path) : null;
             }
             $data = $community->with('user,communityFile,topic')->select($community->id);
         } catch (Exception $e) {
@@ -139,51 +121,122 @@ class Community
     }
 
     /**
-     * 二手商品详情
-     * 查询二手商品详细信息，并更新 browse 字段
-     * @param integer $id 二手商品ID
+     * 动态详情
      * @return \think\response\Json
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
      */
     public function show()
     {
         $id = request()->get('community_id');
-//        if($id = request()->get('used_id')) {
         try {
             $community = CommunityModel::with('communityFile,user,topic')->find($id);
             $community->browse = $community['browse'] + 1;
             $community->save();
-
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return jsone('服务器错误，请稍候重试', [], '1', 'error');
         }
         return jsone('查询成功', $community);
-//        }
     }
 
     /**
-     * 二手商品点赞
-     * 参数：praise
+     * 动态点赞
      * @return \think\response\Json
      */
     public function praise()
     {
-        $id = request()->get('community_id');
+        //获取登录用户ID
+        $id = getUserId();
+        $explain = '';
         if ($id) {
             try {
-                $community = CommunityModel::get($id);
-                $community->praise = $community['praise'] + 1;
+                $community = CommunityModel::get(request()->get('community_id'));
+
+                $praise = Db::name('member_praise')
+                    ->where('module_id', 'eq', $community->id)
+                    ->where('module_type', 'community')
+                    ->where('user_id', 'eq', $id)
+                    ->find();
+                //判断是否有点赞数据
+                if ($praise) {
+                    //判断点赞数据是否软删除
+                    if ($praise['delete_time']) {
+                        //将软删除恢复
+                        Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => null]);
+                        $community->praise = $community['praise'] + 1;
+                        $explain = '点赞成功';
+                    } else {
+                        //软删除点赞
+                        Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => time()]);
+                        $community->praise = $community['praise'] - 1;
+                        $explain = '点赞以取消';
+                    }
+
+                } else {
+                    $community->memberPraise()->save(['user_id' => $id, 'module_id' => $community->id]);
+                    $community->praise = $community['praise'] + 1;
+                    $explain = '点赞成功';
+                }
+
                 $community->save();
-                return jsone('点赞成功', $community->with('user,topic,communityFile')->find($community->id));
+                return jsone($explain, $community->with('user,communityFile,topic')->find($community->id));
             } catch (Exception $e) {
                 Log::error($e->getMessage());
                 return jsone('服务器错误，请稍候重试', [], 1, 'error');
             }
         } else {
-            return jsone('请选择正确动态点赞', [], 1, 'error');
+            return jsone('请登录后重试', [], 1, 'error');
         }
     }
+
+    /**
+     * 动态收藏
+     * @return \think\response\Json
+     */
+    public function collect()
+    {
+        $id = getUserId();
+        $explain = '';
+        if ($id) {
+            try {
+                $community = CommunityModel::get(request()->get('community_id'));
+
+                $collect = Db::name('member_collect')
+                    ->where('module_id', 'eq', $community->id)
+                    ->where('module_type', 'community')
+                    ->where('user_id', 'eq', $id)
+                    ->find();
+                //判断是否有点赞数据
+                if ($collect) {
+                    //判断点赞数据是否软删除
+                    if ($collect['delete_time']) {
+                        //将软删除恢复
+                        Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => null]);
+                        $community->collect = $community['collect'] + 1;
+                        $explain = '收藏成功';
+                    } else {
+                        //软删除点赞
+                        Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => time()]);
+                        $community->collect = $community['collect'] - 1;
+                        $explain = '以取消收藏';
+                    }
+
+                } else {
+
+                    $user_id = 1;
+                    $community->membercollect()->save(['user_id' => $id, 'module_id' => $community->id]);
+                    $community->collect = $community['collect'] + 1;
+                    $explain = '收藏成功';
+                }
+
+                $community->save();
+                return jsone($explain, $community->with('user,communityFile,topic')->find($community->id));
+            } catch (Exception $e) {
+                Log::error($e->getMessage());
+                return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            }
+        } else {
+            return jsone('请登录后重试', [], 1, 'error');
+        }
+    }
+
 }

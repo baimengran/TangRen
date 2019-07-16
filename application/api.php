@@ -57,8 +57,20 @@ Route::get('api/community/show', 'api/Community/show');
 //社区点赞
 Route::get('api/community/praise', 'api/Community/praise');
 //社区收藏
-Route::get('api/community/collect','api/Community/collect');
+Route::get('api/community/collect', 'api/Community/collect');
 //社区评论列表
 Route::get('api/community_comment/index', 'api/CommunityComment/index');
 //社区评论发布
 Route::post('api/community_comment/save', 'api/CommunityComment/save');
+//上传图片
+Route::post('api/upload_image/upload', 'api/UploadImage/upload');
+
+//获取区域
+Route::get('api/region_cate/index', 'api/RegionCate/index');
+//获取行业
+Route::get('api/profession_cate/index', 'api/ProfessionCate/index');
+
+//我的收藏
+Route::get('api/my/collect', 'api/my/collect');
+
+Route::get('api/coupon/index', 'api/coupon/index');

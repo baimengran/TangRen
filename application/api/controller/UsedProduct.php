@@ -9,6 +9,7 @@
 namespace app\api\controller;
 
 use app\admin\model\MemberModel;
+use app\admin\model\MemberPraiseModel;
 use app\admin\model\UsedProductModel;
 use think\Controller;
 use think\Db;
@@ -18,18 +19,22 @@ use think\Request;
 
 class UsedProduct extends Controller
 {
+
     /**
+     * 二手商品列表
      * @return \think\response\Json
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
      */
     public function index()
     {
         $region = Request::instance()->has('region_id', 'get') ? input('get.region_id') : false;
-
+        //搜索
+        $search = request()->get('search');
         try {
             $usedProduct = Db::name('usedProduct');
+            if ($search) {
+                $usedProduct->where('body', 'like', '%' . $search . '%');
+            }
+
             if ($region) {
                 $usedProduct = $usedProduct->where('region_id', 'eq', $region);
             }
@@ -41,8 +46,11 @@ class UsedProduct extends Controller
             $data['last_page'] = $usedProduct->lastPage();
             $data['data'] = [];
             foreach ($usedProduct as $k => $val) {
+                //获取对应用户
                 $member = Db::name('member')->where('id', 'eq', $val['user_id'])->select();
+                //获取对应图片
                 $usedImage = Db::name('used_image')->where('used_id', 'in', $val['id'])->select();
+                //获取对应区域
                 $region = Db::name('region_list')->where('region_id', 'eq', $val['region_id'])->select();
 
                 $val['region'] = $region[0];
@@ -50,49 +58,27 @@ class UsedProduct extends Controller
                 $val['used_image'] = $usedImage;
                 $data['data'][] = $val;
             }
+            return jsone('查询成功', $data);
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return jsone('服务器错误，请稍候重试', [], 1, 'error');
         }
 
-        return jsone('查询成功', $data);
+
     }
 
     /**
-     * 创建二手商品
-     * 方法：POST
-     * 参数：
-     *      user_id     用户ID，
-     *      body        二手商品文字内容
-     *      region_id   区域ID
-     *      phone       电话
-     *      price       价格
-     *      sticky_num  置顶天数
-     *      images      图片
+     * 耳熟商品新增
      * @return \think\response\Json
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
      */
     public function save()
     {
-//TODO:图片处理
 
-        $path = [];
-        if (isset($_FILES['images'])) {
-            // 获取表单上传文件 例如上传了001.jpg
-            $files = request()->file('images');
-            //图片上传处理
-//           return $uploads = uploadImage($files, 'used');
-            if (is_array($uploads = uploadImage($files, 'used'))) {
-                foreach ($uploads as $value) {
-                    $path[] = ['path' => $value];
-                }
-            } else {
-                return jsone($uploads, [], 1, 'error');
-            }
-        }
         $data = request()->post();
+        //获取登录用户ID
+        $id = getUserId();
+        $data['user_id'] = $id;
+
         $validate = validate('UsedProduct');
         if (!$validate->check($data)) {
             return jsone($validate->getError(), [], 1, 'error');
@@ -108,7 +94,7 @@ class UsedProduct extends Controller
         try {
             $used_Product = new UsedProductModel();
             $used_Product->body = input('post.body');
-            $used_Product->user_id = input('post.user_id');
+            $used_Product->user_id = $data['user_id'];
             $used_Product->region_id = input('post.region_id');
             $used_Product->price = input('price');
             $used_Product->sticky_create_time = $sticky_create_time;
@@ -118,9 +104,12 @@ class UsedProduct extends Controller
             $used_Product->status = 0;
             $used_Product->save();
             //保存图片
-            if (count($path)) {
-                $used_Product->usedImage()->saveAll($path);
-
+            if (array_key_exists('path', $data)) {
+                $path = [];
+                foreach ($data['path'] as $value) {
+                    $value ? $path[]['path'] = $value : null;
+                }
+                count($path) ? $used_Product->usedImage()->saveAll($path) : null;
             }
             $data = UsedProductModel::with('user,usedImage,regionList')->select($used_Product->id);
         } catch (Exception $e) {
@@ -132,29 +121,22 @@ class UsedProduct extends Controller
 
     /**
      * 二手商品详情
-     * 查询二手商品详细信息，并更新 browse 字段
-     * @param integer $id 二手商品ID
      * @return \think\response\Json
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
      */
     public function show()
     {
         $id = request()->get('used_id');
-//        if($id = request()->get('used_id')) {
-            try {
-                $usedProduct = UsedProductModel::with('usedImage,user,regionList')->find($id);
-                $usedProduct->browse = $usedProduct['browse'] + 1;
-                $usedProduct->save();
 
-            } catch (Exception $e) {
-                Log::error($e->getMessage());
-                return jsone('服务器错误，请稍候重试', [], '1', 'error');
-            }
-            return jsone('查询成功', $usedProduct);
-//        }
-//        return jsone('查询失败', [], 1, 'error');
+        try {
+            $usedProduct = UsedProductModel::with('usedImage,user,regionList')->find($id);
+            $usedProduct->browse = $usedProduct['browse'] + 1;
+            $usedProduct->save();
+
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return jsone('服务器错误，请稍候重试', [], '1', 'error');
+        }
+        return jsone('查询成功', $usedProduct);
     }
 
     /**
@@ -164,31 +146,49 @@ class UsedProduct extends Controller
      */
     public function praise()
     {
-        $id = request()->get('used_id');
+        //获取登录用户ID
+        $id = getUserId();
+        $explain = '';
         if ($id) {
-//            try {
-//                $usedProduct = UsedProductModel::get($id);
-                $praise = UsedProductModel::with(['memberPraise'])->find($id);
-//                $praise = $usedProduct->memberPraise()->where('user_id',1)->find();
-                return $praise;
-                if($praise){
+            try {
+                $usedProduct = UsedProductModel::get(request()->get('used_id'));
 
-                    $usedProduct->memberPraise()->delete('id');
+                $praise = Db::name('member_praise')
+                    ->where('module_id', 'eq', $usedProduct->id)
+                    ->where('module_type', 'used_product')
+                    ->where('user_id', 'eq', $id)
+                    ->find();
+//                return $praise;
+                //判断是否有点赞数据
+                if ($praise) {
+                    //判断点赞数据是否软删除
+                    if ($praise['delete_time']) {
+                        //将软删除恢复
+                        Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => null]);
+                        $usedProduct->praise = $usedProduct['praise'] + 1;
+                        $explain = '点赞成功';
+                    } else {
+                        //软删除点赞
+                        Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => time()]);
+                        $usedProduct->praise = $usedProduct['praise'] - 1;
+                        $explain = '点赞以取消';
+                    }
+
+                } else {
+                    $user_id = 1;
+                    $usedProduct->memberPraise()->save(['user_id' => $id, 'module_id' => $usedProduct->id]);
+                    $usedProduct->praise = $usedProduct['praise'] + 1;
+                    $explain = '点赞成功';
                 }
-                //TODO:用户认证
-                $user_id = 1;
-                $usedProduct->memberPraise()->save(['user_id'=>1,'module_id'=>$usedProduct->id]);
 
-
-                $usedProduct->praise = $usedProduct['praise'] + 1;
                 $usedProduct->save();
-                return jsone('点赞成功', $usedProduct->with('user,region_list,usedImage')->find($usedProduct->id));
-//            } catch (Exception $e) {
-//                Log::error($e->getMessage());
-//                return jsone('服务器错误，请稍候重试', [], 1, 'error');
-//            }
+                return jsone($explain, $usedProduct->with('user,region_list,usedImage')->find($usedProduct->id));
+            } catch (Exception $e) {
+                Log::error($e->getMessage());
+                return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            }
         } else {
-            return jsone('请选择正确商品点赞', [], 1, 'error');
+            return jsone('请登录后重试', [], 1, 'error');
         }
     }
 }

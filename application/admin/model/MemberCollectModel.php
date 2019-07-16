@@ -10,9 +10,19 @@ namespace app\admin\model;
 
 
 use think\Model;
+use traits\model\SoftDelete;
 
 class MemberCollectModel extends Model
 {
+    use SoftDelete;
+
     protected $name = 'member_collect';
     protected $autoWriteTimestamp = true;
+    protected static $delete_time = 'delete_time';
+
+    public function community()
+    {
+        return $this->morphTo('module');
+    }
+
 }

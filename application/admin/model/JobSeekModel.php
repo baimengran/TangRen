@@ -27,4 +27,9 @@ class JobSeekModel extends Model
     public function profession(){
         return $this->belongsTo('ProfessionCateModel','profession_id');
     }
+
+    public function memberPraise()
+    {
+        return $this->morphMany('MemberPraiseModel', 'module');
+    }
 }
