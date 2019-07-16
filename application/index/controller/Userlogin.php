@@ -107,7 +107,9 @@ class Userlogin extends Controller
         //在用户授权登录成功以后,前端需要再次传入之前的openid值
 //        $post['openid'] = 'ozBCf4u7oQJ2aipXSVN0zdr7Mu64';
 //        $post['token'] = '13a83cabf8767b256ea53bfe7bc13aaa';
-
+        if(!isset($post['token'])){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有用户token值'],320);
+        }
         //根据token值查询这个用户是否录入过信息
         $userInfo = Db::table('think_member')
                 ->where('token',$post['token'])
@@ -131,7 +133,7 @@ class Userlogin extends Controller
                 'country'   => $post['country'],
                 'province'  => $post['province'],
                 'token'     => $post['token'],
-                'every_time'=> time(),
+                'create_time'=> time(),
             ];
         $res = Db::table('think_member')->insert($dat);
 
@@ -139,12 +141,13 @@ class Userlogin extends Controller
         if($res){
             return $err = ['errCode'=>'1','msg'=>'error','ertips'=>'添加用户信息失败'];
         }
+
         $date = Db::table('think_user_login')->alias('a')
                 ->join('think_member b','a.user_token=b.token')
                 ->field('b.id,b.nickname,b.sex,b.country,b.city,b.province,b.head_img,a.user_token,a.openid,a.login_time')
                 ->select();
 
-        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'信息添加成功','retData'=>$date],320);
 
     }
 

@@ -22,7 +22,7 @@ class DiningcommentModel extends Model
             'comment_hygiene'   => $post['comment_hygiene'],
             'comment_taste'     => $post['comment_taste'],
             'comment_all'       => $post['comment_all'],
-            'comment_images'    => $post['comment_images'],
+            'comment_images'    => $post['path'],
             'comment_time'      => time(),
         ];
 

@@ -23,7 +23,7 @@ class HotelModel extends Model
             return $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'没有查到区域'];
         }
 
-        return $date;
+        return $date = ['errcode'=> 0,'errMsg'=>'success','retData'=>$date['0']];
     }
 
     /**

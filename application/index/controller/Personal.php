@@ -6,6 +6,8 @@ use app\index\model\FractionModel;
 use app\index\model\UserModel;
 use think\Controller;
 use think\Db;
+use think\Exception;
+use think\Log;
 
 class Personal extends Controller
 {
@@ -34,8 +36,9 @@ class Personal extends Controller
     public function fraction_goods(\think\Request $request)
     {
         //接收数据
-        $get = $request->get('id');
+        $get = $request->post('id');
 
+//        try{
         //获取用户积分
         $user = new UserModel();
         $fraction = $user->user_fraction($get);
@@ -43,6 +46,10 @@ class Personal extends Controller
         //获取商品信息
         $goods = new FractionModel();
         $goods_list = $goods->index();
+
+//        }catch(Exception $e){
+//            Log::error($e->getMessage());
+//        }
 
         $date = ['fraction'=> $fraction,'goods'=>$goods_list];
 
@@ -59,17 +66,330 @@ class Personal extends Controller
         //接收参数
         $post = $request->post();
 
+        $rule =   [
+            'id'              => 'require',
+            'goods_id'        => 'require',
+        ];
+        $message  = [
+            'id.require'      => '用户ID不能为空',
+            'goods_id.require' => '商品ID不能为空',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
         //获取用户积分
         $user = new UserModel();
         $fraction = $user->user_fraction($post['id']);
-
+//        print_r($fraction['integral']);die;
         //查询商品所用积分
-        $goods = new FractionModel();
-        $goods_fraction = $goods->select($post['goods_id']);
+        $FractionModel = new FractionModel();
+        $goods_fraction = $FractionModel->select($post['goods_id']);
 
+        //判断是否足够购买
+        if($fraction < $goods_fraction){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'积分不足'],320);
+        }
+        //购买积分商品逻辑，减少用户积分
+        $newfraction = $fraction['integral'] - $goods_fraction['goods_fraction'];
 
-        print_r($goods_fraction);
-        die;
+        Db::startTrans();
+        try{
+
+            //修改用户表的积分
+            Db::name('member')->update([
+                    'integral'=>$newfraction,
+                    'id'      =>$post['id']
+                ]);
+
+            //将用户购买的商品加入到订单表中
+            $data = ['id' => $post['id'], 'goods_id' => $post['goods_id'],'order_status'=> '0','order_time'=>time() ];
+            $order_id = Db::table('think_goods_order')->insertGetId($data);
+
+            // 提交事务
+            Db::commit();
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+        }
+        if(!$order_id){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'购买失败'],320);
+        }
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'购买成功'],320);
     }
+
+    /**
+     * 个人中心地址管理接口
+     * 输入：用户ID 商品ID
+     * 返回：
+     */
+    public function address(\think\Request $request)
+    {
+        //获取参数
+        $post = $request->post();
+
+        $rule =   [
+            'id'        => 'require',
+            'city'      => 'require',
+            'area'      => 'require',
+            'address'   => 'require',
+            'mobile_phone' => 'require',
+        ];
+        $message  = [
+            'id.require'         => '用户ID不能为空',
+            'city.require'       => '城市不能为空',
+            'area.require'       => '区域ID不能为空',
+            'address.require'    => '具体地址不能为空',
+            'mobile_phone.require'=> '绑定电话不能为空',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+        //判断是否有这个用户的地址记录
+        $FractionModel = new FractionModel();
+        $address = $FractionModel->select_address($post['id']);
+
+        //如果有这个记录
+        if($address){
+            //执行修改方法
+            $upaddress = $FractionModel->update_address($address['address_id'],$post);
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$upaddress],320);
+
+        }else{
+            $create_address = $FractionModel->create_address($post);
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$create_address],320);
+        }
+
+    }
+
+    /**
+     * 个人中心积分兑换显示接口
+     * 输入：
+     * 返回：积分兑换信息
+     */
+    public function integral()
+    {
+        $date = Db::table('think_integral_list')
+            ->field('integral_number,rmb_number')
+            ->where('integral_status',1)
+            ->select();
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
+    }
+
+    /**
+     * 用户签到接口
+     * 输入：用户ID 签到时间戳
+     * 返回：签到成功 or 失败
+     */
+    public function sign(\think\Request $request)
+    {
+        //接收参数
+        $post = $request->post();
+
+        $rule =   [
+            'id'    => 'require|number',
+            'sign'  => 'require',
+        ];
+        $message  = [
+            'id.require'      => '用户ID不能为空',
+            'id.number'       => '用户ID类型错误',
+            'sign.require'    => '时间戳不能为空',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
+        //查询有无这个用户
+        $FractionModel = new FractionModel();
+        $user = $FractionModel->user_find($post);
+        if(!$user){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有此用户','retData'=>$user],320);
+        }
+
+        //判断用户今天是否签到过
+        $sign = $FractionModel->sign($post);
+
+        if($sign['sign_status'] == 0){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'当天签过到了','retData'=>$sign['sign_status']],320);
+        }
+
+        //判断时间戳是不是今天时间戳
+        $today = date('Ymd',time());
+        $sign_time = date('Ymd',$post['sign']);
+
+        if($sign_time == $today){
+            //修改用户表,执行签到逻辑
+            $user_sign = $FractionModel->update_user($post);
+            //修改任务表,执行签到逻辑
+            $task_sign = $FractionModel->update_task($post);
+        }
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'签到成功','retData'=>$task_sign],320);
+    }
+
+
+    /**
+     * 个人中心积分享任务接口
+     * 输入：用户ID 分享时间戳
+     * 返回：
+     */
+    public function share(\think\Request $request)
+    {
+        //接收参数
+        $post = $request->post();
+
+        $rule =   [
+            'id' => 'require|number',
+            'share'=>'require'
+        ];
+        $message  = [
+            'id.require'      => '用户ID不能为空',
+            'id.number'       => '用户ID类型错误',
+            'share.require'   => '时间戳不能为空',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
+        //判断有无这个用户
+        $FractionModel = new FractionModel();
+        $user = $FractionModel->user_find($post);
+        if(!$user){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有此用户','retData'=>$user],320);
+        }
+
+        //查询分享任务是否已经完成
+        $share = Db::table('think_user_task')
+            ->field('share_type')
+            ->where('id',$post['id'])
+            ->find();
+        if(!$share){
+            $data = ['id' => $post['id'], 'share' => $post['share'],'share_type'=> '1'];
+            $res = Db::table('think_user_task')->insert($data);
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'分享成功','retData'=>$res],320);
+
+        }
+
+        if($share['share_type'] == 0 || $share['share_type'] == 1){
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'分享成功','retData'=>0],320);
+
+        }
+
+        //修改分享任务状态
+        $share = $FractionModel->update_share($post);
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'分享成功','retData'=>$share],320);
+
+    }
+
+    /**
+     * 个人中心积分任务接口
+     * 输入：用户ID 领取积分标识
+     * 返回：积分兑换信息
+     */
+    public function integral_task(\think\Request $request)
+    {
+        //获取参数
+        $post = $request->post();
+
+        $rule =   [
+            'id' => 'require|number'
+        ];
+        $message  = [
+            'id.require'      => '用户ID不能为空',
+            'id.number'       => '用户ID类型错误',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
+        //判断有无这个用户
+        $FractionModel = new FractionModel();
+        $user = $FractionModel->user_find($post);
+        if(!$user){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有此用户','retData'=>$user],320);
+        }
+
+        //查询出用户的任务完成情况
+        $date = Db::table('think_user_task')
+            ->where('id',$post['id'])
+            ->find();
+
+        //判断传参要领取哪种奖励
+        //如果是领取签到奖励
+        if($post['type'] == 1){
+            $signtype = $FractionModel->select_sign($post);
+            if($signtype == 'error'){
+                return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'暂时不能领取奖励','retData'=>$signtype],320);
+            }
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'签到奖励领取成功','retData'=>$signtype],320);
+        }
+        //如果是收藏
+        if($post['type'] == 2){
+            $collecttype = $FractionModel->select_collect($post);
+            if($collecttype == 'error'){
+                return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'暂时不能领取奖励','retData'=>$collecttype],320);
+            }
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'收藏奖励领取成功','retData'=>$collecttype],320);
+        }
+        //如果是发表
+        if($post['type'] == 3){
+            $publishtype = $FractionModel->select_publish($post);
+            if($publishtype == 'error'){
+                return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'暂时不能领取奖励','retData'=>$publishtype],320);
+            }
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'发表奖励领取成功','retData'=>$publishtype],320);
+        }
+
+        if($post['type'] == 4){
+            $sharetype = $FractionModel->select_share($post);
+            if($sharetype == 'error'){
+                return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'暂时不能领取奖励','retData'=>$sharetype],320);
+            }
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'分享奖励领取成功','retData'=>$sharetype],320);
+        }
+
+
+
+    }
+
+
 
 }

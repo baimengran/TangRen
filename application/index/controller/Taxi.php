@@ -23,7 +23,12 @@ class Taxi extends Controller
         //查出一个默认地区分类
         $address = $TaxiModel->address();
 
-        $get = !empty($get) ? $get : $address['0']['region_name'];
+        if($address['errMsg'] == 'error'){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'没有查到区域'];
+            return json_encode($date,320);
+        }
+
+        $get = !empty($get) ? $get : $address['retData']['region_name'];
 
         //最多获取4个品质精选
         $elect = $TaxiModel->select();
@@ -203,23 +208,30 @@ class Taxi extends Controller
         //定义综合评分
         $post['comment_all'] = $taxi_all;
 
-        //判断有无图片,有则上传
-        if($files = request()->file('comment_images')){
-            if(count($_FILES['comment_images']['name']) >= 10){
-                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片不能超过9张'],320);
-            }
-            $aa = uploadImage(
-                $files,
-                '/uploads/taxi/'
-            );
-            //判断图片是否上传成功
-            if(!isset($aa['0'])){
-                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片没有上传成功'],320);
-            }
-            $post['comment_images'] = implode(",", $aa);
+        //获取图片参数
+        if(!isset($post['path'])){
+            $post['path'] = '';
         }else{
-            $post['comment_images'] = '';
+            $post['path'] = implode(",", $post['path']);
         }
+
+        //判断有无图片,有则上传
+//        if($files = request()->file('comment_images')){
+//            if(count($_FILES['comment_images']['name']) >= 10){
+//                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片不能超过9张'],320);
+//            }
+//            $aa = uploadImage(
+//                $files,
+//                '/uploads/taxi/'
+//            );
+//            //判断图片是否上传成功
+//            if(!isset($aa['0'])){
+//                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片没有上传成功'],320);
+//            }
+//            $post['comment_images'] = implode(",", $aa);
+//        }else{
+//            $post['comment_images'] = '';
+//        }
 
         //将数据填入数据库
         $TaxicommentModel= new TaxicommentModel();

@@ -23,7 +23,7 @@ class DiningModel extends Model
             return $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'没有查到区域'];
         }
 
-        return $date;
+        return $date = ['errcode'=> 0,'errMsg'=>'success','retData'=>$date['0']];
     }
     /**
      * index方法调用
@@ -39,7 +39,7 @@ class DiningModel extends Model
         if(!$date){
             return $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'暂时没有精品推荐'];
         }
-        return $date;
+        return $date = ['errcode'=> 0,'errMsg'=>'success','retData'=>$date['0']];
     }
 
     /**

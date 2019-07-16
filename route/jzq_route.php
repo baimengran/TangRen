@@ -11,8 +11,9 @@ Route::post('index/userlogin/login','index/Userlogin/login');
 Route::post('index/userlogin/create','index/Userlogin/create');
 
 //显示前台轮播图
-Route::post('index/turns','turns_module/TurnsController/index');
-
+Route::post('index/turns/index','index/Turns/index');
+//获取交易区域接口
+Route::get('index/report/index','index/Report/index');
 
 //酒店首页接口
 Route::get('index/hotel/first','index/Hotel/first');
@@ -28,14 +29,12 @@ Route::post('index/taxi/details','index/Taxi/details');
 //用户评论叫车评论接口
 Route::post('index/taxi/comment','index/Taxi/comment');
 
-//获取交易区域接口
-Route::get('index/report/index','index/Report/index');
 
 //美食首页接口
 Route::get('index/dining/index','index/Dining/index');
 //美食详情接口
 Route::post('index/dining/details','index/Dining/details');
-//用户评论叫车评论接口
+//用户评论美食评论接口
 Route::post('index/dining/comment','index/Dining/comment');
 
 
@@ -46,9 +45,19 @@ Route::get('index/personal/index','index/Personal/index');
 Route::get('index/personal/fraction_goods','index/Personal/fraction_goods');
 //个人中心积分兑换商品接口
 Route::post('index/personal/buy','index/Personal/buy');
+//个人中心地址管理接口
+Route::post('index/personal/address','index/Personal/address');
+//个人中心积分兑换接口
+Route::get('index/personal/integral','index/Personal/integral');
+//用户签到接口
+Route::post('index/personal/sign','index/Personal/sign');
+//用户分享接口
+Route::post('index/personal/share','index/Personal/share');
+//积分任务接口
+Route::post('index/personal/integral_task','index/Personal/integral_task');
 
 ////接收上传图片接口
 //Route::post('index/report/images','index/Report/images');
-//
-////发布信息接口
+
+//发布信息接口
 //Route::post('index/report/message','index/Report/message');

@@ -18,7 +18,7 @@ class HotelcommentModel extends Model
             'comment_ambient'   => $post['comment_ambient'],
             'comment_hygiene'   => $post['comment_hygiene'],
             'comment_all'       => $post['comment_all'],
-            'images'            => $post['images'],
+            'images'            => $post['path'],
             'comment_time'      => time(),
         ];
 

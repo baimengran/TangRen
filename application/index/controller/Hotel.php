@@ -23,7 +23,12 @@ class Hotel extends Controller
         //查出一个默认地区分类
         $address = $HotelModel->address();
 
-        $get = !empty($get) ? $get : $address['0']['region_name'];
+        if($address['errMsg'] == 'error'){
+             $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'没有查到区域'];
+            return json_encode($date,320);
+        }
+
+        $get = !empty($get) ? $get : $address['retData']['region_name'];
 
         //获取4个酒店精选
         $elect = $HotelModel->select();
@@ -201,26 +206,30 @@ class Hotel extends Controller
         $hotel_all = round(($post['comment_service'] + $post['comment_ambient'] + $post['comment_hygiene']) / 3);
         //定义综合评分
         $post['comment_all'] = $hotel_all;
-        //定义评论时间
-        $post['comment_time'] = time();
-;
-        //判断有无图片,有则上传
-        if($files = request()->file('images')){
-            if(count($_FILES['images']['name']) >= 10){
-                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片不能超过9张'],320);
-            }
-            $aa = uploadImage(
-                $files,
-                '/uploads/hotel/'
-            );
-            //判断图片是否上传成功
-            if(!isset($aa['0'])){
-                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片没有上传成功'],320);
-            }
-            $post['images'] = implode(",", $aa);
+        //获取图片参数
+        if(!isset($post['path'])){
+            $post['path'] = '';
         }else{
-            $post['images'] = '';
+            $post['path'] = implode(",", $post['path']);
         }
+
+        //判断有无图片,有则上传
+//        if($files = request()->file('images')){
+//            if(count($_FILES['images']['name']) >= 10){
+//                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片不能超过9张'],320);
+//            }
+//            $aa = uploadImage(
+//                $files,
+//                '/uploads/hotel/'
+//            );
+//            //判断图片是否上传成功
+//            if(!isset($aa['0'])){
+//                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片没有上传成功'],320);
+//            }
+//            $post['images'] = implode(",", $aa);
+//        }else{
+//            $post['images'] = '';
+//        }
 
         //将数据填入数据库
         $HotelcommentModel = new HotelcommentModel();
