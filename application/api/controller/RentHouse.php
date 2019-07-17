@@ -19,10 +19,19 @@ use think\Log;
 class RentHouse extends Controller
 {
 
+    /**
+     * 房屋出租列表
+     * @return \think\response\Json
+     */
     public function index()
     {
         try {
             $rentHouse = Db::name('rent_house');
+            //搜索
+            $search = request()->get('search');
+            if ($search) {
+                $rentHouse->where('body', 'like', '%' . $search . '%');
+            }
             if ($region = request()->get('region_id')) {
                 $rentHouse = $rentHouse->where('region_id', 'eq', $region);
             }
@@ -52,23 +61,17 @@ class RentHouse extends Controller
 
     }
 
+    /**
+     * 房屋出租新增
+     * @return \think\response\Json
+     */
     public function save()
     {
-        //TODO::图片处理
-
-        $path = [];
-        if (isset($_FILES['images'])) {
-            $uploads = uploadImage(request()->file('images'), 'rent');
-            if (is_array($uploads)) {
-                foreach ($uploads as $upload) {
-                    $path[] = ['path' => $upload];
-                }
-            } else {
-                return jsone($uploads, [], 1, 'error');
-            }
-        }
-
         $data = request()->post();
+
+        //获取登录用户ID
+        $id = getUserId();
+        $data['user_id'] = $id;
         $validate = validate('RentHouse');
         if (!$validate->check($data)) {
             return jsone($validate->getError(), [], 1, 'error');
@@ -92,10 +95,14 @@ class RentHouse extends Controller
                 'sticky_end_time' => $sticky_end_time,
                 'phone' => $data['phone'],
             ]);
-
-            if (count($path)) {
-                $rent->rentImage()->saveAll($path);
+            if (array_key_exists('path', $data)) {
+                $path = [];
+                foreach ($data['path'] as $value) {
+                    $value ? $path[]['path'] = $value : null;
+                }
+                count($path) ? $rent->rentImage()->saveAll($path) : null;
             }
+
             $data = $rent->with('user,regionList,rentImage')->select($rent->id);
             return jsone('创建成功', $data);
         } catch (Exception $e) {
@@ -104,10 +111,14 @@ class RentHouse extends Controller
         }
     }
 
+    /**
+     * 房屋出租详情
+     * @return \think\response\Json
+     */
     public function show()
     {
         $id = request()->get('rent_id');
-//        if ($id = request()->get('rent_id')) {
+
         try {
             $rent = RentHouseModel::with('user,regionList,rentImage')->find($id);
             $rent->browse = $rent['browse'] + 1;
@@ -117,22 +128,57 @@ class RentHouse extends Controller
             Log::error($e->getMessage());
             return jsone('服务器错误，请稍候重试', [], 1, 'error');
         }
-//        }
-//        return jsone('查询失败', [], 1, 'error');
-
-
     }
 
-    public function praise($rent_id)
+    /**
+     * 房屋出租点赞
+     * @return \think\response\Json
+     */
+    public function praise()
     {
-        try {
-            $rent = RentHouseModel::with('user,regionList,rentImage')->find($rent_id);
-            $rent->praise = $rent['praise'] + 1;
-            $rent->save();
-            return jsone('查询成功', $rent);
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return jsone('服务器错误，请稍候重试', [], 1, 'error');
+        //获取登录用户ID
+        $id = getUserId();
+        $explain = '';
+        if ($id) {
+            try {
+                $rent = RentHouseModel::get(request()->get('rent_id'));
+
+                $praise = Db::name('member_praise')
+                    ->where('module_id', 'eq', $rent->id)
+                    ->where('module_type', 'rent_house')
+                    ->where('user_id', 'eq', $id)
+                    ->find();
+//                return $praise;
+                //判断是否有点赞数据
+                if ($praise) {
+                    //判断点赞数据是否软删除
+                    if ($praise['delete_time']) {
+                        //将软删除恢复
+                        Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => null]);
+                        $rent->praise = $rent['praise'] + 1;
+                        $explain = '点赞成功';
+                    } else {
+                        //软删除点赞
+                        Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => time()]);
+                        $rent->praise = $rent['praise'] - 1;
+                        $explain = '点赞以取消';
+                    }
+
+                } else {
+
+                    $rent->memberPraise()->save(['user_id' => $id, 'module_id' => $rent->id]);
+                    $rent->praise = $rent['praise'] + 1;
+                    $explain = '点赞成功';
+                }
+
+                $rent->save();
+                return jsone($explain, $rent->with('user,region_list,rentImage')->find($rent->id));
+            } catch (Exception $e) {
+                Log::error($e->getMessage());
+                return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            }
+        } else {
+            return jsone('请登录后重试', [], 1, 'error');
         }
     }
 

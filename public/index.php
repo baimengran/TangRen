@@ -17,6 +17,9 @@ define('APP_PATH', __DIR__ . '/../application/');
 define('UPLOAD_PATH', __DIR__ . '/../public');
 // 定义应用缓存目录
 define('RUNTIME_PATH', __DIR__ . '/../runtime/');
+
+//获取当前路径
+define('ROOT',dirname($_SERVER['SCRIPT_NAME']));
 // 开启调试模式
 define('APP_DEBUG', true);
 // 加载框架引导文件

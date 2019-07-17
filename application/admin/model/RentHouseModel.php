@@ -30,4 +30,9 @@ class RentHouseModel extends Model
     {
         return $this->belongsTo('RegionListModel', 'region_id', 'region_id');
     }
+
+    public function memberPraise()
+    {
+        return $this->morphMany('MemberPraiseModel', 'module');
+    }
 }

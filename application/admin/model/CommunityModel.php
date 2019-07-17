@@ -30,4 +30,13 @@ class CommunityModel extends Model
     {
         return $this->hasMany('CommunityFileModel', 'community_id');
     }
+
+    public function memberPraise()
+    {
+        return $this->morphMany('MemberPraiseModel', 'module');
+    }
+
+    public function memberCollect(){
+        return $this->morphMany('MemberCollectModel','module');
+    }
 }

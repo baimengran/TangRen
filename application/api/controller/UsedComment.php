@@ -19,6 +19,10 @@ use think\Log;
 class UsedComment
 {
 
+    /**
+     * 二手商品评论
+     * @return \think\response\Json
+     */
     public function index()
     {
 
@@ -52,35 +56,37 @@ class UsedComment
         }
     }
 
-
+    /**
+     * 二手商品评论新增
+     * @return \think\response\Json
+     */
     public function save()
     {
-        //TODO:图片处理
-        $path = [];
-        if (isset($_FILES['images'])) {
-            $uploads = uploadImage(request()->file('images'), 'usedComment');
-            if (is_array($uploads)) {
-                foreach ($uploads as $value) {
-                    $path[] = ['path' => $value];
-                }
-            } else {
-                return jsone($uploads, [], 1, 'error');
-            }
-        }
 
         $data = request()->post();
+        //获取登录用户ID
+        $id = getUserId();
+        $data['user_id']=$id;
         $validate = validate('UsedComment');
         if (!$validate->check($data)) {
             return jsone($validate->getError(), [], 1, 'error');
         }
-//        return $path;
+
         try {
             $usedComment = new UsedCommentModel();
             $usedComment->used_id = $data['used_id'];
             $usedComment->user_id = $data['user_id'];
             $usedComment->body = $data['body'];
             $usedComment->save();
-            $usedComment->commentImage()->saveAll($path);
+
+            //保存图片
+            if (array_key_exists('path',$data)) {
+                $path=[];
+                foreach($data['path'] as $value){
+                    $value? $path[]['path']=$value:null;
+                }
+                count($path)?$usedComment->commentImage()->saveAll($path):null;
+            }
 
             $review = $usedComment->used()->find($usedComment['used_id']);
             Db::name('used_product')->where('id', 'eq', $review->id)->update(['review' => $review->review + 1]);

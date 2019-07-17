@@ -52,19 +52,22 @@ class CommunityComment
     public function save()
     {
         //TODO:图片处理
-        $path = [];
-        if (isset($_FILES['images'])) {
-            $uploads = uploadImage(request()->file('images'), 'communityComment');
-            if (is_array($uploads)) {
-                foreach ($uploads as $value) {
-                    $path[] = ['path' => $value];
-                }
-            } else {
-                return jsone($uploads, [], 1, 'error');
-            }
-        }
+//        $path = [];
+//        if (isset($_FILES['images'])) {
+//            $uploads = uploadImage(request()->file('images'), 'communityComment');
+//            if (is_array($uploads)) {
+//                foreach ($uploads as $value) {
+//                    $path[] = ['path' => $value];
+//                }
+//            } else {
+//                return jsone($uploads, [], 1, 'error');
+//            }
+//        }
 
         $data = request()->post();
+        //获取登录用户ID
+        $id = getUserId();
+        $data['user_id'] = $id;
         $validate = validate('CommunityComment');
         if (!$validate->check($data)) {
             return jsone($validate->getError(), [], 1, 'error');
@@ -77,7 +80,15 @@ class CommunityComment
                 'body' => $data['body']
             ]);
 
-            $communityComment->commentImage()->saveAll($path);
+            //保存图片
+            if (array_key_exists('path', $data)) {
+                $path = [];
+                foreach ($data['path'] as $value) {
+                    $value ? $path[]['path'] = $value : null;
+                }
+                count($path) ? $communityComment->commentImage()->saveAll($path) : null;
+            }
+
             $review = $communityComment->community()->find($communityComment['community_id']);
 
             Db::name('community')->where('id', 'eq', $review->id)->update(['review' => $review->review + 1]);

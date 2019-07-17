@@ -2,263 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb684b8e-68f3-42ef-8ea5-311b6ecf6be4" name="默认的" comment="">
-      <change afterPath="$PROJECT_DIR$/application/admin/controller/Issue.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/controller/Job.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/controller/Renting.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/controller/Used.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/CommunityCommentImageModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/CommunityCommentModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/CommunityFileModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/CommunityModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/JobCommentImageModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/JobCommentModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/JobSeekModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/MemberCollectModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/MemberPraiseModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/ProfessionCateModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/RegionListModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/RentCommentImageModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/RentCommentModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/RentHouseModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/RentImageModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/RentingListModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/TopicCateModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/UsedCommentImageModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/UsedCommentModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/UsedImageModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/model/UsedProductModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/view/Issue/add_cate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/view/Issue/add_issue.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/view/Issue/edit_cate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/view/Issue/edit_issue.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/view/Issue/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/view/Issue/index_cate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/view/renting/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/admin/view/used/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/controller/Community.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/controller/CommunityComment.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/controller/JobComment.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/controller/JobSeek.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/controller/RentComment.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/controller/RentHouse.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/controller/UsedComment.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/validate/Community.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/validate/CommunityComment.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/validate/JobComment.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/validate/JobSeek.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/validate/RentComment.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/validate/RentHouse.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/validate/UsedComment.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/api/validate/UsedProduct.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/20190711-190404-1.sql.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/1492f41e8652724fe90452a388e00472.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/1e88b3b07a1cc7e2f5a64449c2de7828.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/37366eceaa5cfee0ae53ee74cb65022f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/4577a3b794dfb2b8ef4999c5e9f4f184.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/52de1551cc2c09886311a86c175f4bc0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/55648bd8c44f6a0b53b3c60790b47894.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/666ecbef8fc024011da041820f77f38f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/9accf028cbf0203e43215880a194b7a5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/aa721b8e10d3dd05513a3b08f26c82c0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/c369e5437e27c16021141790837e7330.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/d2ffec649fd069d7ce27897af17c4ca4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/dab16fe5d98a3a4d3ad757ffe2b7029c.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/e1b8efa9eceff8c0127b76605db84172.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190714/fd6f464a28b7494d098fc722e64a95a3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/community/20190715/e99d62a74708f4f6451ba31a64305d58.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/communityComment/20190715/26bcd136319d668eae277f26815bc4ef.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/communityComment/20190715/699423b83fea9cf92ca9a018744d688e.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/011c8dd40fdd532fd9a342794c53ac2a.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/07c1239833efaf003a24421763f624d3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/0a9c38c7c0af90dc95cdf21b1103c7af.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/0ad20f956f3fc1f7e45ddb38298bb776.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/0c59422a7c00e6d27ba83ef916088043.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/11a1fdeb60cfa329d73ff701debac930.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/15df3a1744b1b75167e7f0c95fe9ac16.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/15e01e8f3321558ccc644ce999119384.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/1b451dd3c5d5d527ba3b63c4fbb65ead.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/1e4347f10a68f1277da494130de8e847.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/1f2171a3091b4e385e8b1d667b709faf.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/21268a2ad9f0c949b617ec1448e5df2e.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/25cb65d6e85cd505d5f43575e75618dd.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/2932e36c8fa55189c46868657419e845.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/2c35b69d72f33ab30b57447ec802a155.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/2e1b60e7a534fd61ac4b76f89a3becb2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/2fd3e038aae86519b9f583bfa5bbe402.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/31e39f8d647d8f0d772e32188bf5eb8c.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/38dfa3dbd97e6d173b965dc648f31a18.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/3dd6d61534824a08d10ecaaf69b5ceb3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/461573db9d73faeaaab17ec559e814c3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/4a65e7d1ddd75cbcebeec8f6963a8e21.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/4d658324768ceedf519e5c33aaca69f5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/5389b1f7d6e22d3e1a26ea70dc443ed5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/5babac5eac53a40f5c67f1ca72f52cb7.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/5f529fa49eb1a3870396135fc173c20d.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/614fc3e4e55ff53da701a42ddaa5a5a7.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/687434b0681076a6851d908ea2364f1c.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/70c7ec2124154eca10cbdce976f8ed23.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/71fc7096d16eb06ef76a55c89c4b370f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/750e77b356297ed8569da5a1755b0783.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/766c7292e4444b2ab877ce2affe72061.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/7a9e5fbb4668202d7fd388b07a773d9e.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/7d5e76e03b6dfaa02d542b8a48f19a60.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/841d1ea5b0fe7dd063b2a966c7c78bc8.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/8bf602606b8b38a02eab8791f20aeea9.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/8d4452768640f6ff3a782cd244c87fee.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/905df2609dcdbf3a36c53ca3f29194c2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/917cb49efe8c7dfa6a8092d749998fc7.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/91ef1090f75da16101b7601e7cd1e32c.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/97a70df0c270184f5c5a42d20e6b2d43.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/9a15159ad4f37974b9b1b67d587e2363.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/9defa8f4648e787d7a8a4650e518cf8a.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/9e472af1fd305e4b4423b9a842f24646.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/9f890e7ae010a7a7de43eb8586347d0d.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/a40de8d2ee39bbeafd9db55664558897.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/a4e23aea6b4aa649b00770a4468b2446.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/a5d2932582cc9368c36c40d2296065c5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/ac463455ef0befc0a7324c5e152c795d.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/ad604c4fcf9ee88c08cb8b92769491af.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/b146d055847b1c50e4edd68a891a9f9f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/b1b3d4b0f1d782259f416885aa25e044.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/b22f645d07687583c6634424cffa7f65.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/b537007735bacd767c8e3c97b50888c3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/babb33fea488fca3fcc6e30ffd9910c2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/becc05a9a3665d4e7b8d976a2a84d5c0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/c4afb9d9643ea3e69aa906c945cb32f6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/ca89db2c139c61fa1d6b7e954af07078.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/d310e39f7530fc5b35b950f346de93bd.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/d425e22218dfbdf1ee6abd9ac936aaf1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/d7ddfbf5fddee6d83516a86f7eec8079.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/d9283bf17ddda7ee6d9a213c728fbe32.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/e38a9d8721de0295e11a189ee82047f3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/e47a604c8ef5e26f3b1762d2492c1101.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/e5f73156f093927179cf10a762a6d84f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/e7ad4e7b9f5a774dde967cefc3c7029c.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/e883125b9b8d040553c960763f9917ec.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/eb5c26bfeea0789c5ec1deeec01753a0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/ecc4b74e6b5432a35ef1dbb0070db4bf.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/ee2e594bda38738e791b0c0d9cf3b027.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/ef0839c7a6bcb5ec3d04639571b7a55c.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/efda9223dbac9064dcfd8c3601f819a4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/f2b34585d8205faaa244a17065ce82a6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/f39f45afd827767d8da131e3e8df30ef.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/f6d74b59680c0af6092f87778515e29d.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/f79ae88a5bba90fe2c86bda2772939f6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/fa9dc534864d58f4609244fbddc4ce82.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/jobComment/20190714/ff56bb698e29721aa83e5c60e3b37923.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/00d582d96351e6a277b68c66258b01d9.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/07d53930dc384b9be43c17def2d98bad.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/0b744cdbfd18bfb969e44343216522a4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/14d3e3153aa65c2c33df511e8bf6fa10.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/1d953bd219358b57f9e4526bd46e7eab.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/21ba456b313241ee6792bf85dea978f2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/35848c341b9726471cbcc3987a420e57.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/41632e650de252a32e8c80e39fa0270d.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/4ea9d3ad13cd9494cfd9b621e424f7dc.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/545a8ca1cc98a9bf6e00514d229d2f00.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/593652ca54a20ad2c8e4d3d9383595a8.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/59b6de82bad9c994effe66a19bff48d2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/5aedb1b2f29c14cec53bbbf57c09917f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/64fb240757c340025bbecdc988a1d6a3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/6d8f1baf78806844832db449b4df7d81.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/764d971406f91913ba4665ebba6e8594.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/79b0a3a2a77660b1b547a75f91334ae8.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/83c1dbd1d07b32a8ccfe21cfaa0dcc64.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/8f02c81ae0ce0f9ef1b139044ca2fd2c.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/9321bd4880e528360fe8f56ec3909a85.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/95a684868d33eabb3bb85f01762688f6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/a0796ea4973a262454ac75b6f05e182e.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/bafb0fc814e7fc49a146bdda7562d822.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/c732714ad09c16ed24158db27573bf93.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/c8801cf1f1e1d9c5b162e5eb60c17ce3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/d37e1e38fcedd0858662dc88003d910c.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/d8944a551c1a81eb832547579a6ef934.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/de61cb243b66dcf2be950ed81fc73ed3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/e2d411964ff1b08c8c5ca91b053fddc0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/e3667ef9bfb625d38db6531b51b74d26.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/e42e0aa0a024b507f0f7875d4dfa829c.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/f093ac1bc0aff96de3488652b2afcd14.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190713/f271a678d814fe6039aac2c8b3a7b4aa.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190714/63a14a6fcf5c873a0e9879b1e095d15b.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rent/20190714/8e94ca4e9acd5364f368467b66d77ad5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rentComment/20190714/253bfad482993d7216064e4c12f05876.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/rentComment/20190714/4557c1d9361cf0fe3e101b6a166ab0be.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190712/b2a9bde0b2c8878bdcb829f7247e6604.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190712/bfb6db0af26ab6637489731067980656.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190712/d388c0733888519aa5abafd4905327ca.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190713/1db3d0598dd8369c4efc60be5686be89.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190713/55db70b51b264bbe3e0e0b514f8eb4b1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190714/08ce78843dc63c49ce3c23e4c47e8e29.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190714/32c7c3c04012856f13074ce78cad72eb.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190714/33ad465c83e506eefc948fa87aa032a4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190714/33d0b1ba187ca44067b2c7b4d9f80166.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190714/4dfa809a7143b384d393a838d493cdf0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190714/71cec90904a0e699ae0dedd85b39d755.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190714/8b56724dd54d8d36205159ac1a772763.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190714/b3325470942134d5246341153062f7e8.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190714/b3be56f9ea099e73e8e402f3682f8b5d.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/used/20190714/c0047b7efb641b67da0e6b22254f8f2e.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/0257d5ba3cf97a1978961291cc960e7f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/058af80ebc43cc15e89300e1771d317b.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/09c30210e9fb2735425c1af9255861b5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/0c325697138700331f9bfdda10cb5e2a.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/14054d88085ca585ac6ee9f16030039d.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/14231f8440f36731cd4039f9c330a9b0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/1488a57c5a63c2728cad959a60da947f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/16f608a7e72842aaadaab16e2b3fd3fa.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/19dcf20e42454a5674820bef826f7882.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/26a1abd2a079f31b7b851c2b061da98e.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/2a42c11671d09957b75b21f47ab8966a.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/432ae992245ee9f07d6768694564218e.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/46dc56e3bb090d21dfa1ca4454e0aa6d.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/4f3aee814618e1ac76a35a55fb70a1c2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/4f4ba294f68beeb75fa965139d62bd74.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/4fdfcddd7f2273c2b8d1c84cf9d7043f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/564ce269f5feb16cba37c40b5b155b34.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/6472bb866061df3daa8d04eb9dbe66e8.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/66b5daa20667c0dd616e86aceb437dea.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/69598bac16885d84ef93fdb715867acd.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/74ed394b5e66620efae68cc8b60d5349.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/7adcf37cd2a1f2ba1ca3ce10314fab8a.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/7bd6328ff3ffbb745dd06f3807ea1734.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/80166367fc50f18a700238123c181a1f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/8c1a8523e2422fb3d57ef4a20a4006c4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/98e85988b241d1d5be3eb2d5c1c1fb51.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/9d8f67a53b90adda52aedb18e17ca1d6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/a4ba080971dd02546335004d76dd5ccf.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/ab8ae82697afabaac3da43e11bc950e5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/aefc5ada4a89f6f08fdf8e4e607f3861.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/c425165c4adc48a27318f556c7088fe8.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/c54ac1944d85cb311850896d765cdfa2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/d010c462aae43f4343a8fea9cd270015.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/d1980d0503044ea63af09d3eb0a50a30.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/d6080224722910858ffcdbfdd63cd0f5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/d6c6fd153ffbf1c1522653dfc0260e48.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/d921e1c3996cc527d48877f552d3fee2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/e07b3459f2b97c44467c6f017483de1f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/e5ba09ac558cc6763c31b619f81cb023.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/e6f5f17dbb46a37181e48e822e6188ac.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/fa2cd3396a2ba54fe30e3161936a9f13.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190713/fb3f479a4222e4383190f2862f8631f7.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190714/a8d950946f7d020d88926643dd8ab027.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190714/d3bc4decc5d32bd6f75b18d1d2865a8f.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/usedImage/20190714/f7e1ef4491167991b89f26c7dcf9b869.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/model/MemberModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/model/MemberModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/common.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/controller/UsedProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/controller/UsedProduct.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/model/UsedImage.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/model/UsedProduct.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/used/controller/Index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/used/model/UsedImage.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/used/model/UsedProduct.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/admin/js/lunhui.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/admin/js/lunhui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/13869329ee2ba165da8b8943f42479b9.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/70ed52e7610f8125aa3910229d954c41.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/temp/a579cbbd56347b19c0c6ec2760a0503a.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/admin/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/admin/controller/Login.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/admin/view/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/admin/view/public/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/public/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/api/controller/JobSeek.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/controller/JobSeek.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/index/controller/Index.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/controller/Index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/50/e42e2e0c46db6eb01ed4a3be845c44.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -272,62 +24,73 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="UsedProduct.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/api/controller/UsedProduct.php">
+      <file leaf-file-name="Index.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="172" column="31" lean-forward="true" selection-start-line="172" selection-start-column="31" selection-end-line="172" selection-end-column="31" />
+            <state relative-caret-position="152">
+              <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="18" column="49" lean-forward="true" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/thinkphp/base.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="20" column="9" lean-forward="true" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Login.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/admin/controller/Login.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JobSeek.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/api/controller/JobSeek.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="456">
+              <caret line="32" selection-start-line="32" selection-end-line="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Community.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/api/controller/Community.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-385">
+              <caret line="73" column="11" lean-forward="true" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="11" />
               <folding>
-                <element signature="e#127#159#0#PHP" expanded="true" />
+                <element signature="e#128#163#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
-            </state>
-          </provider>
+      <file leaf-file-name="footer.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/admin/view/public/footer.html">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file leaf-file-name="SoftDelete.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/thinkphp/library/traits/model/SoftDelete.php">
+      <file leaf-file-name="config.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/admin/config.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UsedProductModel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/model/UsedProductModel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="36" column="62" selection-start-line="36" selection-start-column="62" selection-end-line="36" selection-end-column="62" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MemberPraiseModel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/model/MemberPraiseModel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-              <folding>
-                <element signature="e#124#140#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="api.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/api.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="988">
-              <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+            <state relative-caret-position="95">
+              <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -336,13 +99,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>page</find>
-      <find>d</find>
-      <find>d[i]</find>
-      <find>is_tui</find>
-      <find>is</find>
-      <find>多</find>
-      <find>with</find>
       <find>一对</find>
       <find>eagerlyOneToMany</find>
       <find>validate</find>
@@ -355,7 +111,6 @@
       <find>region</find>
       <find>求职招聘</find>
       <find>used_Product</find>
-      <find>usedProduct</find>
       <find>used</find>
       <find>job</find>
       <find>community_image</find>
@@ -366,6 +121,14 @@
       <find>$options</find>
       <find>sort</find>
       <find>soft_delete</find>
+      <find>rent_id</find>
+      <find>usedProduct</find>
+      <find>user_id</find>
+      <find>praise</find>
+      <find>upload</find>
+      <find>up</find>
+      <find>class File</find>
+      <find>CACHE_PATH</find>
     </findStrings>
     <replaceStrings>
       <replace>唐人</replace>
@@ -374,15 +137,17 @@
       <replace>求职招聘</replace>
       <replace>JobSeek</replace>
       <replace>$job</replace>
-      <replace>job</replace>
       <replace>topic</replace>
       <replace>community_comment</replace>
       <replace>CommunityComment</replace>
       <replace>Community</replace>
       <replace>社区</replace>
-      <replace>community</replace>
       <replace>community_file</replace>
       <replace>communityFile</replace>
+      <replace>rent</replace>
+      <replace>job</replace>
+      <replace>community</replace>
+      <replace>collect</replace>
     </replaceStrings>
     <dirStrings>
       <dir>D:\phpStudy2018\PHPTutorial\WWW\adminThree</dir>
@@ -396,57 +161,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/application/admin/controller/Renting.php" />
-        <option value="$PROJECT_DIR$/application/admin/view/renting/index.html" />
-        <option value="$PROJECT_DIR$/application/api/model/UsedProduct.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/UsedImage.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/UsedProductImage.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/UsedProductImageModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/common.php" />
-        <option value="$PROJECT_DIR$/application/config.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/RegionModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/MemberModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/UsedCommentImageModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/UsedImageModel.php" />
-        <option value="$PROJECT_DIR$/application/api/common.php" />
-        <option value="$PROJECT_DIR$/application/api/validate/UsedComment.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/RentCommentImageModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/RegionListModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/RentImageModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/RentHouseModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/UsedCommentModel.php" />
-        <option value="$PROJECT_DIR$/application/api/controller/RentHouse.php" />
-        <option value="$PROJECT_DIR$/application/api/validate/RentComment.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/RentCommentModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/ProfessionCateModel.php" />
-        <option value="$PROJECT_DIR$/application/api/validate/RentHouse.php" />
         <option value="$PROJECT_DIR$/application/api/validate/JobSeek.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/JobSeekModel.php" />
         <option value="$PROJECT_DIR$/application/api/validate/JobComment.php" />
         <option value="$PROJECT_DIR$/application/admin/model/JobCommentImageModel.php" />
         <option value="$PROJECT_DIR$/application/admin/model/JobCommentModel.php" />
-        <option value="$PROJECT_DIR$/application/api/controller/UsedComment.php" />
-        <option value="$PROJECT_DIR$/application/api/controller/RentComment.php" />
         <option value="$PROJECT_DIR$/application/admin/model/CommunityCommentImageModel.php" />
         <option value="$PROJECT_DIR$/application/admin/model/CommunityImageModel.php" />
         <option value="$PROJECT_DIR$/application/admin/model/TopicCateModel.php" />
         <option value="$PROJECT_DIR$/application/api/controller/Communty.php" />
         <option value="$PROJECT_DIR$/application/api/validate/UsedProduct.php" />
         <option value="$PROJECT_DIR$/application/api/validate/Community.php" />
-        <option value="$PROJECT_DIR$/application/api/controller/JobComment.php" />
         <option value="$PROJECT_DIR$/application/admin/model/CommunityCommentModel.php" />
-        <option value="$PROJECT_DIR$/application/api/controller/CommunityComment.php" />
         <option value="$PROJECT_DIR$/application/api/validate/CommunityComment.php" />
-        <option value="$PROJECT_DIR$/application/api.php" />
-        <option value="$PROJECT_DIR$/application/api/controller/JobSeek.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/MemberCollectModel.php" />
         <option value="$PROJECT_DIR$/application/admin/model/CommunityFileModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/CommunityModel.php" />
-        <option value="$PROJECT_DIR$/application/api/controller/Community.php" />
         <option value="$PROJECT_DIR$/application/admin/model/MemberPraiseModel.php" />
-        <option value="$PROJECT_DIR$/application/api/controller/UsedProduct.php" />
         <option value="$PROJECT_DIR$/application/admin/model/UsedProductModel.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/application/config.php" />
+        <option value="$PROJECT_DIR$/../../Apache/conf/.htaccess" />
+        <option value="$PROJECT_DIR$/application/admin/model/RentHouseModel.php" />
+        <option value="$PROJECT_DIR$/application/admin/model/JobSeekModel.php" />
+        <option value="$PROJECT_DIR$/application/admin/model/CommunityModel.php" />
+        <option value="$PROJECT_DIR$/application/api/validate/RentHouse.php" />
+        <option value="$PROJECT_DIR$/../../php/php-5.6.27-nts/php.ini" />
+        <option value="$PROJECT_DIR$/application/api/common.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/UploadImage.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/CommunityComment.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/RegionProfessionCate.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/ProfessionCate.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/RegionCate.php" />
+        <option value="$PROJECT_DIR$/application/admin/model/MemberCollectModel.php" />
+        <option value="$PROJECT_DIR$/application/admin/model/CouponModel.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/My.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/Coupon.php" />
+        <option value="$PROJECT_DIR$/application/api.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/JobComment.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/UsedProduct.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/UsedComment.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/RentHouse.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/RentComment.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/Community.php" />
+        <option value="$PROJECT_DIR$/public/index1.php" />
+        <option value="$PROJECT_DIR$/thinkphp/start.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/JobSeek.php" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="D:/FTP/index.php" />
+        <option value="$PROJECT_DIR$/application/admin/view/index.html" />
+        <option value="$PROJECT_DIR$/public/index.php" />
+        <option value="$PROJECT_DIR$/application/admin/controller/Login.php" />
+        <option value="$PROJECT_DIR$/application/index/controller/Index.php" />
+        <option value="$PROJECT_DIR$/application/admin/config.php" />
+        <option value="$PROJECT_DIR$/application/admin/view/public/header.html" />
       </list>
     </option>
   </component>
@@ -463,8 +228,8 @@
     <servers />
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="208" />
-    <option name="y" value="44" />
+    <option name="x" value="83" />
+    <option name="y" value="232" />
     <option name="width" value="1050" />
     <option name="height" value="725" />
   </component>
@@ -492,6 +257,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -515,7 +281,31 @@
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
               <item name="application" type="462c0819:PsiDirectoryNode" />
               <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="used" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
@@ -534,54 +324,29 @@
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
               <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="index" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
               <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="validate" type="462c0819:PsiDirectoryNode" />
+              <item name="index" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="extend" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="runtime" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="runtime" type="462c0819:PsiDirectoryNode" />
-              <item name="log" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="runtime" type="462c0819:PsiDirectoryNode" />
-              <item name="log" type="462c0819:PsiDirectoryNode" />
-              <item name="201907" type="462c0819:PsiDirectoryNode" />
+              <item name="thinkphp" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -594,18 +359,19 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\public" />
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\index\view\index" />
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\admin\view\renting" />
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\admin\view\used" />
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\admin\controller" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen" />
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\admin\model" />
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\adminThree\application\api\model" />
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\adminThree\application\api\controller" />
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\adminThree\application\api" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\admin\view\renting" />
-      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\admin\view\used" />
-      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\admin\controller" />
-      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\admin\view" />
-      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\api\controller" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -647,28 +413,34 @@
       <workItem from="1563118020412" duration="254000" />
       <workItem from="1563118299249" duration="863000" />
       <workItem from="1563123480692" duration="2142000" />
-      <workItem from="1563154301595" duration="7148000" />
+      <workItem from="1563154301595" duration="24705000" />
+      <workItem from="1563184273907" duration="1512000" />
+      <workItem from="1563193659369" duration="6226000" />
+      <workItem from="1563239109324" duration="15046000" />
+      <workItem from="1563285132392" duration="5705000" />
+      <workItem from="1563327257839" duration="10032000" />
+      <workItem from="1563342560334" duration="3435000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="147250000" />
+    <option name="totallyTimeSpent" value="206763000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
     <editor active="true" />
     <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33888048" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="调试" order="7" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="运行" order="7" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.6656581" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="找到" order="8" weight="0.32828283" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -689,330 +461,17 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/database.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/base.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/db/connector/Mysql.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-741" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/model/relation/HasManyThrough.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-627" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/model/relation/HasMany.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2850">
-          <caret line="180" column="39" lean-forward="true" selection-start-line="180" selection-start-column="23" selection-end-line="180" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/helper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="458" column="13" selection-start-line="458" selection-start-column="13" selection-end-line="458" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/UsedCommentImageModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="17" column="41" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/SPL/SPL_c1.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="85" column="24" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/File.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-65">
-          <caret line="178" column="40" selection-start-line="178" selection-start-column="32" selection-end-line="178" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/log/201907/13.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="3580" lean-forward="true" selection-start-line="3580" selection-end-line="3580" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/common.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/RentCommentImageModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/RegionListModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="15" column="34" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/UsedImageModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/UsedCommentModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="24" column="44" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/RentImageModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/model/RentHouseModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/RentCommentModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="28" column="47" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/ProfessionCateModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="16" column="4" lean-forward="true" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/RentHouse.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+        <state relative-caret-position="361">
+          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="36" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/model/JobSeekModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="23" column="48" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/JobSeek.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="42" column="31" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/RentComment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="69" column="5" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="69" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/JobCommentImageModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="13" column="40" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/JobComment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/JobCommentModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="20" column="60" selection-start-line="20" selection-start-column="60" selection-end-line="20" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/controller/UsedComment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/controller/RentComment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="37" column="38" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/CommunityCommentImageModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="16" column="41" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/TopicCateModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="16" column="41" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/UsedProduct.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/Community.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="503">
-          <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/UsedComment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="57" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/controller/JobComment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/CommunityCommentModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/CommunityComment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="40" column="48" selection-start-line="40" selection-start-column="48" selection-end-line="40" selection-end-column="48" />
-          <folding>
-            <element signature="e#126#139#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/controller/CommunityComment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1282">
-          <caret line="85" column="32" selection-start-line="85" selection-start-column="32" selection-end-line="85" selection-end-column="32" />
-          <folding>
-            <element signature="e#127#140#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="988">
-          <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/controller/JobSeek.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2508">
-          <caret line="140" column="35" selection-start-line="140" selection-start-column="35" selection-end-line="140" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/controller/RentHouse.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2280">
-          <caret line="130" column="26" selection-start-line="130" selection-start-column="26" selection-end-line="130" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/MemberCollectModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/CommunityFileModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/CommunityModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="30" column="44" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/controller/Community.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1990">
-          <caret line="59" column="52" selection-start-line="59" selection-start-column="52" selection-end-line="59" selection-end-column="52" />
-          <folding>
-            <element signature="e#128#163#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/Model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="97" column="18" selection-start-line="97" selection-start-column="18" selection-end-line="97" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/library/traits/model/SoftDelete.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        <state relative-caret-position="408">
+          <caret line="30" column="4" selection-start-line="30" selection-start-column="4" selection-end-line="33" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -1020,40 +479,299 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-          <folding>
-            <element signature="e#124#140#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/db/Query.php">
+    <entry file="file://$PROJECT_DIR$/application/api/validate/RentHouse.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="1251" column="20" selection-start-line="1251" selection-start-column="20" selection-end-line="1251" selection-end-column="20" />
+        <state relative-caret-position="403">
+          <caret line="32" column="39" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/UsedProductModel.php">
+    <entry file="file://$PROJECT_DIR$/public/uploads/rent/20190715/6bafb7c216af36efb74a15a4c8c0fe4d.jpg" />
+    <entry file="file://$PROJECT_DIR$/../../php/php-5.6.27-nts/php.ini">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="36" column="62" selection-start-line="36" selection-start-column="62" selection-end-line="36" selection-end-column="62" />
+        <state relative-caret-position="266">
+          <caret line="819" column="25" lean-forward="true" selection-start-line="819" selection-start-column="25" selection-end-line="819" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/route/jzq_route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="34" column="3" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/UploadImage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_9.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="736" column="9" selection-start-line="736" selection-start-column="9" selection-end-line="736" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/common.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/model/MemberModel.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/model/MemberCollectModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/model/CommunityModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="28" column="33" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/model/CouponModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="16" column="41" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/Coupon.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="23" column="15" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/RegionCate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/ProfessionCate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="20" column="65" selection-start-line="20" selection-start-column="65" selection-end-line="20" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/My.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/UsedComment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-333">
+          <caret line="59" column="15" selection-start-line="59" selection-start-column="15" selection-end-line="59" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/RentComment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-105">
+          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/RentHouse.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="174" column="37" selection-start-line="174" selection-start-column="37" selection-end-line="174" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/JobComment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1092">
+          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/api/controller/UsedProduct.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="172" column="31" lean-forward="true" selection-start-line="172" selection-start-column="31" selection-end-line="172" selection-end-column="31" />
+        <state relative-caret-position="3268">
+          <caret line="184" column="37" selection-start-line="184" selection-start-column="37" selection-end-line="184" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/CommunityComment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1558">
+          <caret line="90" selection-start-line="90" selection-end-line="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="19" column="36" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index1.php" />
+    <entry file="file://$PROJECT_DIR$/thinkphp/.htaccess">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/controller/Base.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/common.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1549" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/command.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/common.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-342" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/database.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php" />
+    <entry file="file://D:/FTP/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thinkphp/start.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/route.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/controller/Login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1045">
+          <caret line="55" column="20" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="18" column="49" lean-forward="true" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thinkphp/base.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="20" column="9" lean-forward="true" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/view/public/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/view/public/footer.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/view/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-570">
+          <caret column="15" selection-start-column="15" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/view/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/view/user/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
           <folding>
-            <element signature="e#127#159#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/application/admin/view/used/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+        <state>
+          <folding>
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/JobSeek.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/Community.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-385">
+          <caret line="73" column="11" lean-forward="true" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="11" />
+          <folding>
+            <element signature="e#128#163#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

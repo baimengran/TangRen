@@ -4,6 +4,17 @@
 ////    'ertips'=>'查询成功',
 ////    'retData'=>[
 
+
+use app\admin\model\MemberModel;
+use think\Request;
+
+function getUserId(){
+    $token = Request::instance()->header('authorization');;
+    $member = MemberModel::where('token','eq',$token)->field('id')->find();
+    return $member['id'];
+}
+
+
 function jsone($ertips='查询成功',$retData,$errcode=0,$errMsg='success'){
 //    return json($retData);die;
     $data = [
@@ -19,9 +30,9 @@ function jsone($ertips='查询成功',$retData,$errcode=0,$errMsg='success'){
 
 
 //图片上传
-function uploadImage($files,$dir){
+function uploadImage($file,$dir){
 $path = [];
-    foreach($files as $file){
+//    foreach($files as $file){
         // 移动到框架应用根目录/public/uploads/ 目录下
         $info = $file->validate(['size'=>5242880,'ext'=>'jpg,png,jpeg'])->move(ROOT_PATH . 'public' . DS . 'uploads'.DS.$dir);
         if($info){
@@ -31,6 +42,6 @@ $path = [];
             // 上传失败获取错误信息
             return $file->getError();
         }
-    }
+//    }
     return $path;
 }

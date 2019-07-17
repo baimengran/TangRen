@@ -17,9 +17,12 @@ use think\Log;
 class RentComment
 {
 
+    /**
+     * 房屋出租评论列表
+     * @return \think\response\Json
+     */
     public function index()
     {
-
         if ($id = request()->get('rent_id')) {
 
             try {
@@ -50,34 +53,38 @@ class RentComment
         }
     }
 
+    /**
+     * 房屋评论新增
+     * @return \think\response\Json
+     */
     public function save()
     {
-        //TODO:图片处理
-        $path = [];
-        if (isset($_FILES['images'])) {
-            $uploads = uploadImage(request()->file('images'), 'rentComment');
-            if (is_array($uploads)) {
-                foreach ($uploads as $value) {
-                    $path[] = ['path' => $value];
-                }
-            } else {
-                return jsone($uploads, [], 1, 'error');
-            }
-        }
 
         $data = request()->post();
+        //获取登录用户ID
+        $id = getUserId();
+        $data['user_id'] = $id;
         $validate = validate('RentComment');
         if (!$validate->check($data)) {
             return jsone($validate->getError(), [], 1, 'error');
         }
-//        return $path;
+
         try {
             $rentComment = new RentCommentModel();
             $rentComment->rent_id = $data['rent_id'];
             $rentComment->user_id = $data['user_id'];
             $rentComment->body = $data['body'];
             $rentComment->save();
-            $rentComment->commentImage()->saveAll($path);
+
+            //保存图片
+            if (array_key_exists('path', $data)) {
+                $path = [];
+                foreach ($data['path'] as $value) {
+                    $value ? $path[]['path'] = $value : null;
+                }
+                count($path) ? $rentComment->commentImage()->saveAll($path) : null;
+            }
+
             $review = $rentComment->rent()->find($rentComment['rent_id']);
 
             Db::name('rent_house')->where('id', 'eq', $review->id)->update(['review' => $review->review + 1]);
