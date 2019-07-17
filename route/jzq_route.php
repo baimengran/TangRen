@@ -7,8 +7,8 @@
 
 //前台用户登录模块
 Route::post('index/userlogin/login','index/Userlogin/login');
-//用户信息录入接口
-Route::post('index/userlogin/create','index/Userlogin/create');
+//用户信息录入接口(废弃)
+//Route::post('index/userlogin/create','index/Userlogin/create');
 
 //显示前台轮播图
 Route::post('index/turns/index','index/Turns/index');
@@ -55,6 +55,8 @@ Route::post('index/personal/sign','index/Personal/sign');
 Route::post('index/personal/share','index/Personal/share');
 //积分任务接口
 Route::post('index/personal/integral_task','index/Personal/integral_task');
+//查看个人任务完成接口
+Route::post('index/personal/select_task','index/Personal/select_task');
 
 ////接收上传图片接口
 //Route::post('index/report/images','index/Report/images');

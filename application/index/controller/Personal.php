@@ -241,12 +241,17 @@ class Personal extends Controller
         $sign_time = date('Ymd',$post['sign']);
 
         if($sign_time == $today){
+
             //修改用户表,执行签到逻辑
             $user_sign = $FractionModel->update_user($post);
             //修改任务表,执行签到逻辑
-            $task_sign = $FractionModel->update_task($post);
-        }
+            $task_sign = $FractionModel->update_task($post,$sign_time);
 
+        }else{
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'今天不能签到'],320);
+
+        }
+//        print_r($task_sign);die;
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'签到成功','retData'=>$task_sign],320);
     }
 
@@ -293,6 +298,8 @@ class Personal extends Controller
             ->field('share_type')
             ->where('id',$post['id'])
             ->find();
+        $post['share'] = intval(date('Ymd',$post['share']));
+
         if(!$share){
             $data = ['id' => $post['id'], 'share' => $post['share'],'share_type'=> '1'];
             $res = Db::table('think_user_task')->insert($data);
@@ -388,6 +395,45 @@ class Personal extends Controller
 
 
 
+    }
+
+    /**
+     * 查看个人任务完成接口
+     * 输入：用户ID
+     * 返回：任务完成情况
+     */
+    public function select_task(\think\Request $request)
+    {
+        //获取参数
+        $post = request()->post();
+
+        $rule =   [
+            'id' => 'require|number'
+        ];
+        $message  = [
+            'id.require'      => '用户ID不能为空',
+            'id.number'       => '用户ID类型错误',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
+        //获取当前时间戳
+        $today = date('Ymd',time());
+
+        //执行查询操作
+        $FractionModel = new FractionModel();
+        //执行查询操作
+        $task = $FractionModel->select_task($post['id'],$today);
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$task],320);
     }
 
 

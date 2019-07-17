@@ -115,7 +115,7 @@ class FractionModel extends Model
     /**
      * 获取签到状态表
      * 输入：用户ID
-     * 返回：是否有地址
+     * 返回：
      */
     public function sign($post)
     {
@@ -148,20 +148,22 @@ class FractionModel extends Model
      * 输入：
      * 返回：是否有地址
      */
-    public function update_task($post)
+    public function update_task($post,$sign_time)
     {
-
         $id = Db::table('think_user_task')
             ->field('task_id')
             ->where('id',$post['id'])
-            ->select();
+            ->where('sign',$sign_time)
+            ->find();
+        print_r($sign_time);die;
+        $post['sign'] = intval(date('Ymd',$post['sign']));
         //如果用户没有签到过
         if(!$id){
             $data = ['id' => $post['id'], 'sign' => $post['sign'],'sign_type'=> '1'];
             $res = Db::table('think_user_task')->insert($data);
             return $res;
         }
-
+        $post['sign'] = intval(date('Ymd',$post['sign']));
         //如果用户以前签到过
         $date = Db::table('think_user_task')
             ->update([
@@ -358,6 +360,64 @@ class FractionModel extends Model
             return $task_res;
         }
         return 0;
+    }
+
+
+    /**
+     * 查询任务表表--分享任务状态
+     * 输入:
+     * 返回:任务状态
+     */
+    public function select_task($id,$today)
+    {
+        //查询用户今天签到任务完成情况
+        $sign = Db::table('think_user_task')
+            ->field('sign_type')
+            ->where('id',$id)
+            ->where('sign',$today)
+            ->find();
+
+        //如果查不到则赋值为未完成
+        if(!$sign){
+            $sign['sign_type'] = '2';
+        }
+
+        //查询用户今天收藏任务完成情况
+        $collect = Db::table('think_user_task')
+            ->field('collect_type')
+            ->where('id',$id)
+            ->where('collect',$today)
+            ->find();
+        //如果查不到则赋值为未完成
+        if(!$collect){
+            $collect['collect'] = '2';
+        }
+
+        //查询用户今天发表任务完成情况
+        $publish = Db::table('think_user_task')
+            ->field('publish_type')
+            ->where('id',$id)
+            ->where('publish',$today)
+            ->find();
+        //如果查不到则赋值为未完成
+        if(!$publish){
+            $publish['publish'] = '2';
+        }
+
+        //查询用户今天分享任务完成情况
+        $share = Db::table('think_user_task')
+            ->field('share_type')
+            ->where('id',$id)
+            ->where('share',$today)
+            ->find();
+        //如果查不到则赋值为未完成
+        if(!$share){
+            $share['share'] = '2';
+        }
+        //将所有数据压缩进一个数组
+        $task = array_merge($sign,$collect,$publish,$share);
+
+        return $task;
     }
 
 

@@ -2,8 +2,8 @@
 
 return [
 
-    'wx_AppID'     => 'wxcc02f121e350a650',
-    'wx_AppSecret' => 'bf621d03c47a53461927082843e09cfb',
+    'wx_AppID'     => 'wx49a560f7feac0feb',
+    'wx_AppSecret' => 'bbd0796a4b64055f9b18f92c5a2728d9',
     'wx_LoginUrl'  => 'https://api.weixin.qq.com/sns/jscode2session',
 
     //用户登录表
