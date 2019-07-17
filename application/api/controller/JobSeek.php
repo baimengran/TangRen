@@ -51,7 +51,7 @@ class JobSeek
                 //查询对应招聘信息用户
                 $member = Db::name('member')->where('id', 'eq', $val['user_id'])->select();
                 //查询对应招聘信息行业
-                $profession = Db::name('profession_cate')->where('id', 'in', $val['profession_id'])->select();
+                $profession = Db::name('profession_cate')->where('id', 'eq', $val['profession_id'])->select();
                 //查询对应招聘信息区域
                 $region = Db::name('region_list')->where('region_id', 'eq', $val['region_id'])->select();
 

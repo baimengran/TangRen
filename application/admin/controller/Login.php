@@ -16,6 +16,8 @@ class Login extends Controller
      */
     public function index()
     {
+//        return dirname($_SERVER['SCRIPT_FILENAME']);
+
         $this->assign('verify_type', config('verify_type'));
         return $this->fetch('/login');
     }
