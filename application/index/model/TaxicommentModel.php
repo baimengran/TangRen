@@ -22,7 +22,7 @@ class TaxicommentModel extends Model
             'comment_speed'     => $post['comment_speed'],
             'comment_quality'   => $post['comment_quality'],
             'comment_all'       => $post['comment_all'],
-            'comment_images'    => $post['comment_images'],
+            'comment_images'    => $post['path'],
             'comment_time'      => time(),
         ];
 

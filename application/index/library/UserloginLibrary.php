@@ -8,7 +8,8 @@ class UserloginLibrary
         $wx_config = config('mysql_config.');
 
         // 处理url字符串，发送指定数据
-        $loginUrl  = 'https://api.weixin.qq.com/sns/jscode2session?appid=wxcc02f121e350a650&secret=bf621d03c47a53461927082843e09cfb';
+//        $loginUrl  = 'https://api.weixin.qq.com/sns/jscode2session?appid=wxcc02f121e350a650&secret=bf621d03c47a53461927082843e09cfb';
+        $loginUrl  = 'https://api.weixin.qq.com/sns/jscode2session?appid=wx49a560f7feac0feb&secret=bbd0796a4b64055f9b18f92c5a2728d9';
 //        $loginUrl .= '?appid='.$appID;
 //        $loginUrl .= '&secret='.$appSecret;
         $loginUrl .= '&js_code='.$code;
@@ -21,7 +22,7 @@ class UserloginLibrary
 
         // 验证返回数据格式是否正确
         if(empty($wxResult['openid'])){
-            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有openid'],320);
+            return $err = ['errCode'=>'1','msg'=>'error','ertips'=>'没有openid'];
         }
 
         $loginFile = array_key_exists('errCode',$wxResult);
