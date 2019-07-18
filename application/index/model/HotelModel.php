@@ -69,7 +69,7 @@ class HotelModel extends Model
         //查询区域分类下的酒店
         $date = Db::table('think_hotel_list')
             ->where('hotel_class',$get)
-            ->select();
+            ->paginate(25);
 
         if(!$date){
             return $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'这个区域下没有酒店'];

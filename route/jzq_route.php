@@ -32,6 +32,8 @@ Route::rule('index/taxi/comment','index/Taxi/comment');
 
 //小程序首页美食推荐接口
 Route::rule('index/dining/homeelect','index/Dining/homeelect');
+//搜索接口
+Route::get('index/dining/search','index/Dining/search');
 
 //美食首页接口
 Route::rule('index/dining/index','index/Dining/index');
@@ -43,6 +45,8 @@ Route::rule('index/dining/comment','index/Dining/comment');
 
 //个人中心首页接口
 Route::get('index/personal/index','index/Personal/index');
+
+
 
 //个人中心积分商城接口
 Route::get('index/personal/fraction_goods','index/Personal/fraction_goods');
@@ -60,6 +64,8 @@ Route::post('index/personal/share','index/Personal/share');
 Route::post('index/personal/integral_task','index/Personal/integral_task');
 //查看个人任务完成接口
 Route::post('index/personal/select_task','index/Personal/select_task');
+
+
 //购买积分接口
 Route::post('index/pay/shop','index/Pay/shop');
 //回调方法接口
@@ -79,5 +85,12 @@ Route::rule('admin/turns/index','index/Turns/index');
 Route::rule('admin/turns/add','index/Turns/add');
 //删除轮播图
 Route::rule('admin/turns/del','index/Turns/del');
+
+//酒店列表
+Route::rule('admin/hotel/index','index/Hotel/index');
+//添加酒店
+Route::rule('admin/hotel/add','index/Hotel/add');
+//删除酒店
+Route::rule('admin/hotel/del','index/Hotel/del');
 
 

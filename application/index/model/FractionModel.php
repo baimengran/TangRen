@@ -119,9 +119,11 @@ class FractionModel extends Model
      */
     public function sign($post)
     {
-        $user = Db::table('think_member')
-            ->field('sign_status')
+        $date_sign = date('Ymd',$post['sign']);
+        $user = Db::table('think_user_task')
+            ->field('sign_type')
             ->where('id',$post['id'])
+            ->where('sign',$date_sign)
             ->find();
 
         return $user;
@@ -145,34 +147,62 @@ class FractionModel extends Model
 
     /**
      * 修改积分任务表签到状态
-     * 输入：
+     * 输入：用户ID 当前时间戳
      * 返回：是否有地址
      */
     public function update_task($post,$sign_time)
     {
-        $id = Db::table('think_user_task')
-            ->field('task_id')
-            ->where('id',$post['id'])
-            ->where('sign',$sign_time)
-            ->find();
-        print_r($sign_time);die;
-        $post['sign'] = intval(date('Ymd',$post['sign']));
-        //如果用户没有签到过
-        if(!$id){
-            $data = ['id' => $post['id'], 'sign' => $post['sign'],'sign_type'=> '1'];
-            $res = Db::table('think_user_task')->insert($data);
-            return $res;
-        }
-        $post['sign'] = intval(date('Ymd',$post['sign']));
-        //如果用户以前签到过
-        $date = Db::table('think_user_task')
-            ->update([
-                'sign'      =>$post['sign'],
-                'sign_type' =>'1',
-                'task_id'   =>$id['0']['task_id']
-            ]);
-        return $date;
 
+        $id = Db::table('think_user_task')
+            ->field('task_id,sign')
+            ->where('id',$post['id'])
+            ->find();
+        $sign_date = date('Ymd',$sign_time);
+        //如果用户签到过
+        if($id){
+
+            $id_list = Db::table('think_user_task')
+                ->field('task_id')
+                ->where('id',$post['id'])
+                ->find();
+
+            $res = Db::table('think_user_task')
+                ->update([
+                    'sign'      =>$sign_date,
+                    'sign_type' =>'0',
+                    'task_id'   =>$id_list['task_id']
+                ]);
+
+            $res_id = $this->update_in($post['id'],3);
+
+            return $res_id;
+        }else{
+            $data = ['sign' =>$sign_date ,'sign_type' =>'0', 'id' => $post['id']];
+            $res = Db::table('think_user_task')->insert($data);
+            $res_id = $this->update_in($post['id'],3);
+            return $res_id;
+        }
+
+
+    }
+
+    private function update_in($id,$num)
+    {
+        $in_res = Db::table('think_member')
+            ->field('id,integral')
+            ->where('id',$id)
+            ->find();
+
+        //计算要修改的积分
+        $integral = $in_res['integral'] + $num;
+
+        $res = Db::name('member')
+            ->update([
+                'integral'=>$integral,
+                'id'      =>$id
+            ]);
+
+        return $res;
     }
 
     /**
@@ -180,28 +210,38 @@ class FractionModel extends Model
      * 输入：
      * 返回：签到成功状态
      */
-    public function update_share($post)
+    public function update_share($post,$share_time)
     {
-        //修改分享任务状态为 1
+        //修改分享任务状态为0
         $id = Db::table('think_user_task')
-            ->field('task_id')
             ->where('id',$post['id'])
-            ->select();
-        //如果用户没有分享过
-        if(!$id){
-            $data = ['id' => $post['id'], 'share' => $post['share'],'share_type'=> '1'];
+            ->find();
+
+        $share_date = date('Ymd',$share_time);
+
+        if($id){
+            $date = Db::table('think_user_task')
+                ->where('id',$post['id'])
+                ->find();
+
+            $date = Db::table('think_user_task')
+                ->update([
+                    'share'      =>$share_date,
+                    'share_type' =>'0',
+                    'task_id'    =>$date['task_id']
+                ]);
+
+            $res_in = $this->update_in($post['id'],5);
+            return $res_in;
+        }else{
+            print_r($post['id'] );die;
+            $data = ['share' => $share_date, 'share_type' => 0,'id'=>$post['id']  ];
             $res = Db::table('think_user_task')->insert($data);
-            return $res;
+
+            $res_in = $this->update_in($post['id'],5);
+            return $res_in;
+
         }
-
-        $date = Db::table('think_user_task')
-            ->update([
-                'share'      =>$post['share'],
-                'share_type' =>'1',
-                'task_id'    =>$id['0']['task_id']
-            ]);
-
-        return $date;
     }
 
     /**

@@ -204,12 +204,10 @@ class Personal extends Controller
 
         $rule =   [
             'id'    => 'require|number',
-            'sign'  => 'require',
         ];
         $message  = [
             'id.require'      => '用户ID不能为空',
             'id.number'       => '用户ID类型错误',
-            'sign.require'    => '时间戳不能为空',
         ];
 
         //实例化验证器
@@ -222,36 +220,25 @@ class Personal extends Controller
             return json_encode($date,320);
         }
 
+        $post['sign'] = time();
+
         //查询有无这个用户
         $FractionModel = new FractionModel();
         $user = $FractionModel->user_find($post);
+
         if(!$user){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有此用户','retData'=>$user],320);
         }
 
         //判断用户今天是否签到过
         $sign = $FractionModel->sign($post);
-
-        if($sign['sign_status'] == 0){
-            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'当天签过到了','retData'=>$sign['sign_status']],320);
+        if($sign['sign_type']  == '1' || $sign['sign_type'] == '0' ){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'当天签过到了','retData'=>$sign],320);
         }
 
-        //判断时间戳是不是今天时间戳
-        $today = date('Ymd',time());
-        $sign_time = date('Ymd',$post['sign']);
+        //修改任务表,执行签到逻辑
+        $task_sign = $FractionModel->update_task($post,$post['sign']);
 
-        if($sign_time == $today){
-
-            //修改用户表,执行签到逻辑
-            $user_sign = $FractionModel->update_user($post);
-            //修改任务表,执行签到逻辑
-            $task_sign = $FractionModel->update_task($post,$sign_time);
-
-        }else{
-            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'今天不能签到'],320);
-
-        }
-//        print_r($task_sign);die;
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'签到成功','retData'=>$task_sign],320);
     }
 
@@ -268,12 +255,10 @@ class Personal extends Controller
 
         $rule =   [
             'id' => 'require|number',
-            'share'=>'require'
         ];
         $message  = [
             'id.require'      => '用户ID不能为空',
             'id.number'       => '用户ID类型错误',
-            'share.require'   => '时间戳不能为空',
         ];
 
         //实例化验证器
@@ -285,37 +270,31 @@ class Personal extends Controller
             // 验证失败 输出错误信息
             return json_encode($date,320);
         }
+        $post['share'] = time();
 
         //判断有无这个用户
         $FractionModel = new FractionModel();
         $user = $FractionModel->user_find($post);
+
         if(!$user){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有此用户','retData'=>$user],320);
         }
-
+       $share_date =  date('Ymd',$post['share']);
         //查询分享任务是否已经完成
         $share = Db::table('think_user_task')
             ->field('share_type')
             ->where('id',$post['id'])
+            ->where('share',$share_date)
             ->find();
-        $post['share'] = intval(date('Ymd',$post['share']));
 
-        if(!$share){
-            $data = ['id' => $post['id'], 'share' => $post['share'],'share_type'=> '1'];
-            $res = Db::table('think_user_task')->insert($data);
-            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'分享成功','retData'=>$res],320);
-
+        if($share['share_type']  == '1' || $share['share_type'] == '0' ){
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'分享成功','retData'=>$share],320);
         }
 
-        if($share['share_type'] == 0 || $share['share_type'] == 1){
-            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'分享成功','retData'=>0],320);
+        //修改任务表,执行签到逻辑
+        $task_share = $FractionModel->update_share($post,$post['share']);
 
-        }
-
-        //修改分享任务状态
-        $share = $FractionModel->update_share($post);
-
-        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'分享成功','retData'=>$share],320);
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'分享成功+5点积分','retData'=>$task_share],320);
 
     }
 

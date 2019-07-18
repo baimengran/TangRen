@@ -69,12 +69,49 @@ class DiningModel extends Model
         //查询区域分类下的酒店
         $date = Db::table('think_dining_list')
             ->where('dining_class',$get)
-            ->select();
+            ->paginate(25);
+
 
         if(!$date){
             return $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'这个区域下没有酒店'];
         }
 
+        return $date;
+    }
+
+    /**
+     * search方法调用
+     * 查询与区分类下的餐厅
+     */
+    public function type_dining($id)
+    {
+        $date = Db::table('think_dining_list')
+            ->where('dining_id',$id)
+            ->select();
+        return $date;
+    }
+
+    /**
+     * search方法调用
+     * 查询与区分类下的餐厅
+     */
+    public function type_hotel($id)
+    {
+        $date = Db::table('think_hotel_list')
+            ->where('hotel_id',$id)
+            ->select();
+        return $date;
+    }
+
+    /**
+     * search方法调用
+     * 查询与区分类下的餐厅
+     */
+    public function type_taxi($id)
+    {
+        $date = Db::table('think_taxi_list')
+            ->where('taxi_id',$id)
+            ->select();
         return $date;
     }
 

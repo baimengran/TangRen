@@ -14,6 +14,26 @@ class Hotel extends Controller
         $hotel= new HotelModel();
         $list =  $hotel->select();
 
-        return view('hello',['name'=>'list']);
+        return view('hotel/index',['name'=>'list']);
     }
+
+    //添加酒店接口
+    public function add()
+    {
+        return view('hotel/add',['name'=>'list']);
+    }
+
+    //编辑酒店接口
+    public function eidt()
+    {
+        return view('hotel/eidt',['name'=>'list']);
+    }
+
+    //删除酒店接口
+    public function delete()
+    {
+        echo'111';die;
+    }
+
+
 }

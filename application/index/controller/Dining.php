@@ -27,6 +27,63 @@ class Dining extends Controller
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
     }
     /**
+     * 小程序首页三个模块搜索接口
+     * 接收：要搜索的类目ID
+     * 返回：美食首页所有可见信息
+     */
+    public function search(\think\Request $request)
+    {
+        $get = $request->get();
+
+        $rule =   [
+            'type' => 'require|number'
+        ];
+        $message  = [
+            'type.require'      => '搜索分类不能为空',
+            'type.number'       => '搜索分类格式错误',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($get,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
+        //判断是否大于3
+        if($get['type'] >= 3){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'分类type最大是3'],320);
+        }
+        $type = $get['type'];
+        $community = new DiningModel();
+
+        switch ($type) {
+            case 0:
+                //美食
+                $community = $community->type_dining($get['id']);
+                break;
+            case 1:
+                //酒店
+                $community = $community->type_hotel($get['id']);
+                break;
+            default:
+                $community = $community->type_taxi($get['id']);
+        }
+
+        //查询出所有推荐美食
+//        $date = Db::table('think_dining_list')
+//            ->field('dining_id,dining_logo,dining_name,dining_all')
+//            ->where('dining_status',0)
+//            ->limit(4)
+//            ->select();
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$community],320);
+    }
+
+    /**
      * 美食首页接口
      * 接收：区域名称
      * 返回：美食首页所有可见信息 注：美食评论只显示最新5条记录
