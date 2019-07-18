@@ -1,8 +1,6 @@
 <?php
 namespace app\index\controller;
 
-use app\index\model\HotelcommentModel;
-use app\index\model\HotelModel;
 use think\Controller;
 use think\Db;
 use think\Request;

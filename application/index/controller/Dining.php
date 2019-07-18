@@ -10,6 +10,23 @@ use think\Request;
 class Dining extends Controller
 {
     /**
+     * 小程序首页美食推荐接口
+     * 接收：
+     * 返回：美食首页所有可见信息
+     */
+    public function homeelect(\think\Request $request)
+    {
+
+        //查询出所有推荐美食
+        $date = Db::table('think_dining_list')
+            ->field('dining_id,dining_logo,dining_name,dining_all')
+            ->where('dining_status',0)
+            ->limit(4)
+            ->select();
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
+    }
+    /**
      * 美食首页接口
      * 接收：区域名称
      * 返回：美食首页所有可见信息 注：美食评论只显示最新5条记录

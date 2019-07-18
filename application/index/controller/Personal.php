@@ -330,11 +330,14 @@ class Personal extends Controller
         $post = $request->post();
 
         $rule =   [
-            'id' => 'require|number'
+            'id' => 'require|number',
+            'type' => 'require|number'
         ];
         $message  = [
             'id.require'      => '用户ID不能为空',
             'id.number'       => '用户ID类型错误',
+            'type.require'    => '奖励类型错误不能为空',
+            'type.number'     => '奖励类型错误',
         ];
 
         //实例化验证器
@@ -345,6 +348,9 @@ class Personal extends Controller
             $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
             // 验证失败 输出错误信息
             return json_encode($date,320);
+        }
+        if($post['type'] < 1 || $post['type'] >= 5){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'领取类型type只能是1-4'],320);
         }
 
         //判断有无这个用户
@@ -384,7 +390,7 @@ class Personal extends Controller
             }
             return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'发表奖励领取成功','retData'=>$publishtype],320);
         }
-
+        //如果是分享
         if($post['type'] == 4){
             $sharetype = $FractionModel->select_share($post);
             if($sharetype == 'error'){

@@ -4,9 +4,9 @@ return [
     
     'type'           => 'mysql',	     // 数据库类型   
     'hostname'       => '127.0.0.1',     // 服务器地址   
-    'database'       => 'tangren',       // 数据库名
-    'username'       => 'root',	         // 用户名  
-    'password'       => 'root',	         // 密码
+    'database'       => 'tangren',          // 数据库名
+    'username'       => 'root',	            // 用户名
+    'password'       => '',	            // 密码
     'hostport'       => '3306',	         // 端口
     'dsn'            => '',	             // 连接dsn
     'params'         => [],	             // 数据库连接参数   
