@@ -17,9 +17,19 @@ class Hotel extends Controller
     {
         //接收参数
         $get = $request->get('region_name');
+        $hotel_content= $request->get('hotel_content');
 
         //实例化模型
         $HotelModel = new HotelModel();
+
+        if($hotel_content){
+            $res = Db::table('think_hotel_list')
+                ->where('hotel_content', 'like', '%' . $hotel_content . '%')
+                ->select();
+
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$res],320);
+        }
+
         //查出一个默认地区分类
         $address = $HotelModel->address();
 
@@ -33,13 +43,10 @@ class Hotel extends Controller
         //获取4个酒店精选
         $elect = $HotelModel->select();
 
-        //获取区域分类
-        $region = $HotelModel->region();
-
         //获取区域分类下的酒店
         $hotel = $HotelModel->hotel($get);
 
-        $date = ['elect'=>$elect,'region'=>$region,'hotel'=>$hotel];
+        $date = ['elect'=>$elect,'hotel'=>$hotel];
 
         //将数据返回出去
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'酒店首页信息查询成功','retData'=>$date],320);

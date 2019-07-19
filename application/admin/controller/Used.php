@@ -5,9 +5,7 @@
  * Date: 2019/7/11
  * Time: 16:25
  */
-
 namespace app\admin\controller;
-
 
 use app\admin\model\UsedProductModel;
 use app\used\model\UsedProduct;

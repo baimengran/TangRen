@@ -7,6 +7,7 @@ use app\index\model\UserlistModel;
 use app\index\model\UserloginModel;
 use think\Controller;
 use think\Db;
+use think\Log;
 
 class Userlogin extends Controller
 {
@@ -21,7 +22,7 @@ class Userlogin extends Controller
         $code = request()->post('code');
         $nickName = request()->post('nickName');
         $head_img = request()->post('avatarUrl');
-
+//        Log::info('shijian_1:'.date('Ymd His',time()));
         if(!isset($code)){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'缺少参数code'],320);
         }
@@ -44,10 +45,8 @@ class Userlogin extends Controller
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'数据有误,请重新获取code值'],320);
         }
 
-        $openid = $data['retData']['openid'];
-
 //        //处理用户openid数据
-        $openid = $this->getToken($openid);
+        $openid = $this->getToken($data['retData']['openid']);
 
         //添加用户信息
         $user = $this->create_user($openid['user_token'],$nickName,$head_img);
@@ -98,11 +97,9 @@ class Userlogin extends Controller
             if (empty($res)) {
                 return $err = ['errCode'=>'1','msg'=>'error','ertips'=>'openid添加失败'];
             }
-
             //查看数据库中是否有用户的openid
             $userInfo = Db::table('think_user_login')->where('openid',$openid)->find();
         }
-
 
         //获取用户openid标识
         if (empty($userInfo['openid'])) {
@@ -114,7 +111,6 @@ class Userlogin extends Controller
             ->where('openid',$openid)
             ->field('user_token,openid,login_time')
             ->find();
-          //$userInfo 用户token openid
 
         return $userInfo ;
     }
