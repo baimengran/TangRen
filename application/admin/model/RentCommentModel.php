@@ -17,6 +17,16 @@ class RentCommentModel extends Model
     protected $autoWriteTimestamp = true;
 
 
+    public function getCreateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
+    public function getUpdateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
     public function rent(){
         return $this->belongsTo('RentHouseModel','rent_id');
     }

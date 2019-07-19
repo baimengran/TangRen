@@ -10,6 +10,7 @@ namespace app\api\controller;
 
 
 use app\admin\model\CouponModel;
+use app\api\exception\BannerMissException;
 use think\Exception;
 use think\Log;
 
@@ -17,12 +18,28 @@ class Coupon
 {
     public function discovery()
     {
+
+        //获取登录用户ID
+        if (!$id = getUserId()) {
+            throw new BannerMissException([
+                'code' => 401,
+                'ertips' => '用户认证失败',
+            ]);
+        }
+
         try {
+            $data = [];
             $coupon = CouponModel::all();
-            return jsone('查询成功', $coupon);
+//            foreach($coupons as $coupon){
+//                $data[]=$coupon;
+//                if($coupon['activity_end_time']>=$coupon['activity_create_time']){
+//                    $data[]['expire']=''
+//                }
+//            }
+
+            return jsone('查询成功', 200, $coupon);
         } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            throw new BannerMissException();
         }
     }
 }

@@ -17,6 +17,17 @@ class UsedProductModel extends Model
 // 开启自动写入时间戳字段
     protected $autoWriteTimestamp = true;
 
+
+    public function getCreateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
+    public function getUpdateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
     public function usedImage()
     {
         return $this->hasMany('UsedImageModel', 'used_id', 'id');

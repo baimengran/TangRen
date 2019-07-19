@@ -9,6 +9,7 @@
 namespace app\admin\model;
 
 
+use think\Log;
 use think\Model;
 
 class JobSeekModel extends Model
@@ -16,16 +17,30 @@ class JobSeekModel extends Model
     protected $name = 'job_seek';
     protected $autoWriteTimestamp = true;
 
-    public function user(){
-        return $this->belongsTo('MemberModel','user_id');
+
+    public function getCreateTimeAttr($value)
+    {
+        return date('m月d日', $value);
     }
 
-    public function region(){
-        return $this->belongsTo('RegionListModel','region_id','region_id');
+    public function getUpdateTimeAttr($value)
+    {
+        return date('m月d日', $value);
     }
 
-    public function profession(){
-        return $this->belongsTo('ProfessionCateModel','profession_id');
+    public function user()
+    {
+        return $this->belongsTo('MemberModel', 'user_id');
+    }
+
+    public function region()
+    {
+        return $this->belongsTo('RegionListModel', 'region_id', 'region_id');
+    }
+
+    public function profession()
+    {
+        return $this->belongsTo('ProfessionCateModel', 'profession_id');
     }
 
     public function memberPraise()

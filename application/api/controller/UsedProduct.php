@@ -8,14 +8,13 @@
 
 namespace app\api\controller;
 
-use app\admin\model\MemberModel;
-use app\admin\model\MemberPraiseModel;
 use app\admin\model\UsedProductModel;
 use think\Controller;
 use think\Db;
 use think\Exception;
 use think\Log;
 use think\Request;
+use app\api\exception\BannerMissException;
 
 class UsedProduct extends Controller
 {
@@ -26,18 +25,31 @@ class UsedProduct extends Controller
      */
     public function index()
     {
-        $region = Request::instance()->has('region_id', 'get') ? input('get.region_id') : false;
-        //搜索
-        $search = request()->get('search');
+        if (!Request::instance()->isGet()) {
+            throw new BannerMissException([
+                'code' => 405,
+                'ertips' => '请求错误',
+            ]);
+        }
+
+
+        if (!$search = request()->get('search')) {
+            //搜索不存在时设定区域参数
+            if (!$region = request()->get('region_id')) {
+                throw new BannerMissException([
+                    'code' => 400,
+                    'ertips' => '缺少必要参数'
+                ]);
+            }
+        }
         try {
-            $usedProduct = Db::name('usedProduct');
+            $usedProduct = new UsedProductModel();
             if ($search) {
                 $usedProduct->where('body', 'like', '%' . $search . '%');
-            }
-
-            if ($region) {
+            } else {
                 $usedProduct = $usedProduct->where('region_id', 'eq', $region);
             }
+
             $usedProduct = $usedProduct->order('create_time', 'desc')->paginate(20);
 
             $data['total'] = $usedProduct->total();
@@ -58,30 +70,36 @@ class UsedProduct extends Controller
                 $val['used_image'] = $usedImage;
                 $data['data'][] = $val;
             }
-            return jsone('查询成功', $data);
+            return jsone('查询成功', 200, $data);
         } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            throw new BannerMissException();
         }
-
-
     }
 
     /**
-     * 耳熟商品新增
+     * 二手商品新增
      * @return \think\response\Json
      */
     public function save()
     {
 
-        $data = request()->post();
         //获取登录用户ID
-        $id = getUserId();
-        $data['user_id'] = $id;
+        if (!$id = getUserId()) {
+            throw new BannerMissException([
+                'code' => 401,
+                'ertips' => '用户认证失败',
+            ]);
+        }
 
+        $data = request()->post();
+        $data['user_id'] = $id;
         $validate = validate('UsedProduct');
         if (!$validate->check($data)) {
-            return jsone($validate->getError(), [], 1, 'error');
+            throw new BannerMissException([
+                'code' => 422,
+                'ertips' => $validate->getError()
+            ]);
+
         }
         //确定置顶状态，计算置顶结束日期
         if ($day = input('post.sticky_num')) {
@@ -103,6 +121,8 @@ class UsedProduct extends Controller
             $used_Product->phone = input('post.phone');
             $used_Product->status = 0;
             $used_Product->save();
+
+
             //保存图片
             if (array_key_exists('path', $data)) {
                 $path = [];
@@ -111,12 +131,11 @@ class UsedProduct extends Controller
                 }
                 count($path) ? $used_Product->usedImage()->saveAll($path) : null;
             }
-            $data = UsedProductModel::with('user,usedImage,regionList')->select($used_Product->id);
+            $data = UsedProductModel::with('user,usedImage,regionList')->find($used_Product->id);
         } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            throw new BannerMissException();
         }
-        return $data ? jsone('创建成功', $data) : json('创建失败', [], 1, 'error');
+        return jsone('创建成功', 201, $data);
     }
 
     /**
@@ -125,7 +144,19 @@ class UsedProduct extends Controller
      */
     public function show()
     {
-        $id = request()->get('used_id');
+        if (!Request::instance()->isGet()) {
+            throw new BannerMissException([
+                'code' => 405,
+                'ertips' => '请求错误',
+            ]);
+        }
+
+        if (!$id = request()->get('used_id')) {
+            throw new BannerMissException([
+                'code' => 400,
+                'ertips' => '缺少必要参数'
+            ]);
+        }
 
         try {
             $usedProduct = UsedProductModel::with('usedImage,user,regionList')->find($id);
@@ -133,10 +164,9 @@ class UsedProduct extends Controller
             $usedProduct->save();
 
         } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return jsone('服务器错误，请稍候重试', [], '1', 'error');
+            throw new BannerMissException();
         }
-        return jsone('查询成功', $usedProduct);
+        return jsone('查询成功', 200, $usedProduct);
     }
 
     /**
@@ -146,49 +176,64 @@ class UsedProduct extends Controller
      */
     public function praise()
     {
+        if (!Request::instance()->isGet()) {
+            throw new BannerMissException([
+                'code' => 405,
+                'ertips' => '请求错误'
+            ]);
+        }
         //获取登录用户ID
-        $id = getUserId();
+        if (!$id = getUserId()) {
+            throw new BannerMissException([
+                'code' => 401,
+                'ertips' => '用户认证失败',
+            ]);
+        }
+
+        if (!$used_id = request()->get('used_id')) {
+            throw new BannerMissException([
+                'code' => 400,
+                'ertips' => '缺少必要参数'
+            ]);
+        }
         $explain = '';
-        if ($id) {
-            try {
-                $usedProduct = UsedProductModel::get(request()->get('used_id'));
 
-                $praise = Db::name('member_praise')
-                    ->where('module_id', 'eq', $usedProduct->id)
-                    ->where('module_type', 'used_product')
-                    ->where('user_id', 'eq', $id)
-                    ->find();
-//                return $praise;
-                //判断是否有点赞数据
-                if ($praise) {
-                    //判断点赞数据是否软删除
-                    if ($praise['delete_time']) {
-                        //将软删除恢复
-                        Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => null]);
-                        $usedProduct->praise = $usedProduct['praise'] + 1;
-                        $explain = '点赞成功';
-                    } else {
-                        //软删除点赞
-                        Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => time()]);
-                        $usedProduct->praise = $usedProduct['praise'] - 1;
-                        $explain = '点赞以取消';
-                    }
+        try {
+            $usedProduct = UsedProductModel::get($used_id);
 
-                } else {
-                    $user_id = 1;
-                    $usedProduct->memberPraise()->save(['user_id' => $id, 'module_id' => $usedProduct->id]);
+            $praise = Db::name('member_praise')
+                ->where('module_id', 'eq', $usedProduct->id)
+                ->where('module_type', 'used_product')
+                ->where('user_id', 'eq', $id)
+                ->find();
+
+            //判断是否有点赞数据
+            if ($praise) {
+                //判断点赞数据是否软删除
+                if ($praise['delete_time']) {
+                    //将软删除恢复
+                    Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => null]);
                     $usedProduct->praise = $usedProduct['praise'] + 1;
                     $explain = '点赞成功';
+                } else {
+                    //软删除点赞
+                    Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => time()]);
+                    $usedProduct->praise = $usedProduct['praise'] - 1;
+                    $explain = '点赞以取消';
                 }
 
-                $usedProduct->save();
-                return jsone($explain, $usedProduct->with('user,region_list,usedImage')->find($usedProduct->id));
-            } catch (Exception $e) {
-                Log::error($e->getMessage());
-                return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            } else {
+                $user_id = 1;
+                $usedProduct->memberPraise()->save(['user_id' => $id, 'module_id' => $usedProduct->id]);
+                $usedProduct->praise = $usedProduct['praise'] + 1;
+                $explain = '点赞成功';
             }
-        } else {
-            return jsone('请登录后重试', [], 1, 'error');
+
+            $usedProduct->save();
+            return jsone($explain, 200);
+        } catch (Exception $e) {
+            throw new BannerMissException();
         }
+
     }
 }

@@ -17,6 +17,16 @@ class CommunityCommentModel extends Model
     protected $autoWriteTimestamp = true;
 
 
+    public function getCreateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
+    public function getUpdateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
     public function user()
     {
         return $this->belongsTo('memberModel', 'user_id');
