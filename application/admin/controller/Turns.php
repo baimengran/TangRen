@@ -2,9 +2,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\TurnsModel;
-use think\Config;
 use think\Controller;
-use think\Loader;
 use think\Db;
 
 class Turns extends Controller
@@ -17,8 +15,8 @@ class Turns extends Controller
         $list =  $turns->select();
 
         //将数据传至页面
-        return view('turns/turns',['name'=>'list']);
-//        return $this->fetch('turns/turns',$list);
+        $this->assign('list',$list);
+        return $this->fetch();
     }
 
     public function add()

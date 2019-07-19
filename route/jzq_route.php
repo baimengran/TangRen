@@ -32,7 +32,7 @@ Route::rule('index/taxi/comment','index/Taxi/comment');
 
 //小程序首页美食推荐接口
 Route::rule('index/dining/homeelect','index/Dining/homeelect');
-//搜索接口
+//搜索接口(废弃)
 Route::get('index/dining/search','index/Dining/search');
 
 //美食首页接口
@@ -45,7 +45,6 @@ Route::rule('index/dining/comment','index/Dining/comment');
 
 //个人中心首页接口
 Route::get('index/personal/index','index/Personal/index');
-
 
 
 //个人中心积分商城接口

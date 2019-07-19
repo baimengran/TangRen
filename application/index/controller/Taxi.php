@@ -17,9 +17,17 @@ class Taxi extends Controller
     {
         //接收参数
         $get = $request->get('region_name');
-
+        $search = $request->get('taxi_content');
         //实例化模型
         $TaxiModel = new TaxiModel();
+
+        if($search){
+            $res = Db::table('think_taxi_list')
+                ->where('taxi_content', 'like', '%' . $search . '%')
+                ->select();
+
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$res],320);
+        }
         //查出一个默认地区分类
         $address = $TaxiModel->address();
 
@@ -33,13 +41,10 @@ class Taxi extends Controller
         //最多获取4个品质精选
         $elect = $TaxiModel->select();
 
-        //获取区域分类
-        $region = $TaxiModel->region();
-
         //获取区域分类下的汽车公司
         $taxi = $TaxiModel->taxi($get);
 
-        $date = ['elect'=>$elect,'region'=>$region,'taxi'=>$taxi];
+        $date = ['elect'=>$elect,'taxi'=>$taxi];
 
         //将数据返回出去
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'叫车首页信息查询成功','retData'=>$date],320);

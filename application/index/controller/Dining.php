@@ -27,7 +27,7 @@ class Dining extends Controller
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
     }
     /**
-     * 小程序首页三个模块搜索接口
+     * 小程序首页三个模块搜索接口()
      * 接收：要搜索的类目ID
      * 返回：美食首页所有可见信息
      */
@@ -92,9 +92,18 @@ class Dining extends Controller
     {
         //接收参数
         $get = $request->get('region_name');
+        $search = $request->get('dining_content');
 
         //实例化模型
         $DiningModel = new DiningModel();
+        if($search){
+            $res = Db::table('think_dining_list')
+                ->where('dining_content', 'like', '%' . $search . '%')
+                ->select();
+
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$res],320);
+        }
+
         //查出一个默认地区分类
         $address = $DiningModel->address();
 
@@ -108,13 +117,10 @@ class Dining extends Controller
         //获取4个酒店精选
         $elect = $DiningModel->select();
 
-        //获取区域分类
-        $region = $DiningModel->region();
-
         //获取区域分类下的酒店
         $dining = $DiningModel->dining($get);
 
-        $date = ['elect'=>$elect,'region'=>$region,'dining'=>$dining];
+        $date = ['elect'=>$elect,'dining'=>$dining];
 
         //将数据返回出去
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'美食首页信息查询成功','retData'=>$date],320);
