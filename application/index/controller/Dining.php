@@ -101,7 +101,9 @@ class Dining extends Controller
                 ->where('dining_content', 'like', '%' . $search . '%')
                 ->select();
 
-            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$res],320);
+            $date = ['dining'=>$res];
+
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
         }
 
         //查出一个默认地区分类

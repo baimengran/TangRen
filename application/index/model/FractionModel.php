@@ -223,7 +223,7 @@ class FractionModel extends Model
             $date = Db::table('think_user_task')
                 ->where('id',$post['id'])
                 ->find();
-
+            print_r($date);die;
             $date = Db::table('think_user_task')
                 ->update([
                     'share'      =>$share_date,

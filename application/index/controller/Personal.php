@@ -88,7 +88,7 @@ class Personal extends Controller
         //获取用户积分
         $user = new UserModel();
         $fraction = $user->user_fraction($post['id']);
-//        print_r($fraction['integral']);die;
+
         //查询商品所用积分
         $FractionModel = new FractionModel();
         $goods_fraction = $FractionModel->select($post['goods_id']);
@@ -127,11 +127,11 @@ class Personal extends Controller
     }
 
     /**
-     * 个人中心地址管理接口
+     * 个人中心地址删除接口
      * 输入：用户ID 商品ID
      * 返回：
      */
-    public function address(\think\Request $request)
+    public function address_del(\think\Request $request)
     {
         //获取参数
         $post = $request->post();
@@ -168,12 +168,52 @@ class Personal extends Controller
         if($address){
             //执行修改方法
             $upaddress = $FractionModel->update_address($address['address_id'],$post);
-            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$upaddress],320);
-
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功11','retData'=>$upaddress],320);
         }else{
             $create_address = $FractionModel->create_address($post);
-            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$create_address],320);
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功22','retData'=>$create_address],320);
         }
+
+    }
+
+    /**
+     * 个人中心地址管理接口
+     * 输入：用户ID 商品ID
+     * 返回：
+     */
+    public function address(\think\Request $request)
+    {
+        //获取参数
+        $post = $request->post();
+
+        $rule =   [
+            'id'        => 'require',
+            'city'      => 'require',
+            'area'      => 'require',
+            'address'   => 'require',
+            'mobile_phone' => 'require',
+        ];
+        $message  = [
+            'id.require'         => '用户ID不能为空',
+            'city.require'       => '城市不能为空',
+            'area.require'       => '区域ID不能为空',
+            'address.require'    => '具体地址不能为空',
+            'mobile_phone.require'=> '绑定电话不能为空',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+        //判断是否有这个用户的地址记录
+        $FractionModel = new FractionModel();
+        $create_address = $FractionModel->create_address($post);
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$create_address],320);
 
     }
 

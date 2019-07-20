@@ -13,4 +13,12 @@ class TurnsModel extends Model
 
         return $turns;
     }
+
+    public function add_turns($post)
+    {
+        $data = ['turns_img' => $post['turns_img'], 'turns_url' => '','turns_class'=> $post['turns_class'] ];
+        $res = Db::table('think_turns_list')->insert($data);
+
+        return $res;
+    }
 }

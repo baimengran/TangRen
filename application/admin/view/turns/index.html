@@ -10,11 +10,11 @@
             <!--搜索框开始-->
             <div class="row">
                 <div class="col-sm-12">
-                    <!--<div  class="col-sm-2" style="width: 100px">-->
-                    <!--&lt;!&ndash;<div class="input-group" >  &ndash;&gt;-->
-                    <!--&lt;!&ndash;<a href="{:url('add_article')}"><button class="btn btn-outline btn-primary" type="button">添加</button></a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--</div>                                            -->
+                    <div  class="col-sm-2" style="width: 100px">
+                        <div class="input-group" >
+                            <a href="{:url('add_turns')}"><button class="btn btn-outline btn-primary" type="button">添加轮播图</button></a>
+                        </div>
+                    </div>
                     <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
                         <div class="col-sm-3">
                             <div class="input-group">
@@ -36,42 +36,42 @@
                         <tr class="long-tr">
                             <th width="3%">ID</th>
                             <th width="15%">轮播图</th>
-                            <th width="5%">链接</th>
+                            <!--<th width="5%">链接</th>-->
                             <th width="5%">分类</th>
-                            <th width="5%">状态</th>
-                            <!--<th width="10%">操作</th>-->
+                            <!--<th width="5%">状态</th>-->
+                            <th width="10%">操作</th>
                         </tr>
                         </thead>
-                            {volist name="list" id="vo"}
+                            {volist name="list['list']" id="vo"}
                             <tr class="long-td">
                                 <td>{$vo.turns_id}</td>
                                 <td>{$vo.turns_img}</td>
-                                <td>{$vo.turns_url}</td>
+                                <!--<td>{$vo.turns_url}</td>-->
                                 <td>{$vo.turns_class}</td>
-                                <td>
-                                    {if condition="$vo.turns_status==0"}
-                                    <a href="javascript:;" onclick="used_state();">
-                                        <div id=""><span class="label label-info">已通过</span></div>
-                                    </a>
-                                    {else /}
-                                    <a href="javascript:;" onclick="used_state();">
-                                        <div id="zt{$vo.turns_id}"><span class="label label-danger">未通过</span></div>
-                                    </a>
-                                    {/if}
-                                </td>
                                 <!--<td>-->
-                                <!--<a href="javascript:;" onclick="edit_article({$vo.turns_id})" class="btn btn-primary btn-xs btn-outline">-->
-                                <!--<i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;-->
-                                <!--<a href="javascript:;" onclick="del_article($vo.turns_id})" class="btn btn-danger btn-xs btn-outline">-->
-                                <!--<i class="fa fa-trash-o"></i> 删除</a>-->
+                                    <!--{if condition="$vo.turns_status==0"}-->
+                                    <!--<a href="javascript:;" onclick="used_state();">-->
+                                        <!--<div id=""><span class="label label-info">已通过</span></div>-->
+                                    <!--</a>-->
+                                    <!--{else /}-->
+                                    <!--<a href="javascript:;" onclick="used_state();">-->
+                                        <!--<div id="zt{$vo.turns_id}"><span class="label label-danger">未通过</span></div>-->
+                                    <!--</a>-->
+                                    <!--{/if}-->
                                 <!--</td>-->
+                                <td>
+                                <a href="javascript:;" onclick="edit_article({$vo.turns_id})" class="btn btn-primary btn-xs btn-outline">
+                                <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del_article($vo.turns_id})" class="btn btn-danger btn-xs btn-outline">
+                                <i class="fa fa-trash-o"></i> 删除</a>
+                                </td>
                             </tr>
                             {/volist}
                         <tbody id="list-content"></tbody>
                     </table>
                     <div id="AjaxPage" style="text-align:right;"></div>
                     <div style="text-align: right;">
-                        共条数据，<span ></span>
+                        共x条数据，<span ></span>
                     </div>
                 </div>
             </div>
@@ -98,8 +98,10 @@
      * @param {[type]} curr [当前页]
      */
     // Ajaxpage();
-
-
+    //新增文章
+    function add_turns(){
+        location.href = './add/'+'.html';
+    }
 
     //编辑文章
     function edit_article(id){

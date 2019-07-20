@@ -46,6 +46,7 @@ class Article extends Base
         if(request()->isAjax()){
 
             $param = input('post.');
+            print_r($param);die;
             $article = new ArticleModel();
             $flag = $article->insertArticle($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);

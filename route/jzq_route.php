@@ -53,6 +53,10 @@ Route::get('index/personal/fraction_goods','index/Personal/fraction_goods');
 Route::post('index/personal/buy','index/Personal/buy');
 //个人中心地址管理接口
 Route::post('index/personal/address','index/Personal/address');
+//个人中心编辑地址接口
+Route::post('index/personal/address_edit','index/Personal/address_edit');
+//个人中心删除地址接口
+Route::post('index/personal/address_del','index/Personal/address_del');
 //个人中心积分兑换接口
 Route::get('index/personal/integral','index/Personal/integral');
 //用户签到接口
@@ -78,10 +82,11 @@ Route::post('index/pay/paywx','index/Pay/paywx');
 /**
  * 后台模块
  */
+
 //轮播图列表
 Route::rule('admin/turns/index','index/Turns/index');
 //添加轮播图
-Route::rule('admin/turns/add','index/Turns/add');
+Route::rule('admin/turns/add_turns','index/Turns/add_turns');
 //删除轮播图
 Route::rule('admin/turns/del','index/Turns/del');
 
@@ -89,7 +94,23 @@ Route::rule('admin/turns/del','index/Turns/del');
 Route::rule('admin/hotel/index','index/Hotel/index');
 //添加酒店
 Route::rule('admin/hotel/add','index/Hotel/add');
-//删除酒店
-Route::rule('admin/hotel/del','index/Hotel/del');
 
+
+//叫车列表
+Route::rule('admin/taxi/index','index/Taxi/index');
+//添加叫车
+Route::rule('admin/taxi/add','index/Taxi/add');
+//编辑叫车
+Route::rule('admin/taxi/add','index/Taxi/add');
+//删除叫车
+Route::rule('admin/taxi/del','index/Taxi/del');
+
+//美食列表
+Route::rule('admin/taxi/index','index/Taxi/index');
+//添加叫车
+Route::rule('admin/taxi/add','index/Taxi/add');
+//编辑叫车
+Route::rule('admin/taxi/add','index/Taxi/add');
+//删除叫车
+Route::rule('admin/taxi/del','index/Taxi/del');
 
