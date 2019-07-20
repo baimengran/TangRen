@@ -39,7 +39,8 @@ class DiningModel extends Model
         if(!$date){
             return $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'暂时没有精品推荐'];
         }
-        return $date = ['errcode'=> 0,'errMsg'=>'success','retData'=>$date['0']];
+        return $date;
+//        return $date = ['errcode'=> 0,'errMsg'=>'success','retData'=>$date['0']];
     }
 
     /**
@@ -66,14 +67,24 @@ class DiningModel extends Model
      */
     public function dining($get)
     {
+
+
         //查询区域分类下的酒店
         $date = Db::table('think_dining_list')
             ->where('dining_class',$get)
             ->paginate(25);
 
-
         if(!$date){
             return $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'这个区域下没有酒店'];
+        }
+
+        $date = json_decode(json_encode($date,320),true);
+
+        foreach($date['data'] as $k=>$v)
+        {
+            $date['data'][$k]['dining_label'] = json_decode(
+                $date['data'][$k]['dining_label']
+            );
         }
 
         return $date;

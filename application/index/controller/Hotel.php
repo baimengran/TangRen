@@ -81,7 +81,7 @@ class Hotel extends Controller
             return json_encode($date,320);
         }
 
-        //查酒店信息表，
+        //查酒店信息表
         $hotel = Db::table('think_hotel_list')
             ->where('hotel_id',$post['hotel_id'])
             ->select();
@@ -217,7 +217,8 @@ class Hotel extends Controller
         if(!isset($post['path'])){
             $post['path'] = '';
         }else{
-            $post['path'] = implode(",", $post['path']);
+//            $post['path'] = implode(",", $post['path']);
+            $post['path'] = $post['path'];
         }
 
         //判断有无图片,有则上传

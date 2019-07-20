@@ -4,14 +4,13 @@ namespace app\admin\model;
 use think\Model;
 use think\Db;
 
-class HotelModel extends Model
+class TaxiModel extends Model
 {
-    public function select_hotel()
+    public function index()
     {
-        $date = Db::table('think_hotel_list')
+        $date = Db::table('think_taxi_list')
             ->paginate(10);
 
         return $date;
     }
-
 }

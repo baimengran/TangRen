@@ -88,7 +88,7 @@ class Personal extends Controller
         //获取用户积分
         $user = new UserModel();
         $fraction = $user->user_fraction($post['id']);
-//        print_r($fraction['integral']);die;
+
         //查询商品所用积分
         $FractionModel = new FractionModel();
         $goods_fraction = $FractionModel->select($post['goods_id']);
@@ -127,6 +127,138 @@ class Personal extends Controller
     }
 
     /**
+     * 个人中心地址删除接口
+     * 输入：用户ID 商品ID
+     * 返回：
+     */
+    public function address_del(\think\Request $request)
+    {
+        //获取参数
+        $post = $request->post();
+
+        $rule =   [
+            'address_id'=> 'require',
+
+        ];
+        $message  = [
+            'address_id.require' => '地址ID不能为空',
+
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+        //查看有无这个地址
+        $date = Db::table('think_address_phone')->find($post['address_id']);
+
+        if(!$date){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个地址'],320);
+        }
+        //删除这个用户的地址记录
+        $FractionModel = new FractionModel();
+        $res = $FractionModel->del($post);
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'删除成功','retData'=>$res],320);
+
+    }
+
+    /**
+     * 个人中心地址修改接口
+     * 输入：用户ID 商品ID
+     * 返回：
+     */
+    public function address_edit(\think\Request $request)
+    {
+        //获取参数
+        $post = $request->post();
+
+        $rule =   [
+            'address_id'=> 'require',
+            'id'        => 'require',
+            'city'      => 'require',
+            'area'      => 'require',
+            'address'   => 'require',
+            'mobile_phone' => 'require',
+        ];
+        $message  = [
+            'id.require'         => '用户ID不能为空',
+            'city.require'       => '城市不能为空',
+            'area.require'       => '区域ID不能为空',
+            'address.require'    => '具体地址不能为空',
+            'mobile_phone.require'=> '绑定电话不能为空',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+        //查看有无这个地址
+        $date = Db::table('think_address_phone')->find($post['address_id']);
+
+        if(!$date){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这条信息'],320);
+        }
+        //修改这个用户的地址记录
+        $FractionModel = new FractionModel();
+
+        if(isset($post['default_address']) && $post['default_address'] == 0){
+            //查询出默认地址的主键
+            $res= Db::table('think_address_phone')
+                ->field('address_id')
+                ->where('id',$post['id'])
+                ->where('default_address',$post['default_address'])
+                ->find();
+            //将之前状态是0的ID改为1
+            $res = Db::name('address_phone')
+                ->update([
+                    'default_address'  =>1,
+                    'address_id'    =>$res['address_id']
+                ]);
+
+            //修改新的地址为默认地址
+            $res = Db::name('address_phone')
+                ->update([
+                    'city'          =>$post['city'],
+                    'area'          =>$post['area'],
+                    'address'       =>$post['address'],
+                    'mobile_phone'  =>$post['mobile_phone'],
+                    'default_address'  =>$post['default_address'],
+                    'id'            =>$post['id'],
+                    'address_id'    =>$post['address_id']
+                ]);
+
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$res],320);
+
+        }else{
+            $post['default_address'] = 1;
+            $res = Db::name('address_phone')
+                ->update([
+                    'city'          =>$post['city'],
+                    'area'          =>$post['area'],
+                    'address'       =>$post['address'],
+                    'mobile_phone'  =>$post['mobile_phone'],
+                    'default_address'  =>$post['default_address'],
+                    'id'            =>$post['id'],
+                    'address_id'    =>$post['address_id']
+                ]);
+
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$res],320);
+
+        }
+    }
+
+    /**
      * 个人中心地址管理接口
      * 输入：用户ID 商品ID
      * 返回：
@@ -160,21 +292,23 @@ class Personal extends Controller
             // 验证失败 输出错误信息
             return json_encode($date,320);
         }
-        //判断是否有这个用户的地址记录
+        //添加用户的地址记录
         $FractionModel = new FractionModel();
-        $address = $FractionModel->select_address($post['id']);
-
-        //如果有这个记录
-        if($address){
-            //执行修改方法
-            $upaddress = $FractionModel->update_address($address['address_id'],$post);
-            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$upaddress],320);
-
-        }else{
+        if(isset($post['default_address']) && $post['default_address'] == 0){
             $create_address = $FractionModel->create_address($post);
-            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$create_address],320);
+        }else{
+            $data = [
+                'city'          =>$post['city'],
+                'area'          =>$post['area'],
+                'address'       =>$post['address'],
+                'mobile_phone'  =>$post['mobile_phone'],
+                'default_address' =>1,
+                'id'            =>$post['id']
+            ];
+            $create_address = Db::table('think_address_phone')->insert($data);
         }
 
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$create_address],320);
     }
 
     /**
@@ -232,7 +366,7 @@ class Personal extends Controller
 
         //判断用户今天是否签到过
         $sign = $FractionModel->sign($post);
-        if($sign['sign_type']  == '1' || $sign['sign_type'] == '0' ){
+        if( $sign['sign_type'] == '0' ){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'当天签过到了','retData'=>$sign],320);
         }
 

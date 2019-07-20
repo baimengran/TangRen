@@ -12,9 +12,14 @@ class Hotel extends Controller
     public function index()
     {
         $hotel= new HotelModel();
-        $list =  $hotel->select();
+        $list =  $hotel->select_hotel();
+        //统计多少条数据
+        $count = count($list);
+        $date = ['list'=>$list,'count'=>$count];
 
-        return view('hotel/index',['name'=>'list']);
+        //将数据传至页面
+        $this->assign('list',$date);
+        return $this->fetch();
     }
 
     //添加酒店接口

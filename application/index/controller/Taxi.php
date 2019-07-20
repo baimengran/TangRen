@@ -217,7 +217,8 @@ class Taxi extends Controller
         if(!isset($post['path'])){
             $post['path'] = '';
         }else{
-            $post['path'] = implode(",", $post['path']);
+//            $post['path'] = implode(",", $post['path']);
+            $post['path'] = $post['path'];
         }
 
         //判断有无图片,有则上传
