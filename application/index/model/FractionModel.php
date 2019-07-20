@@ -43,6 +43,23 @@ class FractionModel extends Model
         $res = Db::table('date_goods_order')->insert($data);
         return $res;
     }
+    /**
+     * 查询订单信息接口
+     * 输入：用户ID 商品ID
+     * 返回：购买成功状态
+     */
+    public function order($post)
+    {
+        $date = Db::table('think_goods_order')->alias('a')
+            ->join('think_goods_fraction b','a.goods_id=b.goods_id')
+            ->join('think_member c','a.id=c.id')
+            ->field('b.goods_id,b.goods_name,b.goods_img,b.goods_fraction,c.nickname,c.head_img,a.order_time')
+            ->order('a.order_time desc')
+            ->paginate(25);
+
+        return $date;
+    }
+
 
     /**
      * 查询地址接口

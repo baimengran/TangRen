@@ -127,6 +127,40 @@ class Personal extends Controller
     }
 
     /**
+     * 个人中心查看订单接口
+     * 输入：用户ID 商品ID
+     * 返回：购买成功状态
+     */
+    public function order(\think\Request $request)
+    {
+        //接收参数
+        $post = $request->post();
+
+        $rule =   [
+            'id'              => 'require',
+        ];
+        $message  = [
+            'id.require'      => '用户ID不能为空',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
+        //查询商品订单接口
+        $FractionModel = new FractionModel();
+        $date = $FractionModel->order($post);
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'订单查询成功','retData'=>$date],320);
+    }
+
+    /**
      * 个人中心地址删除接口
      * 输入：用户ID 商品ID
      * 返回：

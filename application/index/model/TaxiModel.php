@@ -76,6 +76,15 @@ class TaxiModel extends Model
             return $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'这个区域下没有汽车'];
         }
 
+        $date = json_decode(json_encode($date,320),true);
+
+        foreach($date['data'] as $k=>$v)
+        {
+            $date['data'][$k]['taxi_label'] = json_decode(
+                $date['data'][$k]['taxi_label']
+            );
+        }
+
         return $date;
     }
 
