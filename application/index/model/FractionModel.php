@@ -85,17 +85,47 @@ class FractionModel extends Model
      */
     public function create_address($post)
     {
-        $data = [
+        $this->upaddress($post);
+
+            $data = [
                 'city'          =>$post['city'],
                 'area'          =>$post['area'],
                 'address'       =>$post['address'],
                 'mobile_phone'  =>$post['mobile_phone'],
+                'default_address' =>$post['default_address'],
                 'id'            =>$post['id']
-        ];
+            ];
+            $address = Db::table('think_address_phone')->insert($data);
+            return $address;
+    }
 
-        $address = Db::table('think_address_phone')->insert($data);
+    //create_address调用
+    public function upaddress($post)
+    {
+        $address_id = Db::table('think_address_phone')
+            ->field('address_id')
+            ->where('id',$post['id'])
+            ->where('default_address',0)
+            ->find();
 
-        return $address;
+        $res = Db::name('address_phone')
+            ->update([
+                'default_address' =>1,
+                'address_id'   =>$address_id['address_id']
+            ]);
+
+    }
+
+    /**
+     * 删除地址接口
+     * 输入：用户ID
+     * 返回：是否有地址
+     */
+    public function del($post)
+    {
+        $res=Db::table('think_address_phone')->where('address_id',$post['address_id'])->delete();
+
+        return $res;
     }
 
     /**
@@ -223,7 +253,7 @@ class FractionModel extends Model
             $date = Db::table('think_user_task')
                 ->where('id',$post['id'])
                 ->find();
-            print_r($date);die;
+
             $date = Db::table('think_user_task')
                 ->update([
                     'share'      =>$share_date,

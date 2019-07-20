@@ -124,6 +124,8 @@ class Dining extends Controller
 
         $date = ['elect'=>$elect,'dining'=>$dining];
 
+//        die(json_encode($dining,320));
+
         //将数据返回出去
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'美食首页信息查询成功','retData'=>$date],320);
 
@@ -173,16 +175,21 @@ class Dining extends Controller
             ->where('dining_status',0)
             ->select();
 
+
         $dining['0']['images'] = $images;
 
-        //查询评论信息和用户头像,昵称(只显示5条)
+        //查询评论信息和用户头像,昵称
         $user_comment = Db::table('think_dining_user')->alias('a')
-            ->where('dining_id',$post['dining_id'])
-            ->join('think_member b','a.id=b.id')
-            ->field('a.dining_user_id,a.comment_time,a.comment_content,a.comment_images,a.comment_all,b.nickname,b.head_img')
-            ->order('comment_time desc')
-            ->limit(5)
-            ->select();
+            ->join('think_member b','a.id=b.id','LEFT')
+            ->field('a.dining_user_id,a.comment_time,a.comment_content,' .
+                'a.comment_images,a.comment_all,b.nickname,b.head_img')
+            ->where('a.dining_id',$post['dining_id'])
+            ->order('a.comment_time desc')
+            ->paginate(25);
+//        $user_comment = Db::table('think_dining_user')->alias('a')
+//            ->join('think_member b','a.id=b.id')
+//            ->field('b.user_id,b.nickname,b.sex,b.country,b.city,b.province,b.user_img,a.user_token,a.openid,a.login_time')
+//            ->select();
 
         $date[] = ['dining'=>$dining,'user_comment'=>$user_comment];
 
@@ -242,7 +249,8 @@ class Dining extends Controller
         if(!isset($post['path'])){
             $post['path'] = '';
         }else{
-            $post['path'] = implode(",", $post['path']);
+//            $post['path'] = implode(",", $post['path']);
+            $post['path'] = $post['path'];
         }
 
         //判断有无图片,有则上传
@@ -285,4 +293,5 @@ class Dining extends Controller
         //将数据返回出去
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'评论成功','retData'=>$date],320);
     }
+
 }

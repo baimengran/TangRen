@@ -41,6 +41,8 @@ Route::rule('index/dining/index','index/Dining/index');
 Route::rule('index/dining/details','index/Dining/details');
 //用户评论美食评论接口
 Route::rule('index/dining/comment','index/Dining/comment');
+//用户评论美食评论接口
+Route::get('index/dining/viewcomm','index/Dining/viewcomm');
 
 
 //个人中心首页接口
