@@ -17,7 +17,11 @@ class UploadImage
 {
     public function upload()
     {
-
+        $data = [
+            'a'=>'b',
+            'c'=>'d',
+        ];
+//        return json($data);
         //验证登录状态
 //        if (!getUserId()) {
 //            throw new BannerMissException([
@@ -31,20 +35,30 @@ class UploadImage
             //图片上传处理
             if (is_array($uploads = uploadImage($files, ''))) {
                 foreach ($uploads as $value) {
-                    $path = ['path' => $value];
+                    $path = ['path' => $value,];
                 }
-                return jsone('上传成功', 200, $path);
+
+//                return 'www.tangren.com'.$uploads[0];
+                return str_replace('"','',$uploads[0]);
+//                return jsone('上传成功', 200, $uploads);
             } else {
-                throw new BannerMissException([
-                    'code' => 422,
-                    'ertips' => $uploads,
-                ]);
+                return null;
+//                throw new BannerMissException([
+//                    'code' => 422,
+//                    'ertips' => $uploads,
+//                ]);
             }
         } else {
-            throw new BannerMissException([
-                'code' => 422,
-                'ertips' => '请选择图片上传',
-            ]);
+            return null;
+//            throw new BannerMissException([
+//                'code' => 422,
+//                'ertips' => '请选择图片上传',
+//            ]);
         }
+//        $data = [
+//            'path'=>333,
+//            'paths'=>332,
+//        ];
+//        return json($data);
     }
 }

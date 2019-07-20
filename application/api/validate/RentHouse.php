@@ -20,7 +20,7 @@ class RentHouse extends Validate
         'region_id' => 'require|number|regionId',
         'body' => 'require|min:5|max:550',
         'price' => 'require|number',
-        'sticky_num' => 'number',
+        'sticky_id' => 'require|number',
         'phone' => 'require',
     ];
 
@@ -36,7 +36,8 @@ class RentHouse extends Validate
         'body.max' => '房屋信息不能大于550个字',
         'price.require' => '价格必须填写',
         'price.number' => '价格填写错误',
-        'sticky_num.number' => '置顶状态错误',
+        'sticky_id.require' => '置顶状态错误',
+        'sticky_id.number' => '置顶状态错误',
         'phone.require' => '电话必须填写',
     ];
 

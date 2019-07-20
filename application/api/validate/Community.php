@@ -19,7 +19,7 @@ class Community extends Validate
         'topic_id' => 'require|number|topicId',
         'user_id' => 'require|number|userId',
         'body' => 'require|max:550|min:5',
-        'sticky_num' => 'number',
+        'sticky_id' => 'require|number',
 
     ];
 
@@ -33,7 +33,8 @@ class Community extends Validate
         'body.require' => '内容必须填写',
         'body.min' => '内容最小不能低于5个字',
         'body.max' => '内容最大不能超过550个字',
-        'sticky_num.number' => '置顶填写错误',
+        'sticky_id.require' => '置顶填写错误',
+        'sticky_id.number' => '置顶填写错误',
 
     ];
 

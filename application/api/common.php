@@ -12,8 +12,8 @@ use think\Request;
 
 function getUserId()
 {
-    $token = request()->post('authorization');
-    Log::error('auth',$token);
+    $token = input('authorization');
+
     if ($token) {
         $member = MemberModel::where('token', 'eq', $token)->field('id')->find();
         return $member['id'] ?: false;

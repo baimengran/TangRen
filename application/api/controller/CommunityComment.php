@@ -20,14 +20,8 @@ class CommunityComment
 {
     public function index()
     {
-        if (!Request::instance()->isGet()) {
-            throw new BannerMissException([
-                'code' => 405,
-                'ertips' => '请求错误',
-            ]);
-        }
 
-        if (!$id = request()->get('community_id')) {
+        if (!$id = input('community_id')) {
             throw new BannerMissException([
                 'code' => 400,
                 'ertips' => '缺少必要参数',
@@ -63,7 +57,7 @@ class CommunityComment
     public function save()
     {
 
-        $data = request()->post();
+        $data = input();
         //获取登录用户ID
         if (!$id = getUserId()) {
             throw new BannerMissException([
@@ -88,18 +82,18 @@ class CommunityComment
             ]);
 
             //保存图片
-            if (array_key_exists('path', $data)) {
-                $path = [];
-                foreach ($data['path'] as $value) {
-                    $value ? $path[]['path'] = $value : null;
-                }
-                count($path) ? $communityComment->commentImage()->saveAll($path) : null;
+            $path = explode(',', $data['path']);
+            $data = [];
+            foreach ($path as $k => $value) {
+                $data[$k]['path'] = $value;
+            }
+
+            if (count($data)) {
+                $communityComment->commentImage()->saveAll($data);
             }
 
             $review = $communityComment->community()->find($communityComment['community_id']);
-
             Db::name('community')->where('id', 'eq', $review->id)->update(['review' => $review->review + 1]);
-
             $data = $communityComment::with('commentImage,user,community')->find($communityComment->id);
         } catch (Exception $e) {
             throw new BannerMissException();

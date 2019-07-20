@@ -19,25 +19,34 @@ class Coupon
     public function discovery()
     {
 
-        //获取登录用户ID
-        if (!$id = getUserId()) {
-            throw new BannerMissException([
-                'code' => 401,
-                'ertips' => '用户认证失败',
-            ]);
-        }
 
         try {
             $data = [];
-            $coupon = CouponModel::all();
-//            foreach($coupons as $coupon){
-//                $data[]=$coupon;
-//                if($coupon['activity_end_time']>=$coupon['activity_create_time']){
-//                    $data[]['expire']=''
-//                }
-//            }
+            $coupons = CouponModel::where('expire', 'eq', '0')->select();
 
-            return jsone('查询成功', 200, $coupon);
+            //优惠卷过期
+            foreach ($coupons as $coupon) {
+                if ($coupon['activity_end_time'] <= time()) {
+                    $coupon->save(['expire' => 1]);
+                }
+            }
+            $coupons = CouponModel::all();
+            foreach ($coupons as $k => $coupon) {
+                $data[$k]['id'] = $coupon['id'];
+                $data[$k]['title'] = $coupon['title'];
+                $data[$k]['money'] = $coupon['money'];
+                $data[$k]['description'] = $coupon['description'];
+                $data[$k]['shop_name'] = $coupon['shop_name'];
+                $data[$k]['address'] = $coupon['address'];
+                $data[$k]['status'] = $coupon['status'];
+                $data[$k]['activity_create_time'] = date('Y.m.d', $coupon['activity_create_time']);
+                $data[$k]['activity_end_time'] = date('Y.m.d', $coupon['activity_end_time']);
+                $data[$k]['expire'] = $coupon['expire'];
+                $data[$k]['create_time'] = $coupon['create_time'];
+                $data[$k]['update_time'] = $coupon['update_time'];
+            }
+
+            return jsone('查询成功', 200, $data);
         } catch (Exception $e) {
             throw new BannerMissException();
         }

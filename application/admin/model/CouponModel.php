@@ -25,13 +25,13 @@ class CouponModel extends Model
         }
     }
 
-    public function getActivityCreateTimeAttr($value)
-    {
-        return date('yy年m月d天');
-    }
-
-    public function getActivityEndTimeAttr($value)
-    {
-        return date('yy年m月d天');
-    }
+//    public function getActivityCreateTimeAttr($value)
+//    {
+//        return date('Y.m.d',$value);
+//    }
+//
+//    public function getActivityEndTimeAttr($value)
+//    {
+//        return date('Y.m.d',$value);
+//    }
 }

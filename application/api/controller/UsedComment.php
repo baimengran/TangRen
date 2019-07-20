@@ -18,6 +18,7 @@ use think\exception\HttpException;
 use think\exception\HttpResponseException;
 use think\Log;
 use think\Request;
+use app\admin\model\MemberModel;
 
 class UsedComment
 {
@@ -29,14 +30,7 @@ class UsedComment
     public function index()
     {
 
-        if (!Request::instance()->isGet()) {
-            throw new BannerMissException([
-                'code' => 405,
-                'ertips' => '请求错误',
-            ]);
-
-        }
-        if (!$id = request()->get('used_id')) {
+        if (!$id = input('used_id')) {
             throw new BannerMissException([
                 'code' => 400,
                 'ertips' => '缺少必要参数',
@@ -73,7 +67,7 @@ class UsedComment
      */
     public function save()
     {
-        $data = request()->post();
+        $data = input();
         //获取登录用户ID
         if (!$id = getUserId()) {
             throw new BannerMissException([
@@ -97,15 +91,16 @@ class UsedComment
             $usedComment->body = $data['body'];
             $usedComment->save();
 
-            //保存图片
-            if (array_key_exists('path', $data)) {
-                $path = [];
-                foreach ($data['path'] as $value) {
-                    $value ? $path[]['path'] = $value : null;
-                }
-                count($path) ? $usedComment->commentImage()->saveAll($path) : null;
+            $path = explode(',', $data['path']);
+            $data = [];
+            foreach ($path as $k => $value) {
+                $data[$k]['path'] = $value;
             }
+            //保存图片
 
+            if (count($data)) {
+                $usedComment->commentImage()->saveAll($data);
+            }
             $review = $usedComment->used()->find($usedComment['used_id']);
             Db::name('used_product')->where('id', 'eq', $review->id)->update(['review' => $review->review + 1]);
             $data = $usedComment::with('commentImage,user,used')->find($usedComment->id);

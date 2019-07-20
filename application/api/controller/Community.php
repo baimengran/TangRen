@@ -10,7 +10,10 @@ namespace app\api\controller;
 
 
 use app\admin\model\CommunityModel;
+use app\admin\model\MemberCollectModel;
 use app\admin\model\MemberModel;
+use app\admin\model\MemberPraiseModel;
+use app\admin\model\UserTaskModel;
 use app\api\exception\BannerMissException;
 use think\Db;
 use think\Exception;
@@ -25,20 +28,16 @@ class Community
      */
     public function index()
     {
-        if (!Request::instance()->isGet()) {
-            throw new BannerMissException([
-                'code' => 405,
-                'ertips' => '请求错误',
-            ]);
+        if (!$search = input('search')) {
+            if (!$order = input('order')) {
+                throw new BannerMissException([
+                    'code' => 400,
+                    'ertips' => '缺少必要参数',
+                ]);
+            }
         }
 
-        if (!$order = request()->get('order')) {
-            throw new BannerMissException([
-                'code' => 400,
-                'ertips' => '缺少必要参数',
-            ]);
-        }
-        $topic = request()->get('topic_id');
+        $topic = input('topic_id');
 //        if($topic = request()->get('topic_id')){
 //            throw new BannerMissException([
 //                'code'=>400,
@@ -47,7 +46,7 @@ class Community
 //        }
         try {
             $community = new CommunityModel();
-            if ($search = request()->get('search')) {
+            if ($search) {
                 $community->where('body', 'like', '%' . $search . '%');
             } else {
                 //$community = $community->where('topic_id', 'eq', $topic);
@@ -75,6 +74,43 @@ class Community
                 $usedImage = Db::name('community_file')->where('community_id', 'in', $val['id'])->select();
                 $topic = Db::name('topic_cate')->where('id', 'eq', $val['topic_id'])->select();
 
+                //获取点赞数据
+                $praise = Db::name('member_praise')->where('user_id','eq',getUserId())
+                    ->where('module_id','eq',$val['id'])
+                    ->where('module_type','eq','community')
+                    ->find();
+//                return $praise;
+                //获取收藏数据
+                $collect = Db::name('member_collect')->where('user_id','eq',getUserId())
+                    ->where('module_id','eq',$val['id'])
+                    ->where('module_type','eq','community')
+                    ->find();
+//                $data[]=$community;
+                if(!$praise){
+                    //如果是空，证明没点攒
+                    $praise=1;
+                }else{
+                    //如果存在，证明以软删除点赞
+                    if($praise['delete_time']){
+                        $praise=1;
+                    }else{
+                        $praise=0;
+                    }
+                }
+                if(!$collect){
+                    //如果是空，证明没点攒
+                    $collect=1;
+                }else{
+                    //如果存在，证明以软删除点赞
+                    if($collect['delete_time']){
+                        $collect=1;
+                    }else{
+                        $collect=0;
+                    }
+                }
+                $val['user_praise']=$praise;
+                $val['user_collect']=$collect;
+
                 $val['region'] = $topic[0];
                 $val['user'] = $member[0];
                 $val['community_file'] = $usedImage;
@@ -94,7 +130,7 @@ class Community
     public function save()
     {
 
-        $data = request()->post();
+        $data = input();
 
         //获取用户ID
         if (!$id = getUserId()) {
@@ -111,11 +147,28 @@ class Community
                 'ertips' => $validate->getError(),
             ]);
         }
+        $sticky = Db::name('sticky')->where('id', $data['sticky_id'])->find();
         //确定置顶状态，计算置顶结束日期
-        if ($day = input('post.sticky_num')) {
-            $sticky_create_time = time();
-            $sticky_end_time = $sticky_create_time + $day * 24 * 3600;
+        if ($sticky) {
+            //查询积分
+            $integral = MemberModel::where('id', $id)->find();
+            if ($integral['integral'] - $sticky['integral'] >= 0) {
+                $integral->update([
+                    'integral' => $integral['integral'] - $sticky['integral']
+                ], ['id' => $id]);
+
+            } else {
+                throw new BannerMissException([
+                    'code'=>422,
+                    'ertips'=>'积分不足'
+                ]);
+            }
+            if ($day = $sticky['day_num']) {
+                $sticky_create_time = time();
+                $sticky_end_time = $sticky_create_time + $day * 24 * 3600;
+            }
         } else {
+
             $sticky_create_time = 0;
             $sticky_end_time = 0;
         }
@@ -126,17 +179,22 @@ class Community
             $community->topic_id = input('post.topic_id');
             $community->sticky_create_time = $sticky_create_time;
             $community->sticky_end_time = $sticky_end_time;
-            $community->sticky_status = $day ? 0 : 1;
+            $community->sticky_status = $data['sticky_id'] ? 0 : 1;
             $community->status = 0;
             $community->save();
+
             //保存图片
-            if (array_key_exists('path', $data)) {
-                $path = [];
-                foreach ($data['path'] as $value) {
-                    $value ? $path[]['path'] = $value : null;
-                }
-                count($path) ? $community->communityFile()->saveAll($path) : null;
+            $path = explode(',', $data['path']);
+            $data = [];
+            foreach ($path as $k => $value) {
+                $data[$k]['path'] = $value;
             }
+
+            if (count($data)) {
+                $community->communityFile()->saveAll($data);
+            }
+
+//
             $data = $community->with('user,communityFile,topic')->select($community->id);
         } catch (Exception $e) {
             throw new BannerMissException();
@@ -150,14 +208,7 @@ class Community
      */
     public function show()
     {
-        if (!Request::instance()->isGet()) {
-            throw new BannerMissException([
-                'code' => 405,
-                'ertips' => '请求错误',
-            ]);
-        }
-
-        if (!$id = request()->get('community_id')) {
+        if (!$id = input('community_id')) {
             throw new BannerMissException([
                 'code' => 400,
                 'ertips' => '缺少必要参数',
@@ -165,12 +216,51 @@ class Community
         }
         try {
             $community = CommunityModel::with('communityFile,user,topic')->find($id);
+            //获取点赞数据
+            $praise = Db::name('member_praise')->where('user_id','eq',getUserId())
+                ->where('module_id','eq',$community['id'])
+                ->where('module_type','eq','community')
+                ->find();
+
+            //获取收藏数据
+            $collect = Db::name('member_collect')->where('user_id','eq',getUserId())
+                ->where('module_id','eq',$community->id)
+                ->where('module_type','eq','community')
+                ->find();
+
+            if(!$praise){
+                //如果是空，证明没点攒
+                $praise=1;
+            }else{
+                //如果存在，证明以软删除点赞
+                if($praise['delete_time']){
+                    $praise=1;
+                }else{
+                    $praise=0;
+                }
+            }
+            if(!$collect){
+                //如果是空，证明没点攒
+                $collect=1;
+            }else{
+                //如果存在，证明以软删除点赞
+                if($collect['delete_time']){
+                    $collect=1;
+                }else{
+                    $collect=0;
+                }
+            }
+
+            $data=$community->toArray();
+            $data['user_praise']=$praise;
+            $data['user_collect']=$collect;
+            //增加浏览量
             $community->browse = $community['browse'] + 1;
             $community->save();
         } catch (Exception $e) {
             throw new BannerMissException();
         }
-        return jsone('查询成功', 200, $community);
+        return jsone('查询成功', 200, $data);
     }
 
     /**
@@ -179,13 +269,8 @@ class Community
      */
     public function praise()
     {
-        //获取登录用户ID
-        if (!Request::instance()->isGet()) {
-            throw new BannerMissException([
-                'code' => 405,
-                'ertips' => '请求错误'
-            ]);
-        }
+
+        
         //获取登录用户ID
         if (!$id = getUserId()) {
             throw new BannerMissException([
@@ -194,7 +279,7 @@ class Community
             ]);
         }
 
-        if (!$community_id = request()->get('community_id')) {
+        if (!$community_id = input('community_id')) {
             throw new BannerMissException([
                 'code' => 400,
                 'ertips' => '缺少必要参数'
@@ -243,14 +328,6 @@ class Community
      */
     public function collect()
     {
-
-        //获取登录用户ID
-        if (!Request::instance()->isGet()) {
-            throw new BannerMissException([
-                'code' => 405,
-                'ertips' => '请求错误'
-            ]);
-        }
         //获取登录用户ID
         if (!$id = getUserId()) {
             throw new BannerMissException([
@@ -259,7 +336,33 @@ class Community
             ]);
         }
 
-        if (!$community_id = request()->get('community_id')) {
+        //判断 用户id 添加时间 状态0
+        //增加状态
+        //查询当前用户是否有签到状态
+        $task = Db::name('user_task')->where('id', 'eq', $id)->find();
+        if (!$task) {
+            $data = [
+                'id' => $id,
+                'collect' => date('Ymd'),
+                'collect_type' => 0,
+            ];
+            //没有当前用户签到数据，新增一条
+            Db::name('user_task')->insert($data);
+            //并加积分
+            $integral = MemberModel::where('id', 'eq', $id)->find();
+            $integral->update(['integral' => $integral['integral'] + 5],['id'=>$integral['id']]);
+        } else {
+            if($task['collect']){
+
+            }
+        }
+
+
+
+
+
+
+        if (!$community_id = input('community_id')) {
             throw new BannerMissException([
                 'code' => 400,
                 'ertips' => '缺少必要参数'
@@ -270,61 +373,42 @@ class Community
         $community = new CommunityModel();
         $db = $community->db(false);
         $db->startTrans();
-        try {
-            $community = $community->get($community_id);
+//        try {
+        $community = $community->get($community_id);
 
-            $collect = Db::name('member_collect')
-                ->where('module_id', 'eq', $community->id)
-                ->where('module_type', 'community')
-                ->where('user_id', 'eq', $id)
-                ->find();
-            //判断是否有点赞数据
-            if ($collect) {
-                //判断点赞数据是否软删除
-                if ($collect['delete_time']) {
-                    //将软删除恢复
-                    Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => null]);
-                    $community->collect = $community['collect'] + 1;
-                    $explain = '收藏成功';
-                } else {
-                    //软删除点赞
-                    Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => time()]);
-                    $community->collect = $community['collect'] - 1;
-                    $explain = '以取消收藏';
-                }
-
-            } else {
-                $user_id = 1;
-                $community->membercollect()->save(['user_id' => $id, 'module_id' => $community->id]);
+        $collect = Db::name('member_collect')
+            ->where('module_id', 'eq', $community->id)
+            ->where('module_type', 'community')
+            ->where('user_id', 'eq', $id)
+            ->find();
+        //判断是否有点赞数据
+        if ($collect) {
+            //判断点赞数据是否软删除
+            if ($collect['delete_time']) {
+                //将软删除恢复
+                Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => null]);
                 $community->collect = $community['collect'] + 1;
                 $explain = '收藏成功';
+            } else {
+                //软删除点赞
+                Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => time()]);
+                $community->collect = $community['collect'] - 1;
+                $explain = '以取消收藏';
             }
 
-            $community->save();
-            //判断 用户id 添加时间 状态0
-            //增加状态
-//        $task_id = Db::name('user_task')->where('id', 'eq', $id)->field('task_id')->find();
-
-//        if (!$task_id) {
-//        $data = [
-//            'id' => $id,
-//             'collect' => date('ymd'),
-//            'collect_type' => 0,
-//        ];
-//           Db::name('user_task')->insert($data);
-//           return view();
-//            $integral = MemberModel::where('id', 'eq', $id)->field('integral')->find();
-//            $integral->update(['integral' => $integral['integral'] + 5]);
-//            return $integral;
-//        } else {
-//
-//        }
-            //增加积分
-            return jsone($explain, 200);
-        } catch (Exception $e) {
-            $db->rollback();
-            throw new BannerMissException();
+        } else {
+            $community->membercollect()->save(['user_id' => $id, 'module_id' => $community->id]);
+            $community->collect = $community['collect'] + 1;
+            $explain = '收藏成功';
         }
+
+        $community->save();
+
+        return jsone($explain, 200);
+//        } catch (Exception $e) {
+//            $db->rollback();
+//            throw new BannerMissException();
+//        }
     }
 
 }

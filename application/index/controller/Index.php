@@ -5,8 +5,6 @@ class Index
 {
     public function index()
     {
-        //return ROOT_PATH;
-        return$_SERVER['SERVER_NAME'];
         return view();
     }
 	

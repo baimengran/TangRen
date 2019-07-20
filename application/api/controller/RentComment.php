@@ -26,14 +26,8 @@ class RentComment
      */
     public function index()
     {
-        if (!Request::instance()->isGet()) {
-            throw new BannerMissException([
-                'code' => 405,
-                'ertips' => '请求错误',
-            ]);
-        }
 
-        if (!$id = request()->get('rent_id')) {
+        if (!$id = input('rent_id')) {
             throw new BannerMissException([
                 'code' => 400,
                 'ertips' => '缺少必要参数',
@@ -77,7 +71,7 @@ class RentComment
                 'ertips' => '用户认证失败'
             ]);
         }
-        $data = request()->post();
+        $data = input();
         $data['user_id'] = $id;
 
         $validate = validate('RentComment');
@@ -96,12 +90,13 @@ class RentComment
             $rentComment->save();
 
             //保存图片
-            if (array_key_exists('path', $data)) {
-                $path = [];
-                foreach ($data['path'] as $value) {
-                    $value ? $path[]['path'] = $value : null;
-                }
-                count($path) ? $rentComment->commentImage()->saveAll($path) : null;
+            $path = explode(',', $data['path']);
+            $data = [];
+            foreach ($path as $k => $value) {
+                $data[$k]['path'] = $value;
+            }
+            if (count($data)) {
+                $rentComment->commentImage()->saveAll($data) ;
             }
 
             $review = $rentComment->rent()->find($rentComment['rent_id']);
