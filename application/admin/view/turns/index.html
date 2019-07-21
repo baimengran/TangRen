@@ -45,7 +45,7 @@
                             {volist name="list['list']" id="vo"}
                             <tr class="long-td">
                                 <td>{$vo.turns_id}</td>
-                                <td>{$vo.turns_img}</td>
+                                <td><img width="100" src="/uploads/images/{$vo.turns_img}"  /></td>
                                 <!--<td>{$vo.turns_url}</td>-->
                                 <td>{$vo.turns_class}</td>
                                 <!--<td>-->
@@ -69,9 +69,10 @@
                             {/volist}
                         <tbody id="list-content"></tbody>
                     </table>
+                    {$list.list->render()}
                     <div id="AjaxPage" style="text-align:right;"></div>
                     <div style="text-align: right;">
-                        共x条数据，<span ></span>
+                        共{$list.count}条数据，<span ></span>
                     </div>
                 </div>
             </div>
@@ -105,7 +106,7 @@
 
     //编辑文章
     function edit_article(id){
-        location.href = './edit_article/id/'+id+'.html';
+        location.href = './edit_turns/id/'+id+'.html';
     }
 
     //删除文章

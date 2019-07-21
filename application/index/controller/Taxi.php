@@ -139,7 +139,7 @@ class Taxi extends Controller
         $user_comment = Db::table('think_taxi_user')->alias('a')
             ->where('taxi_id',$post['taxi_id'])
             ->join('think_member b','a.id=b.id')
-            ->field('a.taxi_user_id,b.nickname,b.head_img,a.comment_sati,a.comment_time,a.comment_content,a.comment_images,a.comment_all')
+            ->field('a.taxi_user_id,b.nickname,b.head_img,a.comment_sati,a.comment_time,a.comment_content,a.comment_images,a.comment_all,a.comment_sati')
             ->order('a.comment_time desc')
             ->paginate(10);
 

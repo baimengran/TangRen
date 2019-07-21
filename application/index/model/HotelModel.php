@@ -162,8 +162,11 @@ class HotelModel extends Model
      * update_comment()
      * 更新酒店评分信息
      */
-    public function update_comment($hitel_id,$hotel_hygiene,$hotel_ambient,$hotel_service,$hotel_all)
+    public function update_comment($hitel_id,$hotel_hygiene,$hotel_ambient,$hotel_service)
     {
+        //计算出酒店综合评分
+        $zong = $hotel_hygiene + $hotel_ambient + $hotel_service;
+        $hotel_all = $zong / 3;
         //查询出酒店评论表所有的酒店评分
         $res = Db::name('hotel_list')
             ->update([
