@@ -72,7 +72,7 @@ class Dining extends Controller
                     'a.comment_images,a.comment_all,b.nickname,b.head_img')
                 ->where('a.dining_id',$post['model_id'])
                 ->order('a.comment_time desc')
-                ->paginate(3);
+                ->paginate(10);
             //如果查询的是叫车
         }else if($post['model_type'] == 1){
 
