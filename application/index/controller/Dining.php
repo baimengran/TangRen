@@ -16,11 +16,10 @@ class Dining extends Controller
      */
     public function homeelect(\think\Request $request)
     {
-
         //查询出所有推荐美食
         $date = Db::table('think_dining_list')
             ->field('dining_id,dining_logo,dining_name,dining_all')
-            ->where('dining_status',0)
+            ->where('dining_home',0)
             ->limit(4)
             ->select();
 
@@ -33,8 +32,7 @@ class Dining extends Controller
      */
     public function selectcomm(\think\Request $request)
     {
-        $post = $request->post();
-
+        $post = $request->get();
         $rule =   [
             'model_type' => 'require|number',
             'model_id' => 'require|number',
@@ -55,12 +53,16 @@ class Dining extends Controller
             // 验证失败 输出错误信息
             return json_encode($date,320);
         }
+        if($post['model_id'] == 0){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'ID不能是0','retData'=>$post['model_id']],320);
+        }
 
         //判断是否小于3
         if($post['model_type'] > 2){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'类型不能大于2','retData'=>$post['model_type']],320);
         }
 
+        //如果查询的是美食
         if($post['model_type'] == 0){
             $date = Db::table('think_dining_user')->alias('a')
                 ->join('think_member b','a.id=b.id','LEFT')
@@ -69,13 +71,17 @@ class Dining extends Controller
                 ->where('a.dining_id',$post['model_id'])
                 ->order('a.comment_time desc')
                 ->paginate(10);
+            //如果查询的是叫车
         }else if($post['model_type'] == 1){
+
             $date = Db::table('think_taxi_user')->alias('a')
                 ->where('taxi_id',$post['model_id'])
                 ->join('think_member b','a.id=b.id')
-                ->field('a.taxi_user_id,b.nickname,b.head_img,a.comment_time,a.comment_content,a.comment_images,a.comment_all')
+                ->field('a.taxi_user_id,b.nickname,b.head_img,a.comment_sati,a.comment_time,a.comment_content,a.comment_images,a.comment_all')
                 ->order('a.comment_time desc')
                 ->paginate(10);
+
+            //如果查询的是酒店
         }else if($post['model_type'] == 2){
             $date = Db::table('think_hotel_user')->alias('a')
                 ->where('hotel_id',$post['model_id'])
@@ -86,6 +92,7 @@ class Dining extends Controller
         }
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
+
     }
 
     /**
@@ -250,7 +257,7 @@ class Dining extends Controller
         $user_comment = Db::table('think_dining_user')->alias('a')
             ->join('think_member b','a.id=b.id','LEFT')
             ->field('a.dining_user_id,a.comment_time,a.comment_content,' .
-                'a.comment_images,a.comment_all,b.nickname,b.head_img')
+                'a.comment_images,a.comment_all,a.comment_sati,b.nickname,b.head_img')
             ->where('a.dining_id',$post['dining_id'])
             ->order('a.comment_time desc')
             ->paginate(10);
@@ -278,6 +285,7 @@ class Dining extends Controller
             'comment_service'           => 'require|number',
             'comment_hygiene'           => 'require|number',
             'comment_taste'             => 'require|number',
+            'comment_sati'              => 'require|number',
         ];
         $message  = [
             'dining_id.require'         => '餐厅ID不能为空',
@@ -292,6 +300,8 @@ class Dining extends Controller
             'comment_taste.number'      => '味道评分类型错误',
             'comment_hygiene.require'   => '卫生评分不能为空',
             'comment_hygiene.number'    => '卫生评分类型错误',
+            'comment_sati.require'      => '满意度不能为空',
+            'comment_sati.number'       => '满意度类型错误',
         ];
 
         //实例化验证器
@@ -350,8 +360,8 @@ class Dining extends Controller
 
         //获取综合评分(平均值)
         $dining_all = $DiningcommentModel->select_comment($post['dining_id']);
-//        die;
-        //修改汽车公司列表的评分
+
+        //修改美食列表的评分
         $res = $DiningcommentModel->update_comment($post['dining_id'],$dining_taste,$dining_hygiene,$dining_service,$dining_all);
 
         //将数据返回出去
