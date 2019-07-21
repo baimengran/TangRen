@@ -89,15 +89,22 @@ class Personal extends Controller
         //获取用户积分
         $user = new UserModel();
         $fraction = $user->user_fraction($post['id']);
-
+        if(!$fraction){
+            return $err = json_encode(['errCode'=>'1','msg'=>'eerror','ertips'=>'没有这个用户'],320);
+        }
         //查询商品所用积分
         $FractionModel = new FractionModel();
         $goods_fraction = $FractionModel->select($post['goods_id']);
 
+        if(!$goods_fraction){
+            return $err = json_encode(['errCode'=>'1','msg'=>'eerror','ertips'=>'没有这个商品'],320);
+        }
+
         //判断是否足够购买
-        if($fraction < $goods_fraction){
+        if($fraction['integral'] < $goods_fraction['goods_fraction']){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'积分不足'],320);
         }
+
         //购买积分商品逻辑，减少用户积分
         $newfraction = $fraction['integral'] - $goods_fraction['goods_fraction'];
 
