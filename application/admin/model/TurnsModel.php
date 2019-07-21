@@ -6,10 +6,27 @@ use think\Db;
 
 class TurnsModel extends Model
 {
-    public function select()
+    public function count()
     {
         //查询出轮播图信息
-        $turns = Db::table('think_turns_list')->select();
+        $turns = Db::table('think_turns_list')->where('turns_status',0)->count();
+
+        return $turns;
+    }
+    public function find($id)
+    {
+        $where['turns_status'] = 0;
+        $where['turns_id'] = $id;
+        //查询出轮播图信息
+        $turns = Db::table('think_turns_list')->where($where)->find();
+
+        return $turns;
+    }
+
+    public function paginate($page)
+    {
+        //查询出轮播图信息
+        $turns = Db::table('think_turns_list')->where('turns_status',0)->paginate($page);
 
         return $turns;
     }

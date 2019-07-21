@@ -133,7 +133,7 @@ class Hotel extends Controller
         $user_comment = Db::table('think_hotel_user')->alias('a')
             ->join('think_member b','a.id=b.id')
             ->where('hotel_id',$post['hotel_id'])
-            ->field('a.hotel_user_id,b.nickname,b.head_img,a.comment_time,a.comment_sati,a.comment_content,a.images,a.comment_all')
+            ->field('a.hotel_user_id,b.nickname,b.head_img,a.comment_time,a.comment_sati,a.comment_content,a.images,a.comment_all,a.comment_sati')
             ->order('a.comment_time desc')
             ->paginate(10);
 //
@@ -191,7 +191,6 @@ class Hotel extends Controller
             'comment_service'   => 'require|number',
             'comment_ambient'   => 'require|number',
             'comment_hygiene'   => 'require|number',
-            'comment_sati'      => 'require|number',
         ];
         $message  = [
             'hotel_id.require'          => '酒店ID不能为空',
@@ -206,8 +205,7 @@ class Hotel extends Controller
             'comment_ambient.number'    => '环境评分类型错误',
             'comment_hygiene.require'   => '卫生评分不能为空',
             'comment_hygiene.number'    => '卫生评分类型错误',
-            'comment_sati.require'      => '满意度不能为空',
-            'comment_sati.number'       => '满意度类型错误',
+
         ];
 
         //实例化验证器
@@ -220,15 +218,15 @@ class Hotel extends Controller
             return json_encode($date,320);
         }
 
-        //计算出综合评分
-        $hotel_all = round(($post['comment_service'] + $post['comment_ambient'] + $post['comment_hygiene']) / 3);
-        //定义综合评分
-        $post['comment_all'] = $hotel_all;
+        //计算出此次评价满意度评分
+        $comment_sati = round(($post['comment_service'] + $post['comment_ambient'] + $post['comment_hygiene']) / 3);
+
+        //定义满意度评分
+        $post['comment_sati'] = $comment_sati;
         //获取图片参数
         if(!isset($post['path'])){
             $post['path'] = '';
         }else{
-//            $post['path'] = implode(",", $post['path']);
             $post['path'] = $post['path'];
         }
 
@@ -264,11 +262,12 @@ class Hotel extends Controller
         $hotel_hygiene = $HotelModel->hygiene($post['hotel_id']);
         //获取酒店服务评分(平均值)
         $hotel_service = $HotelModel->services($post['hotel_id']);
-        //获取酒店综合评分(平均值)
-        $hotel_all = $HotelModel->select_comment($post['hotel_id'],'comment_all');
+        //获取酒店综合评分
+        $comment_sati = $HotelModel->select_comment($post['hotel_id']);
 
         //修改酒店评分表
-        $res = $HotelModel->update_comment($post['hotel_id'],$hotel_hygiene,$hotel_ambient,$hotel_service,$hotel_all);
+        $res = $HotelModel->update_comment($post['hotel_id'],$hotel_hygiene,$hotel_ambient,$hotel_service);
+
         //将数据返回出去
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'评论成功','retData'=>$date],320);
     }

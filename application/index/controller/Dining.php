@@ -257,7 +257,7 @@ class Dining extends Controller
         $user_comment = Db::table('think_dining_user')->alias('a')
             ->join('think_member b','a.id=b.id','LEFT')
             ->field('a.dining_user_id,a.comment_time,a.comment_content,' .
-                'a.comment_images,a.comment_all,a.comment_sati,b.nickname,b.head_img')
+                'a.comment_images,a.comment_all,a.comment_sati,a.comment_sati,b.nickname,b.head_img')
             ->where('a.dining_id',$post['dining_id'])
             ->order('a.comment_time desc')
             ->paginate(10);
