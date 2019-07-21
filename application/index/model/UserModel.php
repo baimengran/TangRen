@@ -9,7 +9,7 @@ class UserModel extends Model
     public function test_1($get)
     {
         $user = Db::table('think_member')
-            ->field('nickname,head_img,sigin_status,create_time')
+            ->field('nickname,head_img,sign_status,create_time')
             ->where('id',$get)
             ->find();
 
