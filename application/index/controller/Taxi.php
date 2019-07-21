@@ -190,7 +190,6 @@ class Taxi extends Controller
             'comment_service'           => 'require|number',
             'comment_speed'             => 'require|number',
             'comment_quality'           => 'require|number',
-            'comment_sati'              => 'require|number',
         ];
         $message  = [
             'taxi_id.require'           => '汽车公司ID不能为空',
@@ -205,8 +204,6 @@ class Taxi extends Controller
             'comment_quality.number'    => '汽车质量评分类型错误',
             'comment_speed.require'     => '汽车速度评分不能为空',
             'comment_speed.number'      => '汽车速度评分类型错误',
-            'comment_sati.require'      => '满意度评分不能为空',
-            'comment_sati.number'       => '满意度评分类型错误',
         ];
 
         //实例化验证器
@@ -219,10 +216,10 @@ class Taxi extends Controller
             return json_encode($date,320);
         }
 
-        //计算出综合评分
-        $taxi_all = round(($post['comment_service'] + $post['comment_quality'] + $post['comment_speed']) / 3);
+        //计算出满意度评分
+        $comment_sati= round(($post['comment_service'] + $post['comment_quality'] + $post['comment_speed']) / 3);
         //定义综合评分
-        $post['comment_all'] = $taxi_all;
+        $post['comment_sati'] = $comment_sati;
 
         //获取图片参数
         if(!isset($post['path'])){
