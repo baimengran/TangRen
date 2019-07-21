@@ -348,7 +348,7 @@ class Community
 
         $community = new CommunityModel();
 //        $db = $community->db(false);
-//        $db->startTrans();
+        Db::startTrans();
         try {
             $community = $community->get($community_id);
 
@@ -383,10 +383,10 @@ class Community
             }
 
             $community->save();
-
+            Db::commit();
             return jsone($explain, 200);
         } catch (Exception $e) {
-            $db->rollback();
+            Db::rollback();
             throw new BannerMissException();
         }
     }
