@@ -34,10 +34,13 @@ class My
         }
 //        return $id;
         try {
+            //获取当前用户收藏id
+            $module_ids = Db::name('member_collect')->where('user_id', $id)
+                ->where('module_type','community')
+                ->where('delete_time',null)
+                ->column('module_id');
 
-            $module_ids = Db::name('member_collect')->where('user_id', $id)->column('module_id');
-
-//            return $module_ids;
+//            //获取以收藏动态
             $community = CommunityModel::with('user,topic,communityFile')
                 ->where('id', 'in', $module_ids)
                 ->paginate(20);
@@ -47,14 +50,16 @@ class My
                     //获取点赞数据
                     $praise = Db::name('member_praise')->where('user_id', 'eq', getUserId())
                         ->where('module_id', 'eq', $val['id'])
-                        ->where('module_type', 'eq', 'used_product')
+                        ->where('module_type', 'eq', 'community')
                         ->find();
 //                return $praise;
                     //获取收藏数据
                     $collect = Db::name('member_collect')->where('user_id', 'eq', getUserId())
                         ->where('module_id', 'eq', $val['id'])
-                        ->where('module_type', 'eq', 'used_product')
+                        ->where('module_type', 'eq', 'community')
+                        ->where('delete_time',null)
                         ->find();
+
 //                $data[]=$community;
                     if (!$praise) {
                         //如果是空，证明没点攒

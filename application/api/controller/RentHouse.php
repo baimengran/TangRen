@@ -9,6 +9,7 @@
 namespace app\api\controller;
 
 
+use app\admin\model\JobSeekModel;
 use app\admin\model\MemberModel;
 use app\admin\model\RentHouseModel;
 use app\admin\model\RentImageModel;
@@ -39,6 +40,24 @@ class RentHouse extends Controller
         }
 
         try {
+            //查询有置顶的动态
+            $rentSticky = new RentHouseModel();
+            $stickies = $rentSticky->where('sticky_status',0)->select();
+            //检查置顶是否过期
+            $updates=[];
+            foreach($stickies as $sticky){
+                if(time()>$sticky['sticky_end_time']){
+
+                    $val['id']=$sticky['id'];
+                    $val['sticky_status']=1;
+                    $updates[]=$val;
+                }
+            }
+            //批量更新过期置顶数据
+            $rentSticky->saveAll($updates);
+
+
+
             $rentHouse = new RentHouseModel();
             //搜索
             if ($search) {

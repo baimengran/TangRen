@@ -107,7 +107,9 @@
 
 
         function complete(data){
+            console.log("complete:".data);
             if(data.code==1){
+                console.log('data.code=1:',11);
                 lunhui.success(data.msg,data.url);
             }else{ 
                 lunhui.error(data.msg);

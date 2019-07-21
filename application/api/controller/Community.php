@@ -45,6 +45,22 @@ class Community
 //            ]);
 //        }
         try {
+            //查询有置顶的动态
+            $communitySticky = new CommunityModel();
+            $stickies = $communitySticky->where('sticky_status',0)->select();
+            //检查置顶是否过期
+            $updates=[];
+            foreach($stickies as $sticky){
+                if(time()>$sticky['sticky_end_time']){
+
+                     $val['id']=$sticky['id'];
+                     $val['sticky_status']=1;
+                     $updates[]=$val;
+                }
+            }
+            //批量更新过期置顶数据
+            $communitySticky->saveAll($updates);
+
             $community = new CommunityModel();
             if ($search) {
                 $community->where('body', 'like', '%' . $search . '%');

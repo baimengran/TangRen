@@ -36,6 +36,22 @@ class UsedProduct extends Controller
             }
         }
         try {
+            //查询有置顶的动态
+            $usedSticky = new UsedProductModel();
+            $stickies = $usedSticky->where('sticky_status',0)->select();
+            //检查置顶是否过期
+            $updates=[];
+            foreach($stickies as $sticky){
+                if(time()>$sticky['sticky_end_time']){
+
+                    $val['id']=$sticky['id'];
+                    $val['sticky_status']=1;
+                    $updates[]=$val;
+                }
+            }
+            //批量更新过期置顶数据
+            $usedSticky->saveAll($updates);
+
             $usedProduct = new UsedProductModel();
             if ($search) {
                 $usedProduct->where('body', 'like', '%' . $search . '%');

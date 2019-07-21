@@ -42,6 +42,22 @@ class JobSeek
         //搜索
 
         try {
+            //查询有置顶的动态
+            $jobSticky = new JobSeekModel();
+            $stickies = $jobSticky->where('sticky_status',0)->select();
+            //检查置顶是否过期
+            $updates=[];
+            foreach($stickies as $sticky){
+                if(time()>$sticky['sticky_end_time']){
+
+                    $val['id']=$sticky['id'];
+                    $val['sticky_status']=1;
+                    $updates[]=$val;
+                }
+            }
+            //批量更新过期置顶数据
+            $jobSticky->saveAll($updates);
+
             $job = new JobSeekModel();
 
             if ($search) {
