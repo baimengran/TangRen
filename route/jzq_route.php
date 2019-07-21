@@ -41,8 +41,10 @@ Route::rule('index/dining/index','index/Dining/index');
 Route::rule('index/dining/details','index/Dining/details');
 //用户评论美食评论接口
 Route::rule('index/dining/comment','index/Dining/comment');
-//用户评论美食评论接口
-Route::get('index/dining/viewcomm','index/Dining/viewcomm');
+//获取评论接口
+Route::post('index/dining/selectcomm','index/Dining/selectcomm');
+////用户评论美食评论接口
+//Route::get('index/dining/viewcomm','index/Dining/viewcomm');
 
 
 //个人中心首页接口
@@ -53,6 +55,8 @@ Route::get('index/personal/index','index/Personal/index');
 Route::get('index/personal/fraction_goods','index/Personal/fraction_goods');
 //个人中心积分兑换商品接口
 Route::post('index/personal/buy','index/Personal/buy');
+//个人中心积分兑换商品查看订单接口
+Route::post('index/personal/order','index/Personal/order');
 //个人中心地址管理接口
 Route::post('index/personal/address','index/Personal/address');
 //个人中心编辑地址接口

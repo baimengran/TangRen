@@ -129,14 +129,22 @@ class Hotel extends Controller
             'hotel_all'     =>$hotel_all,
             ];
 
-        //查询评论信息和用户头像,昵称(只显示5条)
+        //查询评论信息和用户头像,昵称
         $user_comment = Db::table('think_hotel_user')->alias('a')
             ->where('hotel_id',$post['hotel_id'])
             ->join('think_member b','a.id=b.id')
             ->field('a.hotel_user_id,b.nickname,b.head_img,a.comment_time,a.comment_content,a.images,a.comment_all')
-            ->order('comment_time desc')
-            ->limit(5)
+            ->order('a.comment_time desc')
+            ->paginate(10);
+
+        $hotel_label = Db::table('think_hotel_list')
+            ->field('hotel_label')
+            ->where('hotel_id',$post['hotel_id'])
             ->select();
+        //处理标签数据加入详情数据中
+        $date = json_decode(json_encode($hotel_label,320),true);
+        $hotel['0']['hotel_label'] = json_decode($date['0']['hotel_label'],true);
+
 
         $date[] = ['hotel'=>$hotel,'user_comment'=>$user_comment];
 

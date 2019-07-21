@@ -27,6 +27,68 @@ class Dining extends Controller
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
     }
     /**
+     * 三个模块获取评论接口
+     * 接收：模块类型,主键ID
+     * 返回：模块下的评论ID
+     */
+    public function selectcomm(\think\Request $request)
+    {
+        $post = $request->post();
+
+        $rule =   [
+            'model_type' => 'require|number',
+            'model_id' => 'require|number',
+        ];
+        $message  = [
+            'model_type.require'      => '模块类型不能为空',
+            'model_type.number'       => '模块类型错误',
+            'model_id.require'        => 'ID不能为空',
+            'model_id.number'         => 'ID类型错误',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
+        //判断是否小于3
+        if($post['model_type'] > 2){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'类型不能大于2','retData'=>$post['model_type']],320);
+        }
+
+        if($post['model_type'] == 0){
+            $date = Db::table('think_dining_user')->alias('a')
+                ->join('think_member b','a.id=b.id','LEFT')
+                ->field('a.dining_user_id,a.comment_time,a.comment_content,' .
+                    'a.comment_images,a.comment_all,b.nickname,b.head_img')
+                ->where('a.dining_id',$post['model_id'])
+                ->order('a.comment_time desc')
+                ->paginate(10);
+        }else if($post['model_type'] == 1){
+            $date = Db::table('think_taxi_user')->alias('a')
+                ->where('taxi_id',$post['model_id'])
+                ->join('think_member b','a.id=b.id')
+                ->field('a.taxi_user_id,b.nickname,b.head_img,a.comment_time,a.comment_content,a.comment_images,a.comment_all')
+                ->order('a.comment_time desc')
+                ->paginate(10);
+        }else if($post['model_type'] == 2){
+            $date = Db::table('think_hotel_user')->alias('a')
+                ->where('hotel_id',$post['model_id'])
+                ->join('think_member b','a.id=b.id')
+                ->field('a.hotel_user_id,b.nickname,b.head_img,a.comment_time,a.comment_content,a.images,a.comment_all')
+                ->order('a.comment_time desc')
+                ->paginate(10);
+        }
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
+    }
+
+    /**
      * 小程序首页三个模块搜索接口()
      * 接收：要搜索的类目ID
      * 返回：美食首页所有可见信息
@@ -124,8 +186,6 @@ class Dining extends Controller
 
         $date = ['elect'=>$elect,'dining'=>$dining];
 
-//        die(json_encode($dining,320));
-
         //将数据返回出去
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'美食首页信息查询成功','retData'=>$date],320);
 
@@ -159,10 +219,19 @@ class Dining extends Controller
             return json_encode($date,320);
         }
 
-        //查餐厅信息表，
+        //查餐厅信息表
         $dining = Db::table('think_dining_list')
             ->where('dining_id',$post['dining_id'])
             ->select();
+
+        //查询餐厅标签字段
+        $dining_label = Db::table('think_dining_list')
+            ->field('dining_label')
+            ->where('dining_id',$post['dining_id'])
+            ->select();
+        //处理标签数据加入详情数据中
+        $date = json_decode(json_encode($dining_label,320),true);
+        $dining['0']['dining_label'] = json_decode($date['0']['dining_label'],true);
 
         if(count($dining)<=0){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'餐厅信息不存在','retData'=>$dining],320);
@@ -174,8 +243,6 @@ class Dining extends Controller
             ->where('dining_id',$post['dining_id'])
             ->where('dining_status',0)
             ->select();
-
-
         $dining['0']['images'] = $images;
 
         //查询评论信息和用户头像,昵称
@@ -185,11 +252,7 @@ class Dining extends Controller
                 'a.comment_images,a.comment_all,b.nickname,b.head_img')
             ->where('a.dining_id',$post['dining_id'])
             ->order('a.comment_time desc')
-            ->paginate(25);
-//        $user_comment = Db::table('think_dining_user')->alias('a')
-//            ->join('think_member b','a.id=b.id')
-//            ->field('b.user_id,b.nickname,b.sex,b.country,b.city,b.province,b.user_img,a.user_token,a.openid,a.login_time')
-//            ->select();
+            ->paginate(10);
 
         $date[] = ['dining'=>$dining,'user_comment'=>$user_comment];
 

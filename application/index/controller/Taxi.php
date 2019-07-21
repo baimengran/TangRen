@@ -85,6 +85,15 @@ class Taxi extends Controller
             ->where('taxi_id',$post['taxi_id'])
             ->select();
 
+        //查询餐厅标签字段
+        $taxi_label = Db::table('think_taxi_list')
+            ->field('taxi_label')
+            ->where('taxi_id',$post['taxi_id'])
+            ->select();
+        //处理标签数据加入详情数据中
+        $date = json_decode(json_encode($taxi_label,320),true);
+        $taxi['0']['taxi_label'] = json_decode($date['0']['taxi_label'],true);
+
         if(count($taxi)<=0){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'汽车公司信息不存在','retData'=>$taxi],320);
         }
@@ -126,14 +135,13 @@ class Taxi extends Controller
             'taxi_all'      =>$taxi_all,
         ];
 
-        //查询评论信息和用户头像,昵称(只显示5条)
+        //查询评论信息和用户头像,昵称
         $user_comment = Db::table('think_taxi_user')->alias('a')
             ->where('taxi_id',$post['taxi_id'])
             ->join('think_member b','a.id=b.id')
             ->field('a.taxi_user_id,b.nickname,b.head_img,a.comment_time,a.comment_content,a.comment_images,a.comment_all')
-            ->order('comment_time desc')
-            ->limit(5)
-            ->select();
+            ->order('a.comment_time desc')
+            ->paginate(10);
 
         $date[] = ['taxi'=>$taxi,'user_comment'=>$user_comment];
 
@@ -242,8 +250,6 @@ class Taxi extends Controller
         //将数据填入数据库
         $TaxicommentModel= new TaxicommentModel();
         $date =  $TaxicommentModel->com_add($post);
-
-
 
         //获取(平均值)
         $taxi_speed = $TaxicommentModel->ambient($post['taxi_id']);

@@ -67,8 +67,6 @@ class DiningModel extends Model
      */
     public function dining($get)
     {
-
-
         //查询区域分类下的酒店
         $date = Db::table('think_dining_list')
             ->where('dining_class',$get)
