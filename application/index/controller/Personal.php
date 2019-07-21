@@ -36,12 +36,13 @@ class Personal extends Controller
     public function fraction_goods(\think\Request $request)
     {
         //接收数据
-        $get = $request->post('id');
+        $get = $request->get('id');
 
 //        try{
         //获取用户积分
         $user = new UserModel();
         $fraction = $user->user_fraction($get);
+
 
         //获取商品信息
         $goods = new FractionModel();
