@@ -30,11 +30,14 @@ class Community
     {
         if (!$search = input('search')) {
             if (!$order = input('order')) {
-                throw new BannerMissException([
-                    'code' => 400,
-                    'ertips' => '缺少必要参数',
-                ]);
+                $order=3;
             }
+        }
+        //判断是否有首页推荐状态参数
+        if($recommend = input('recommend')){
+            $recommend_status = 0;
+        }else{
+            $recommend_status=1;
         }
 
         $topic = input('topic_id');
@@ -47,7 +50,8 @@ class Community
         try {
             //查询有置顶的动态
             $communitySticky = new CommunityModel();
-            $stickies = $communitySticky->where('sticky_status',0)->select();
+            $stickies = $communitySticky->where('sticky_status',0)
+                ->where('recommend_status',1)->select();
             //检查置顶是否过期
             $updates=[];
             foreach($stickies as $sticky){
@@ -63,9 +67,10 @@ class Community
 
             $community = new CommunityModel();
             if ($search) {
-                $community->where('body', 'like', '%' . $search . '%');
+                $community->where('body', 'like', '%' . $search . '%')
+                    ->where('recommend_status',$recommend_status);
             } else {
-                //$community = $community->where('topic_id', 'eq', $topic);
+                $community = $community->where('recommend_status',$recommend_status);
                 switch ($order) {
                     case 1:
                         //热门
@@ -80,6 +85,7 @@ class Community
                 }
             }
             $community = $community->paginate(20);
+//            return $community;
             $data['total'] = $community->total();
             $data['per_page'] = $community->listRows();
             $data['current_page'] = $community->currentPage();
