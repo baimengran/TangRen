@@ -193,7 +193,7 @@ class UsedProduct extends Controller
     public function show()
     {
 
-        if (!$id = post()->get('used_id')) {
+        if (!$id = input('used_id')) {
             throw new BannerMissException([
                 'code' => 400,
                 'ertips' => '缺少必要参数'

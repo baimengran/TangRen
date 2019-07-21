@@ -32,14 +32,60 @@ class My
                 'ertips' => '用户认证失败',
             ]);
         }
+//        return $id;
         try {
 
             $module_ids = Db::name('member_collect')->where('user_id', $id)->column('module_id');
 
+//            return $module_ids;
             $community = CommunityModel::with('user,topic,communityFile')
                 ->where('id', 'in', $module_ids)
                 ->paginate(20);
-            return jsone('查询成功', 200, $community);
+
+            $data = [];
+                foreach($community as $val){
+                    //获取点赞数据
+                    $praise = Db::name('member_praise')->where('user_id', 'eq', getUserId())
+                        ->where('module_id', 'eq', $val['id'])
+                        ->where('module_type', 'eq', 'used_product')
+                        ->find();
+//                return $praise;
+                    //获取收藏数据
+                    $collect = Db::name('member_collect')->where('user_id', 'eq', getUserId())
+                        ->where('module_id', 'eq', $val['id'])
+                        ->where('module_type', 'eq', 'used_product')
+                        ->find();
+//                $data[]=$community;
+                    if (!$praise) {
+                        //如果是空，证明没点攒
+                        $praise = 1;
+                    } else {
+                        //如果存在，证明以软删除点赞
+                        if ($praise['delete_time']) {
+                            $praise = 1;
+                        } else {
+                            $praise = 0;
+                        }
+                    }
+                    if (!$collect) {
+                        //如果是空，证明没点攒
+                        $collect = 1;
+                    } else {
+                        //如果存在，证明以软删除点赞
+                        if ($collect['delete_time']) {
+                            $collect = 1;
+                        } else {
+                            $collect = 0;
+                        }
+                    }
+
+                    $val['user_praise'] = $praise;
+                    $val['user_collect'] = $collect;
+                    $data[] =$val;
+                }
+
+
+            return jsone('查询成功', 200, $data);
         } catch (Exception $e) {
             throw new BannerMissException();
         }

@@ -74,6 +74,9 @@ Route::get('api/topic_cate/index','api/TopicCate/index');
 //获取置顶积分
 Route::get('api/sticky/index','api/Sticky/index');
 
+//跑马灯
+Route::get('api/marquee/index','api/Marquee/index');
+
 //我的收藏
 Route::get('api/my/collect', 'api/my/collect');
 //发现

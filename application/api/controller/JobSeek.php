@@ -63,11 +63,11 @@ class JobSeek
             $data['data'] = [];
             foreach ($job as $k => $val) {
                 //查询对应招聘信息用户
-                $member = Db::name('member')->where('id', 'eq', $val['user_id'])->select();
+                $member = Db::name('member')->where('id', 'eq', $val['user_id'])->find();
                 //查询对应招聘信息行业
-                $profession = Db::name('profession_cate')->where('id', 'eq', $val['profession_id'])->select();
+                $profession = Db::name('profession_cate')->where('id', 'eq', $val['profession_id'])->find();
                 //查询对应招聘信息区域
-                $region = Db::name('region_list')->where('region_id', 'eq', $val['region_id'])->select();
+                $region = Db::name('region_list')->where('region_id', 'eq', $val['region_id'])->find();
 
                 //获取点赞数据
                 $praise = Db::name('member_praise')->where('user_id','eq',getUserId())

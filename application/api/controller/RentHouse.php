@@ -55,9 +55,9 @@ class RentHouse extends Controller
             $data['data'] = [];
 
             foreach ($rentHouse as $rent) {
-                $user = Db::name('member')->where('id', 'eq', $rent['user_id'])->select();
+                $user = Db::name('member')->where('id', 'eq', $rent['user_id'])->find();
                 $rentImage = Db::name('rent_image')->where('rent_id', 'eq', $rent['id'])->select();
-                $region = Db::name('region_list')->where('region_id', 'eq', $rent['region_id'])->select();
+                $region = Db::name('region_list')->where('region_id', 'eq', $rent['region_id'])->find();
 
                 //获取点赞数据
                 $praise = Db::name('member_praise')->where('user_id','eq',getUserId())
@@ -94,7 +94,7 @@ class RentHouse extends Controller
                 $rent['user_praise']=$praise;
                 $rent['user_collect']=$collect;
 
-                $rent['user'] = $user[0];
+                $rent['user'] = $user;
                 $rent['region'] = $region;
                 $rent['rent_image'] = $rentImage;
                 $data['data'][] = $rent;

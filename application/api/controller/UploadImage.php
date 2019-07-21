@@ -37,28 +37,30 @@ class UploadImage
                 foreach ($uploads as $value) {
                     $path = ['path' => $value,];
                 }
+                $data = [
+                    'errcode' => '0',
+                    'errMsg' => 'success',
+                    'ertips' => '上传成功',
+                    'retData' => $uploads
+                ];
 
-//                return 'www.tangren.com'.$uploads[0];
-                return str_replace('"','',$uploads[0]);
-//                return jsone('上传成功', 200, $uploads);
+                return $data;
             } else {
-                return null;
-//                throw new BannerMissException([
-//                    'code' => 422,
-//                    'ertips' => $uploads,
-//                ]);
+                $data = [
+                    'errcode' => '1',
+                    'errMsg' => 'error',
+                    'ertips' => $uploads,
+                ];
+                return $data;
             }
         } else {
-            return null;
-//            throw new BannerMissException([
-//                'code' => 422,
-//                'ertips' => '请选择图片上传',
-//            ]);
+            $data = [
+                    'errcode' => '1',
+                    'errMsg' => 'error',
+                    'ertips' => '请选择上传图片',
+                ];
+                return $data;
         }
-//        $data = [
-//            'path'=>333,
-//            'paths'=>332,
-//        ];
-//        return json($data);
+
     }
 }
