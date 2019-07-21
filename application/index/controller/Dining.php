@@ -16,11 +16,10 @@ class Dining extends Controller
      */
     public function homeelect(\think\Request $request)
     {
-
         //查询出所有推荐美食
         $date = Db::table('think_dining_list')
             ->field('dining_id,dining_logo,dining_name,dining_all')
-            ->where('dining_status',0)
+            ->where('dining_home',0)
             ->limit(4)
             ->select();
 
@@ -33,8 +32,7 @@ class Dining extends Controller
      */
     public function selectcomm(\think\Request $request)
     {
-        $post = $request->post();
-
+        $post = $request->get();
         $rule =   [
             'model_type' => 'require|number',
             'model_id' => 'require|number',
@@ -94,6 +92,7 @@ class Dining extends Controller
         }
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
+
     }
 
     /**
