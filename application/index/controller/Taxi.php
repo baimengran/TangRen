@@ -143,7 +143,7 @@ class Taxi extends Controller
             ->order('a.comment_time desc')
             ->paginate(10);
 
-        $date[] = ['taxi'=>$taxi,'user_comment'=>$user_comment];
+        $date = ['taxi'=>$taxi,'user_comment'=>$user_comment];
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'汽车公司信息查询成功','retData'=>$date],320);
     }
