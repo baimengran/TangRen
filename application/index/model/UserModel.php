@@ -30,7 +30,7 @@ class UserModel extends Model
     public function user_fraction($get)
     {
         $integral = Db::table('think_member')
-            ->field('integral')
+            ->field('integral,head_img')
             ->where('id',$get)
             ->find();
 

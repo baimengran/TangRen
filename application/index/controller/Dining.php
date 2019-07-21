@@ -285,7 +285,7 @@ class Dining extends Controller
             'comment_service'           => 'require|number',
             'comment_hygiene'           => 'require|number',
             'comment_taste'             => 'require|number',
-            'comment_sati'              => 'require|number',
+
         ];
         $message  = [
             'dining_id.require'         => '餐厅ID不能为空',
@@ -300,8 +300,7 @@ class Dining extends Controller
             'comment_taste.number'      => '味道评分类型错误',
             'comment_hygiene.require'   => '卫生评分不能为空',
             'comment_hygiene.number'    => '卫生评分类型错误',
-            'comment_sati.require'      => '满意度不能为空',
-            'comment_sati.number'       => '满意度类型错误',
+
         ];
 
         //实例化验证器
