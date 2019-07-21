@@ -167,6 +167,7 @@ class HotelModel extends Model
         //计算出酒店综合评分
         $zong = $hotel_hygiene + $hotel_ambient + $hotel_service;
         $hotel_all = $zong / 3;
+
         //查询出酒店评论表所有的酒店评分
         $res = Db::name('hotel_list')
             ->update([
