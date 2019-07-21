@@ -146,7 +146,7 @@ class Hotel extends Controller
         $hotel['0']['hotel_label'] = json_decode($date['0']['hotel_label'],true);
 
 
-        $date[] = ['hotel'=>$hotel,'user_comment'=>$user_comment];
+        $date = ['hotel'=>$hotel,'user_comment'=>$user_comment];
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'酒店信息查询成功','retData'=>$date],320);
     }

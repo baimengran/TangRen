@@ -229,6 +229,7 @@ class Dining extends Controller
             ->field('dining_label')
             ->where('dining_id',$post['dining_id'])
             ->select();
+
         //处理标签数据加入详情数据中
         $date = json_decode(json_encode($dining_label,320),true);
         $dining['0']['dining_label'] = json_decode($date['0']['dining_label'],true);
@@ -254,7 +255,7 @@ class Dining extends Controller
             ->order('a.comment_time desc')
             ->paginate(10);
 
-        $date[] = ['dining'=>$dining,'user_comment'=>$user_comment];
+        $date = ['dining'=>$dining,'user_comment'=>$user_comment];
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'餐厅信息查询成功','retData'=>$date],320);
     }
