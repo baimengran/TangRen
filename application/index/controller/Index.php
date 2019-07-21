@@ -5,7 +5,7 @@ class Index
 {
     public function index()
     {
-        return view();
+        return view('application/index/view/index/aaa.php');
     }
 	
 	public function test() {

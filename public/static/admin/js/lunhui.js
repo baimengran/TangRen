@@ -4,7 +4,6 @@ var lunhui = {
 	success: function(message,url){
 		layer.msg(message, {icon: 1,time:2000}, function(index){
             layer.close(index);
-            console.log('ff:'.url);
             window.location.href=url;
         });
 	},

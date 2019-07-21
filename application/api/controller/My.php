@@ -44,8 +44,11 @@ class My
             $community = CommunityModel::with('user,topic,communityFile')
                 ->where('id', 'in', $module_ids)
                 ->paginate(20);
-
-            $data = [];
+            $data['total'] = $community->total();
+            $data['per_page'] = $community->listRows();
+            $data['current_page'] = $community->currentPage();
+            $data['last_page'] = $community->lastPage();
+            $data['data'] = [];
                 foreach($community as $val){
                     //获取点赞数据
                     $praise = Db::name('member_praise')->where('user_id', 'eq', getUserId())
@@ -86,7 +89,7 @@ class My
 
                     $val['user_praise'] = $praise;
                     $val['user_collect'] = $collect;
-                    $data[] =$val;
+                    $data['data'][] =$val;
                 }
 
 

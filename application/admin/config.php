@@ -8,5 +8,6 @@ return [
         '__CSS__' => '/public/static/admin/css',
         '__JS__' => '/public/static/admin/js',
         '__IMG__' => '/public/static/admin/images',
+        '__UPLOADS__'=>'/public/uploads',
     ),
 ];
