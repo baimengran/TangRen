@@ -13,6 +13,24 @@ class TaxicommentModel extends Model
      */
     public function com_add($post)
     {
+        switch ($post['comment_sati'])
+        {
+            case 0:
+                $post['comment_sati'] = '很不满意';
+                break;
+            case 1:
+                $post['comment_sati'] = '不满意';
+                break;
+            case 2:
+                $post['comment_sati'] = '一般';
+                break;
+            case 3:
+                $post['comment_sati'] = '满意';
+                break;
+            case 4:
+                $post['comment_sati'] = '超满意';
+                break;
+        }
         //执行添加操作
         $data = [
             'taxi_id'           => $post['taxi_id'],
@@ -23,7 +41,8 @@ class TaxicommentModel extends Model
             'comment_quality'   => $post['comment_quality'],
             'comment_all'       => $post['comment_all'],
             'comment_images'    => $post['path'],
-            'comment_time'      => time(),
+            'comment_sati'      => $post['comment_sati'],
+            'comment_time'      => date('Y年m月d日',time()),
         ];
 
         $res = Db::table('think_taxi_user')->insertGetId($data);

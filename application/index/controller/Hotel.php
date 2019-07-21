@@ -131,20 +131,20 @@ class Hotel extends Controller
 
         //查询评论信息和用户头像,昵称
         $user_comment = Db::table('think_hotel_user')->alias('a')
-            ->where('hotel_id',$post['hotel_id'])
             ->join('think_member b','a.id=b.id')
-            ->field('a.hotel_user_id,b.nickname,b.head_img,a.comment_time,a.comment_content,a.images,a.comment_all')
+            ->where('hotel_id',$post['hotel_id'])
+            ->field('a.hotel_user_id,b.nickname,b.head_img,a.comment_time,a.comment_sati,a.comment_content,a.images,a.comment_all')
             ->order('a.comment_time desc')
             ->paginate(10);
-
+//
         $hotel_label = Db::table('think_hotel_list')
             ->field('hotel_label')
             ->where('hotel_id',$post['hotel_id'])
             ->select();
+
         //处理标签数据加入详情数据中
         $date = json_decode(json_encode($hotel_label,320),true);
         $hotel['0']['hotel_label'] = json_decode($date['0']['hotel_label'],true);
-
 
         $date = ['hotel'=>$hotel,'user_comment'=>$user_comment];
 
@@ -191,6 +191,7 @@ class Hotel extends Controller
             'comment_service'   => 'require|number',
             'comment_ambient'   => 'require|number',
             'comment_hygiene'   => 'require|number',
+            'comment_sati'      => 'require|number',
         ];
         $message  = [
             'hotel_id.require'          => '酒店ID不能为空',
@@ -205,6 +206,8 @@ class Hotel extends Controller
             'comment_ambient.number'    => '环境评分类型错误',
             'comment_hygiene.require'   => '卫生评分不能为空',
             'comment_hygiene.number'    => '卫生评分类型错误',
+            'comment_sati.require'      => '满意度不能为空',
+            'comment_sati.number'       => '满意度类型错误',
         ];
 
         //实例化验证器

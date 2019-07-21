@@ -139,7 +139,7 @@ class Taxi extends Controller
         $user_comment = Db::table('think_taxi_user')->alias('a')
             ->where('taxi_id',$post['taxi_id'])
             ->join('think_member b','a.id=b.id')
-            ->field('a.taxi_user_id,b.nickname,b.head_img,a.comment_time,a.comment_content,a.comment_images,a.comment_all')
+            ->field('a.taxi_user_id,b.nickname,b.head_img,a.comment_sati,a.comment_time,a.comment_content,a.comment_images,a.comment_all')
             ->order('a.comment_time desc')
             ->paginate(10);
 
@@ -190,6 +190,7 @@ class Taxi extends Controller
             'comment_service'           => 'require|number',
             'comment_speed'             => 'require|number',
             'comment_quality'           => 'require|number',
+            'comment_sati'              => 'require|number',
         ];
         $message  = [
             'taxi_id.require'           => '汽车公司ID不能为空',
@@ -204,6 +205,8 @@ class Taxi extends Controller
             'comment_quality.number'    => '汽车质量评分类型错误',
             'comment_speed.require'     => '汽车速度评分不能为空',
             'comment_speed.number'      => '汽车速度评分类型错误',
+            'comment_sati.require'      => '满意度评分不能为空',
+            'comment_sati.number'       => '满意度评分类型错误',
         ];
 
         //实例化验证器

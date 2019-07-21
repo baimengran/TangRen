@@ -13,6 +13,24 @@ class DiningcommentModel extends Model
      */
     public function com_add($post)
     {
+        switch ($post['comment_sati'])
+        {
+            case 0:
+                $post['comment_sati'] = '很不满意';
+            break;
+            case 1:
+                $post['comment_sati'] = '不满意';
+                break;
+            case 2:
+                $post['comment_sati'] = '一般';
+                break;
+            case 3:
+                $post['comment_sati'] = '满意';
+                break;
+            case 4:
+                $post['comment_sati'] = '超满意';
+                break;
+        }
         //执行添加操作
         $data = [
             'dining_id'         => $post['dining_id'],
@@ -22,8 +40,9 @@ class DiningcommentModel extends Model
             'comment_hygiene'   => $post['comment_hygiene'],
             'comment_taste'     => $post['comment_taste'],
             'comment_all'       => $post['comment_all'],
+            'comment_sati'      => $post['comment_sati'],
             'comment_images'    => $post['path'],
-            'comment_time'      => time(),
+            'comment_time'      => date('Y年m月d日',time()),
         ];
 
         $res = Db::table('think_dining_user')->insertGetId($data);
