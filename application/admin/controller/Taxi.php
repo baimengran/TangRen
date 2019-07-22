@@ -11,6 +11,12 @@ class Taxi extends Controller
     {
         //执行查询操作
         $list= Db::table('think_taxi_list')
+                ->where('exits_status',0)
+                ->paginate(10);
+
+        //
+        $list= Db::table('think_taxi_list')
+            ->where('exits_status',0)
             ->paginate(10);
 
         $count = count($list);

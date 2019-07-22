@@ -401,12 +401,19 @@ class Personal extends Controller
      * 输入：
      * 返回：积分兑换信息
      */
-    public function integral()
+    public function integral(\think\Request $request)
     {
+        $get =$request->get();
+        $integral = Db::table('think_member')
+            ->field('integral')
+            ->where('id',$get['id'])
+            ->select();
+
         $date = Db::table('think_integral_list')
             ->field('integral_number,rmb_number')
             ->where('integral_status',1)
             ->select();
+        $date = ['integral'=>$integral,'date'=>$date];
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
     }
