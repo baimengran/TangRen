@@ -8,7 +8,7 @@ if (isset($_GET['dir'])){ //config the basedir
 }else{
     $basedir = '.';
 }
-$auto = 1;// 1 标注检测bom头并自动去除，0 标注bom文件不去除
+$auto = 0;// 0 标注检测bom头并自动去除，1 标注bom文件不去除
 checkdir($basedir);
 function checkdir($basedir){
     if ($dh = opendir($basedir)) {

@@ -81,7 +81,7 @@
         $('#doLogin').ajaxForm({
             beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
             success: complete, // 这是提交后的方法
-            dataType: 'text'
+            dataType: 'json'
         });
         
         function checkForm(){
@@ -108,7 +108,6 @@
 
         function complete(data){
             if(data.code==1){
-                console.log('data.code=1:',11);
                 lunhui.success(data.msg,data.url);
             }else{ 
                 lunhui.error(data.msg);
