@@ -404,6 +404,32 @@ class Personal extends Controller
     public function integral(\think\Request $request)
     {
         $get =$request->get();
+        $rule =   [
+            'id' => 'require|number'
+        ];
+        $message  = [
+            'id.require'      => '用户ID不能为空',
+            'id.number'       => '用户ID类型错误',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($get,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+        //判断有无这个用户
+        $id = Db::table('think_member')
+            ->field('id')
+            ->where('id',$get['id'])
+            ->select();
+        if(!$id){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个用户'],320);
+        }
+
         $integral = Db::table('think_member')
             ->field('integral')
             ->where('id',$get['id'])
