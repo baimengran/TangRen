@@ -16,6 +16,8 @@ define('APP_PATH', __DIR__ . '/application/');
 
 // 定义上传目录
 define('UPLOAD_PATH', __DIR__ . '/public');
+//pdf图片路径
+define('PDF',__DIR__.'/public/uploads/pdf');
 // 定义应用缓存目录
 define('RUNTIME_PATH', __DIR__ . '/runtime/');
 define('LOG_PATHS', __DIR__ .'/'. RUNTIME_PATH . '/log');

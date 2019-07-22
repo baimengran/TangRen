@@ -2,9 +2,175 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb684b8e-68f3-42ef-8ea5-311b6ecf6be4" name="默认的" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/adminThree.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/adminThree.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/aaa.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/view/index/aaa.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/admin/view/region/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/region/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/CONTRIBUTING.md" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/CONTRIBUTING.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/LICENSE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/base.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/codecov.yml" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/codecov.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/console.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/console.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/convention.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/convention.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/helper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/lang/zh-cn.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/lang/zh-cn.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/App.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/App.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Build.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Build.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Cache.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Cache.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Collection.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Collection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Config.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Console.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Console.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Cookie.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Cookie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Db.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Db.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Debug.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Debug.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Env.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Env.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Error.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Error.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Exception.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Exception.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/File.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/File.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Hook.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Hook.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Lang.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Lang.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Loader.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Loader.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Log.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Log.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Paginator.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Paginator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Process.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Process.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Request.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Request.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Response.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Response.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Route.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Route.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Session.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Url.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Url.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/Validate.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/Validate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/View.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/View.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/cache/Driver.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/cache/Driver.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/File.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/File.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Lite.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Lite.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Memcache.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Memcache.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Memcached.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Memcached.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Redis.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Redis.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Sqlite.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Sqlite.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Wincache.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Wincache.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Xcache.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/cache/driver/Xcache.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/config/driver/Ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/config/driver/Ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/config/driver/Json.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/config/driver/Json.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/config/driver/Xml.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/config/driver/Xml.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/Command.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/Command.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/Input.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/Input.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/Output.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/Output.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/bin/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/bin/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/Build.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/Build.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/Clear.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/Clear.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/Help.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/Help.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/Lists.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/Lists.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/Make.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/Make.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/make/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/make/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/make/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/make/Model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/make/stubs/controller.plain.stub" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/make/stubs/controller.plain.stub" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/make/stubs/controller.stub" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/make/stubs/controller.stub" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/make/stubs/model.stub" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/make/stubs/model.stub" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/optimize/Autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/optimize/Autoload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/optimize/Config.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/optimize/Config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/optimize/Route.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/optimize/Route.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/command/optimize/Schema.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/command/optimize/Schema.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/input/Argument.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/input/Argument.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/input/Definition.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/input/Definition.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/input/Option.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/input/Option.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/Ask.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/Ask.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/Descriptor.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/Descriptor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/Formatter.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/Formatter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/Question.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/Question.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/descriptor/Console.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/descriptor/Console.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/driver/Buffer.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/driver/Buffer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/driver/Console.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/driver/Console.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/driver/Nothing.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/driver/Nothing.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/formatter/Stack.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/formatter/Stack.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/formatter/Style.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/formatter/Style.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/question/Choice.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/question/Choice.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/console/output/question/Confirmation.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/console/output/question/Confirmation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/controller/Rest.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/controller/Rest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/controller/Yar.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/controller/Yar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/Builder.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/Builder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/Connection.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/Connection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/Query.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/Query.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/builder/Mysql.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/builder/Mysql.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/builder/Pgsql.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/builder/Pgsql.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/builder/Sqlite.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/builder/Sqlite.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/builder/Sqlsrv.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/builder/Sqlsrv.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/connector/Mysql.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/connector/Mysql.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/connector/Pgsql.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/connector/Pgsql.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/connector/Sqlite.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/connector/Sqlite.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/connector/Sqlsrv.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/connector/Sqlsrv.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/connector/pgsql.sql" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/connector/pgsql.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/exception/BindParamException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/exception/BindParamException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/exception/DataNotFoundException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/exception/DataNotFoundException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/db/exception/ModelNotFoundException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/db/exception/ModelNotFoundException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/debug/Console.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/debug/Console.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/debug/Html.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/debug/Html.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/exception/ClassNotFoundException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/exception/ClassNotFoundException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/exception/DbException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/exception/DbException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/exception/ErrorException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/exception/ErrorException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/exception/Handle.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/exception/Handle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/exception/HttpException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/exception/HttpException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/exception/HttpResponseException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/exception/HttpResponseException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/exception/PDOException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/exception/PDOException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/exception/RouteNotFoundException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/exception/RouteNotFoundException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/exception/TemplateNotFoundException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/exception/TemplateNotFoundException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/exception/ThrowableError.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/exception/ThrowableError.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/exception/ValidateException.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/exception/ValidateException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/log/driver/File.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/log/driver/File.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/log/driver/Socket.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/log/driver/Socket.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/log/driver/Test.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/log/driver/Test.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/Collection.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/Collection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/Merge.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/Merge.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/Pivot.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/Pivot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/Relation.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/Relation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/relation/BelongsTo.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/relation/BelongsTo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/relation/BelongsToMany.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/relation/BelongsToMany.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/relation/HasMany.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/relation/HasMany.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/relation/HasManyThrough.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/relation/HasManyThrough.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/relation/HasOne.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/relation/HasOne.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/relation/MorphMany.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/relation/MorphMany.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/relation/MorphOne.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/relation/MorphOne.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/relation/MorphTo.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/relation/MorphTo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/model/relation/OneToOne.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/model/relation/OneToOne.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/paginator/driver/Bootstrap.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/paginator/driver/Bootstrap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/process/Builder.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/process/Builder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/process/Utils.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/process/Utils.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/process/exception/Failed.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/process/exception/Failed.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/process/exception/Timeout.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/process/exception/Timeout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/process/pipes/Pipes.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/process/pipes/Pipes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/process/pipes/Unix.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/process/pipes/Unix.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/process/pipes/Windows.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/process/pipes/Windows.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/response/Json.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/response/Json.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/response/Jsonp.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/response/Jsonp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/response/Redirect.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/response/Redirect.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/response/View.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/response/View.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/response/Xml.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/response/Xml.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/session/driver/Memcache.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/session/driver/Memcache.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/session/driver/Memcached.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/session/driver/Memcached.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/session/driver/Redis.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/session/driver/Redis.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/template/TagLib.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/template/TagLib.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/template/driver/File.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/template/driver/File.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/template/taglib/Cx.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/template/taglib/Cx.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/view/driver/Php.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/view/driver/Php.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/think/view/driver/Think.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/think/view/driver/Think.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/traits/controller/Jump.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/traits/controller/Jump.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/traits/model/SoftDelete.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/traits/model/SoftDelete.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/library/traits/think/Instance.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/library/traits/think/Instance.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/phpunit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/start.php" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/start.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/tpl/default_index.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/tpl/default_index.tpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/tpl/dispatch_jump.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/tpl/dispatch_jump.tpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/tpl/page_trace.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/tpl/page_trace.tpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thinkphp/tpl/think_exception.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/thinkphp/tpl/think_exception.tpl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,11 +184,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/application/admin/view/index.html">
+      <file leaf-file-name="Region.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/admin/controller/Region.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
+            <state relative-caret-position="209">
+              <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/admin/view/region/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-314">
+              <caret line="18" column="46" selection-end-line="162" selection-end-column="7" />
+              <folding>
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GenerateImage.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/api/controller/GenerateImage.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="194">
+              <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+              <folding>
+                <element signature="e#305#7553#0#PHP" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="19" column="41" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -94,16 +295,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/application/admin/model/CommunityModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/JobCommentModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/JobSeekModel.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/RentCommentModel.php" />
         <option value="$PROJECT_DIR$/application/admin/model/RentHouseModel.php" />
         <option value="$PROJECT_DIR$/application/admin/model/UsedCommentModel.php" />
         <option value="$PROJECT_DIR$/application/api/validate/UsedComment.php" />
         <option value="$PROJECT_DIR$/application/api/controller/ProfessionCate.php" />
         <option value="$PROJECT_DIR$/application/api/controller/RegionCate.php" />
-        <option value="$PROJECT_DIR$/index.php" />
         <option value="$USER_HOME$/Desktop/tt.html" />
         <option value="$PROJECT_DIR$/application/api/exception/BaseException.php" />
         <option value="$PROJECT_DIR$/.htaccess" />
@@ -145,6 +341,11 @@
         <option value="$PROJECT_DIR$/application/api/controller/Community.php" />
         <option value="$PROJECT_DIR$/application/index/view/index/aaa.php" />
         <option value="$PROJECT_DIR$/application/admin/view/login.html" />
+        <option value="$PROJECT_DIR$/application/admin/controller/Region.php" />
+        <option value="$PROJECT_DIR$/application/admin/view/region/index.html" />
+        <option value="$PROJECT_DIR$/application/api/controller/GenerateQrCode.php" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/application/api/controller/GenerateImage.php" />
       </list>
     </option>
   </component>
@@ -160,9 +361,17 @@
   <component name="PhpServers">
     <servers />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="160" />
-    <option name="y" value="97" />
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/topthink/think-installer" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/mpdf/mpdf" />
+      <path value="$PROJECT_DIR$/vendor/setasign/fpdi" />
+    </include_path>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="289" />
+    <option name="y" value="25" />
     <option name="width" value="968" />
     <option name="height" value="568" />
   </component>
@@ -213,6 +422,13 @@
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
               <item name="application" type="462c0819:PsiDirectoryNode" />
               <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -221,47 +437,49 @@
               <item name="application" type="462c0819:PsiDirectoryNode" />
               <item name="admin" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="used" type="462c0819:PsiDirectoryNode" />
+              <item name="article" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
               <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="index" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="region" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
               <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="index" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="index" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="index" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="index" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="index" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="uploads" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
+              <item name="route" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
@@ -298,19 +516,19 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\aa" />
-      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\public\uploads\lunbo" />
-      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen" />
-      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\public" />
-      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\index\view\index" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\public" />
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen" />
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\admin\model" />
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\adminThree\application\api\model" />
       <recent name="D:\phpStudy2018\PHPTutorial\WWW\adminThree\application\api\controller" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\admin\view\region" />
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\application\aa" />
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\public\uploads\lunbo" />
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen" />
+      <recent name="D:\phpStudy2018\PHPTutorial\WWW\TangRen\public" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -372,17 +590,18 @@
       <workItem from="1563623679645" duration="10489000" />
       <workItem from="1563650462262" duration="19467000" />
       <workItem from="1563692792958" duration="13695000" />
-      <workItem from="1563758376447" duration="1263000" />
+      <workItem from="1563758376447" duration="6234000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="374245000" />
+    <option name="totallyTimeSpent" value="379216000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <frame x="289" y="25" width="968" height="568" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28290468" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2819383" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="调试" order="7" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
@@ -413,55 +632,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/admin/model/CouponModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/CommunityModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="44" column="32" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/JobSeek.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="42" column="18" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/RentHouse.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/UsedProduct.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="40" column="39" selection-start-line="40" selection-start-column="39" selection-end-line="40" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/api/validate/Community.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/helper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="120" column="13" selection-start-line="120" selection-start-column="13" selection-end-line="120" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/api/controller/TopicCate.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
@@ -630,13 +800,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="77" column="49" selection-start-line="77" selection-start-column="49" selection-end-line="77" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/api/controller/Sticky.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -657,13 +820,6 @@
     <entry file="file://$PROJECT_DIR$/runtime/log/201907/21.log">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3239" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="29" column="6" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/api/controller/Community.php">
@@ -735,10 +891,71 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1368">
+          <caret line="77" column="49" selection-start-line="77" selection-start-column="49" selection-end-line="77" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/view/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
+        <state relative-caret-position="408">
+          <caret line="65" column="25" lean-forward="true" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/controller/Region.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/controller/Article.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-171" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/mpdf/mpdf/composer.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/view/region/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-314">
+          <caret line="18" column="46" selection-end-line="162" selection-end-column="7" />
+          <folding>
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="29" column="6" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="19" column="41" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/api/controller/GenerateImage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+          <folding>
+            <element signature="e#305#7553#0#PHP" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
