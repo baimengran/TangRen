@@ -1,8 +1,6 @@
 <?php
 namespace app\index\controller;
 
-use app\admin\model\MemberModel;
-use app\index\model\AddressPhone;
 use app\index\model\FractionModel;
 use app\index\model\UserModel;
 use think\Controller;
@@ -287,6 +285,7 @@ class Personal extends Controller
         if(!$data){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这条信息'],320);
         }
+
 
         if (isset($post['default_address']) && $post['default_address'] == 0){
             Db::table('think_address_phone')->where(['id'=>$post['id']])->update(['default_address'=>1]);
