@@ -60,7 +60,7 @@ Route::post('index/personal/order','index/Personal/order');
 //个人中心地址添加接口
 Route::post('index/personal/address','index/Personal/address');
 //个人中心地址添加接口
-Route::get('index/personal/address_select','index/Personal/address_select');
+Route::post('index/personal/address_select','index/Personal/address_select');
 //个人中心编辑地址接口
 Route::post('index/personal/address_edit','index/Personal/address_edit');
 //个人中心删除地址接口
@@ -75,7 +75,6 @@ Route::post('index/personal/share','index/Personal/share');
 Route::post('index/personal/integral_task','index/Personal/integral_task');
 //查看个人任务完成接口
 Route::post('index/personal/select_task','index/Personal/select_task');
-
 
 //购买积分接口
 Route::post('index/pay/shop','index/Pay/shop');
@@ -96,7 +95,7 @@ Route::rule('admin/turns/index','index/Turns/index');
 //添加轮播图
 Route::rule('admin/turns/add_turns','index/Turns/add_turns');
 //编辑轮播图
-Route::rule('admin/turns/edit_turns/:id','index/Turns/edit_turns');
+Route::post('admin/turns/edit_turns/:id','index/Turns/edit_turns');
 //删除轮播图
 Route::rule('admin/turns/del','index/Turns/del');
 

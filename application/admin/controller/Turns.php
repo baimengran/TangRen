@@ -4,6 +4,7 @@ namespace app\admin\controller;
 use app\admin\model\TurnsModel;
 use think\Controller;
 use think\Db;
+use think\Request;
 
 class Turns extends Controller
 {
@@ -69,14 +70,14 @@ class Turns extends Controller
 //        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$list],320);
     }
 
-    //添加轮播图
+    //修改轮播图
     public function edit_turns(\think\Request $request)
     {
-        $id = $request->get('id');
+        $post = $request->post();
+        print_r($post);die;
         $turns = new TurnsModel();
         $data = $turns->find($id);
-        dump($id);
-        die;
+
         //获取轮播图信息
         $post = $request->post();
 
@@ -89,7 +90,6 @@ class Turns extends Controller
         ];
 
         if(!empty($post)){
-
             if($post['title'] > 6){
                 return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'类型不能大于6','retData'=>$post['title']],320);
             }
