@@ -1,6 +1,7 @@
 <?php
 //remove the utf-8 boms
 //by magicbug at gmail dot com
+phpinfo();die;
 set_time_limit(0);
 
 if (isset($_GET['dir'])){ //config the basedir

@@ -8,182 +8,259 @@
 
 namespace app\api\controller;
 
+use org\image\driver\Imagick;
+use think\Loader;
 
 class GenerateImage
 {
-        public function htmlConvertPdf(){
+
+    public function htmlConvertPdf()
+    {
+
 //            $html = input('html_code');
+        Loader::import('mpdf.mpdf.mpdf');
+        $html = $this->getHtml();
+        $path = PDF;
+        $w = 414;
+        $h = 736;
+        //设置中文
+        $mpdf = new \mPDF('utf-8');
+        $mpdf->autoScriptToLang = true;
+        $mpdf->autoLangToFont = true;
+        //设置pdf的尺寸
+        $mpdf->WriteHTML('<pagebreak sheet-size="' . $w . 'mm ' . $h . 'mm" />');
 
-                $html = $this->getHtml();
-                $path =PDF;
-                RETURN $path;
+        //设置pdf显示方式
+        $mpdf->SetDisplayMode('fullpage');
+//        $stylesheet1 = file_get_contents($path.'gener.css');
+//        $mpdf->WriteHTML($stylesheet1,1);
 
-        }
+        //删除pdf第一页(由于设置pdf尺寸导致多出了一页)
+        $mpdf->DeletePages(1, 1);
 
-    public function getHtml(){
-      return  $html = '{include file="public/header" /}
-<body class="gray-bg">
-<div class="wrapper wrapper-content animated fadeInRight">
-    <!-- Panel Other -->
-    <div class="ibox float-e-margins">
-        <div class="ibox-title">
-            <h5>区域列表</h5>
-        </div>
-        <div class="ibox-content">
-            <!--搜索框开始-->           
-            <div class="row">
-                <div class="col-sm-12">   
-                <!--<div  class="col-sm-2" style="width: 100px">-->
-                    <!--&lt;!&ndash;<div class="input-group" >  &ndash;&gt;-->
-                        <!--&lt;!&ndash;<a href="{:url(\'add_article\')}"><button class="btn btn-outline btn-primary" type="button">添加</button></a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--</div>                                            -->
-                    <form name="admin_list_sea" class="form-search" method="post" action="{:url(\'index\')}">
-                        <div class="col-sm-3">
-                            <div class="input-group">
-                                <input type="text" id="key" class="form-control" name="key" value="{$val}" placeholder="输入需查询的区域名称" />
-                                <span class="input-group-btn"> 
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button> 
-                                </span>
-                            </div>
-                        </div>
-                    </form>                         
-                </div>
-            </div>
-            <!--搜索框结束-->
-            <div class="hr-line-dashed"></div>
-            <div class="example-wrap">
-                <div class="example">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr class="long-tr">
-                                <th width="3%">ID</th>
-                                <th width="15%">标题</th>
-                                <th width="5%">用户</th>
-                                <th width="5%">区域</th>
-                                <th width="4%">价格</th>
-                                <th width="4%">置顶状态</th>
-                                <th width="4%">电话</th>
-                                <th width="10%">创建时间</th>
-                                <th width="10%">更新时间</th>
-                                <th width="5%">状态</th>
-                                <!--<th width="10%">操作</th>-->
-                            </tr>
-                        </thead>
-                        <script id="list-template" type="text/html">
-                            {volist name="lists" id="data"}
-                                <tr class="long-td">
-                                    <td>{$data.id}</td>
-                                    <td>{$data.title}</td>
-                                    <td>{$data.user_id}</td>
-                                    <td>{$data.region}</td>
-                                    <td>{$data.price}</td>
-                                    <td>{$data.sticky_status}</td>
-                                    <td>{$data.phone}</td>
-                                    <td>{$data.create_time}</td>
-                                    <td>{$data.update_time}</td>
-                                    <td>
-                                        {if condition="$data.status==0"}
-                                            <a href="javascript:;" onclick="used_state({$data.id});">
-                                                <div id="zt{$data.id}"><span class="label label-info">已通过</span></div>
-                                            </a>
-                                        {else /}
-                                            <a href="javascript:;" onclick="used_state({$data.id});">
-                                                <div id="zt{$data.id}"><span class="label label-danger">未通过</span></div>
-                                            </a>
-                                        {/if}
-                                    </td>
-                                    <!--<td>-->
-                                        <!--<a href="javascript:;" onclick="edit_article({$data.id})" class="btn btn-primary btn-xs btn-outline">-->
-                                            <!--<i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;-->
-                                        <!--<a href="javascript:;" onclick="del_article({$data.id})" class="btn btn-danger btn-xs btn-outline">-->
-                                            <!--<i class="fa fa-trash-o"></i> 删除</a>-->
-                                    <!--</td>-->
-                                </tr>
-                            {/volist}
-                        </script>
-                        <tbody id="list-content"></tbody>
-                    </table>
-                    <div id="AjaxPage" style="text-align:right;"></div>
-                    <div style="text-align: right;">
-                        共{$count}条数据，<span id="allpage"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
+        $mpdf->WriteHTML($html);
 
-<!-- 加载动画 -->
-<div class="spiner-example">
-    <div class="sk-spinner sk-spinner-three-bounce">
-        <div class="sk-bounce1"></div>
-        <div class="sk-bounce2"></div>
-        <div class="sk-bounce3"></div>
-    </div>
-</div>
+        $pdf_name = md5(time()) . '.pdf';
+        $pdfPath = $path . '/' . $pdf_name;
+        $mpdf->Output($pdfPath, 'F');
 
-{include file="public/footer" /}
+//        $this->pdf2png2($pdfPath, $path);
 
-<script type="text/javascript">
-   
-    /**
-     * [Ajaxpage laypage分页]
-     * @param {[type]} curr [当前页]
-     */
-    Ajaxpage();
-
-    function Ajaxpage(curr){
-        var key=$(\'#key\').val();
-        $.getJSON(\'{:url("article/index")}\', {
-            page: curr || 1,key:key
-        }, function(data){      //data是后台返回过来的JSON数据
-			$(".spiner-example").css(\'display\',\'none\'); //数据加载完关闭动画
-            if(data==\'\'){
-                $("#list-content").html(\'<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>\');
-            }else{
-                var tpl = document.getElementById(\'list-template\').innerHTML;
-                laytpl(tpl).render(data, function(html){
-                    document.getElementById(\'list-content\').innerHTML = html;
-                });
-                laypage({
-                    cont: $(\'#AjaxPage\'),//容器。值支持id名、原生dom对象，jquery对象,
-                    pages:\'{$allpage}\',//总页数
-                    skip: true,//是否开启跳页
-                    skin: \'#1AB5B7\',//分页组件颜色
-                    curr: curr || 1,
-                    groups: 3,//连续显示分页数
-                    jump: function(obj, first){
-                        if(!first){
-                            Ajaxpage(obj.curr)
-                        }
-                        $(\'#allpage\').html(\'第\'+ obj.curr +\'页，共\'+ obj.pages +\'页\');
-                    }
-                });
-            }
-        });
     }
- 
 
-//编辑文章
-function edit_article(id){
-    location.href = \'./edit_article/id/\'+id+\'.html\';
+    /**
+     * 将pdf文件转化为多张png图片
+     * @param string $pdf pdf所在路径 （/www/pdf/abc.pdf pdf所在的绝对路径）
+     * @param string $path 新生成图片所在路径 (/www/pngs/)
+     *
+     * @return array|bool
+     */
+    function pdf2png($pdf, $path)
+    {
+        if (!extension_loaded('imagick')) {
+            return false;
+        }
+        if (!file_exists($pdf)) {
+            return false;
+        }
+        $im = new \Imagick();
+        $im->setResolution(120, 120); //设置分辨率 值越大分辨率越高
+        $im->setCompressionQuality(100);
+        $im->readImage($pdf);
+        foreach ($im as $k => $v) {
+            $v->setImageFormat('png');
+            $fileName = $path . md5($k . time()) . '.png';
+            if ($v->writeImage($fileName) == true) {
+                $return[] = $fileName;
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * 将pdf转化为单一png图片
+     * @param string $pdf pdf所在路径 （/www/pdf/abc.pdf pdf所在的绝对路径）
+     * @param string $path 新生成图片所在路径 (/www/pngs/)
+     *
+     * @throws Exception
+     */
+    function pdf2png2($pdf, $path)
+    {
+        try {
+            $im = new Imagick();
+            $im->setCompressionQuality(100);
+            $im->setResolution(120, 120);//设置分辨率 值越大分辨率越高
+            $im->readImage($pdf);
+
+            $canvas = new Imagick();
+            $imgNum = $im->getNumberImages();
+            //$canvas->setResolution(120, 120);
+            foreach ($im as $k => $sub) {
+                $sub->setImageFormat('png');
+                //$sub->setResolution(120, 120);
+                $sub->stripImage();
+                $sub->trimImage(0);
+                $width = $sub->getImageWidth() + 10;
+                $height = $sub->getImageHeight() + 10;
+                if ($k + 1 == $imgNum) {
+                    $height += 10;
+                } //最后添加10的height
+                $canvas->newImage($width, $height, new ImagickPixel('white'));
+                $canvas->compositeImage($sub, Imagick::COMPOSITE_DEFAULT, 5, 5);
+            }
+
+            $canvas->resetIterator();
+            $canvas->appendImages(true)->writeImage($path . microtime(true) . '.png');
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+
+    public function getHtml()
+    {
+        return $html = '<div id="f_list" class="list">
+			<div class="list-item">
+				<div class="img_box">
+					<img class="lazy" data-original="http://img.ejyfile.com/format_img/1463017443.png!500" src="http://img.ejyfile.com/format_img/1463017443.png!500" style="">
+					<span class="prices">128.00</span>
+					<span class="dot">
+						<img class="icon" src="../img/img1/btn_shoucang.png">
+						<span class="num">0</span>
+					</span>
+				</div>
+				<div class="info">
+					<h3>苏州石公山、明月湾、古樟园一日自驾游</h3>
+					<div class="detail">
+						<span class="line">南京-->苏州</span>
+						出发时间：
+						<span class="time">2017-12-02</span>
+						共
+						<span class="total">1</span>
+						天
+					</div>
+					<div class="tag">
+						<span class="tag-items">踏青旅游</span>
+						<span class="tag-items">古镇园林</span>
+						<span class="tag-items">亲子活动</span>
+						<span class="volume_temp">已售:3</span>
+					</div>
+				</div>
+			</div>
+			</div>';
+    }
+
+    public function getCss(){
+        return $css = '*{
+    margin: 0;
+    padding: 0;
+}
+body,html{
+    background-color: #eee;
+}
+ul,li{
+    list-style: none; /*列表样式：无。*/
+    list-style-type: none;/*列表无标记*/
+}
+a,a:active,a:focus,a:hover{
+    text-decoration: none; /* 文本修饰：无 */
+    color: inherit;/*inherit 关键字指定一个属性应从父元素继承它的值。*/
+}
+input{/*内边距和边距不再会增加它的宽度*/
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+/*重置表格元素*/
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
-//删除文章
-function del_article(id){
-    lunhui.confirm(id,\'{:url("del_article")}\');
+/*线路列表*/
+.list{
+    width: 100%;
 }
 
-//审核状态
-function used_state(id){
-    lunhui.status(id,\'{:url("used_state")}\',\'已审核\',\'未审核\');
+.list-item{
+    width: 100%;
+    height: 300px;
+    background-color: white;
 }
 
-</script>
-</body>
-</html>';
+.img_box{
+    width: 100%;
+    height: 200px;
+    position: relative;
+}
+
+.lazy{
+    width: 100%;
+    height: 200px;
+}
+
+.prices::before{
+    content: "￥";
+}
+.prices{
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    color: white;
+    font-size: 18px;
+    background-color: rgba(0,0,0,0.2);
+}
+.prices::after{
+    content: "起";
+}
+.dot{
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    color: white;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.icon{
+    height: 30px;
+    vertical-align: middle;
+    position: relative;
+    bottom: 2px;
+    left: 5px;
+}
+
+.info{
+    width: 100%;
+    padding: 10px 0 0 6px;
+}
+
+.info>h3{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.detail{
+    margin: 10px 0;
+    font-size: 14px;
+    color: #999;
+}
+
+.tag-items{
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    padding: 2px 10px;
+    color: #CCB68A;
+    background-color: #F3EEE0;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.volume_temp{
+    float: right;
+    margin-right: 10px;
+    color: #999;
+}';
     }
 }
 
