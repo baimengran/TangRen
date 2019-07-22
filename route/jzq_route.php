@@ -57,8 +57,10 @@ Route::get('index/personal/fraction_goods','index/Personal/fraction_goods');
 Route::post('index/personal/buy','index/Personal/buy');
 //个人中心积分兑换商品查看订单接口
 Route::post('index/personal/order','index/Personal/order');
-//个人中心地址管理接口
+//个人中心地址添加接口
 Route::post('index/personal/address','index/Personal/address');
+//个人中心地址添加接口
+Route::get('index/personal/address_select','index/Personal/address_select');
 //个人中心编辑地址接口
 Route::post('index/personal/address_edit','index/Personal/address_edit');
 //个人中心删除地址接口
