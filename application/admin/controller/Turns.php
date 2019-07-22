@@ -27,6 +27,7 @@ class Turns extends Controller
     //添加轮播图
     public function add_turns(\think\Request $request)
     {
+
         //获取轮播图信息
         $post = $request->post();
 
@@ -39,7 +40,6 @@ class Turns extends Controller
         ];
 
         if(!empty($post)){
-
             if($post['title'] > 6){
                 return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'类型不能大于6','retData'=>$post['title']],320);
             }
@@ -51,6 +51,7 @@ class Turns extends Controller
                 // 验证失败 输出错误信息
                 return json_encode($date,320);
             }
+
             $data = ['turns_class' => $post['title'], 'turns_img' => $post['photo'] ];
             $res = Db::table('think_turns_list')->insert($data);
 

@@ -51,7 +51,7 @@ class Personal extends Controller
 //        }catch(Exception $e){
 //            Log::error($e->getMessage());
 //        }
-
+        print_r($fraction);die;
         $date = ['fraction'=> $fraction,'goods'=>$goods_list];
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
