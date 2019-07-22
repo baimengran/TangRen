@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\admin\model\MemberModel;
+use app\index\model\AddressPhone;
 use app\index\model\FractionModel;
 use app\index\model\UserModel;
 use think\Controller;
@@ -278,63 +279,22 @@ class Personal extends Controller
 
         //判断有无错误
         if(true !== $result){
-            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
             // 验证失败 输出错误信息
-            return json_encode($date,320);
+            return json_encode(['errcode'=> 1,'errMsg'=>'error','ertips'=>$result],320);
         }
         //查看有无这个地址
-        $date = Db::table('think_address_phone')->find($post['address_id']);
-
-        if(!$date){
+        $data = Db::table('think_address_phone')->find($post['address_id']);
+        if(!$data){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这条信息'],320);
         }
-        //修改这个用户的地址记录
-        $FractionModel = new FractionModel();
 
-        if(isset($post['default_address']) && $post['default_address'] == 0){
-            //查询出默认地址的主键
-            $res= Db::table('think_address_phone')
-                ->field('address_id')
-                ->where('id',$post['id'])
-                ->where('default_address',$post['default_address'])
-                ->find();
-            //将之前状态是0的ID改为1
-            $res = Db::name('address_phone')
-                ->update([
-                    'default_address'  =>1,
-                    'address_id'    =>$res['address_id']
-                ]);
-
-            //修改新的地址为默认地址
-            $res = Db::name('address_phone')
-                ->update([
-                    'city'          =>$post['city'],
-                    'area'          =>$post['area'],
-                    'address'       =>$post['address'],
-                    'mobile_phone'  =>$post['mobile_phone'],
-                    'default_address'  =>$post['default_address'],
-                    'id'            =>$post['id'],
-                    'address_id'    =>$post['address_id']
-                ]);
-
-            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$res],320);
-
-        }else{
-            $post['default_address'] = 1;
-            $res = Db::name('address_phone')
-                ->update([
-                    'city'          =>$post['city'],
-                    'area'          =>$post['area'],
-                    'address'       =>$post['address'],
-                    'mobile_phone'  =>$post['mobile_phone'],
-                    'default_address'  =>$post['default_address'],
-                    'id'            =>$post['id'],
-                    'address_id'    =>$post['address_id']
-                ]);
-
-            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$res],320);
-
+        if (isset($post['default_address']) && $post['default_address'] == 0){
+            Db::table('think_address_phone')->where(['id'=>$post['id']])->update(['default_address'=>1]);
         }
+
+        Db::table('think_address_phone')->where(['address_id'=>$post['address_id']])->update($post);
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>1],320);
+
     }
 
     /**
