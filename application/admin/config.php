@@ -9,5 +9,6 @@ return [
         '__JS__' => '/public/static/admin/js',
         '__IMG__' => '/public/static/admin/images',
         '__UPLOADS__'=>'/public/uploads',
+        '__ADMIN__'=>'/public/static/admin/',
     ),
 ];

@@ -352,6 +352,7 @@ class Community
      */
     public function collect()
     {
+
         //获取登录用户ID
         if (!$id = getUserId()) {
             throw new BannerMissException([
@@ -360,26 +361,34 @@ class Community
             ]);
         }
 
-        if (!$community_id = input('community_id')) {
+        if (!$module_id = input('module_id')) {
             throw new BannerMissException([
                 'code' => 400,
                 'ertips' => '缺少必要参数'
             ]);
         }
+        if(!$module_type = ucfirst(input('module_type'))){
+           throw new BannerMissException([
+               'code'=>400,
+               'ertips'=>'缺少必要参数'
+           ]);
+        }
         $explain = '';
 
-        $community = new CommunityModel();
+        $community = new $module_type.Model();
+
+        return $community;
 //        $db = $community->db(false);
         Db::startTrans();
         try {
-            $community = $community->get($community_id);
+            $community = $community->get($module_id);
 
             $collect = Db::name('member_collect')
                 ->where('module_id', 'eq', $community->id)
-                ->where('module_type', 'community')
+                ->where('module_type', $module_type)
                 ->where('user_id', 'eq', $id)
                 ->find();
-            //判断是否有点赞数据
+            //判断是否有收藏数据
             if ($collect) {
                 //判断点赞数据是否软删除
                 if ($collect['delete_time']) {
