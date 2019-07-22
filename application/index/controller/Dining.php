@@ -322,7 +322,6 @@ class Dining extends Controller
         if(!isset($post['path'])){
             $post['path'] = '';
         }else{
-//            $post['path'] = implode(",", $post['path']);
             $post['path'] = $post['path'];
         }
 

@@ -118,7 +118,7 @@ class Personal extends Controller
                 ]);
 
             //将用户购买的商品加入到订单表中
-            $data = ['id' => $post['id'], 'goods_id' => $post['goods_id'],'order_status'=> '0','order_time'=>time() ];
+            $data = ['id' => $post['id'], 'goods_id' => $post['goods_id'],'order_status'=> '0','order_time'=>date('Y年m月d日',time()) ];
             $order_id = Db::table('think_goods_order')->insertGetId($data);
 
             // 提交事务
@@ -131,7 +131,7 @@ class Personal extends Controller
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'购买失败'],320);
         }
 
-        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'购买成功'],320);
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'购买成功','retData'=>$order_id],320);
     }
 
     /**
@@ -166,6 +166,49 @@ class Personal extends Controller
         $date = $FractionModel->order($post);
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'订单查询成功','retData'=>$date],320);
+    }
+
+    /**
+     * 个人中心地址查看接口
+     * 输入：用户ID 商品ID
+     * 返回：
+     */
+    public function address_select(\think\Request $request)
+    {
+        //获取参数
+        $post = $request->get();
+
+        $rule =   [
+            'id'=> 'require',
+        ];
+        $message  = [
+            'id.require' => '用户ID不能为空',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
+        //查看有无这个用户
+        $date = Db::table('think_member')->find($post['id']);
+
+        if(!$date){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个地址'],320);
+        }
+        //删除这个用户的地址记录
+        $FractionModel = new FractionModel();
+        $res = Db::table('think_address_phone')
+            ->where('id',$post['id'])
+            ->select();
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$res],320);
+
     }
 
     /**
