@@ -48,6 +48,9 @@ class UsedProductModel extends Model
         return $this->morphMany('MemberPraiseModel', 'module');
     }
 
+    public function memberCollect(){
+        return $this->morphMany('MemberCollectModel','module');
+    }
     /**
      * 根据搜索条件获取用户列表信息
      * @author [田建龙] [864491238@qq.com]

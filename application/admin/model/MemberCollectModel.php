@@ -25,4 +25,7 @@ class MemberCollectModel extends Model
         return $this->morphTo('module');
     }
 
+    public function usedProduct(){
+        return $this->morphTo('module');
+    }
 }

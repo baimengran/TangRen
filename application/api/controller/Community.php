@@ -10,9 +10,12 @@ namespace app\api\controller;
 
 
 use app\admin\model\CommunityModel;
+use app\admin\model\JobSeekModel;
 use app\admin\model\MemberCollectModel;
 use app\admin\model\MemberModel;
 use app\admin\model\MemberPraiseModel;
+use app\admin\model\RentHouseModel;
+use app\admin\model\UsedProductModel;
 use app\admin\model\UserTaskModel;
 use app\api\exception\BannerMissException;
 use think\Db;
@@ -367,7 +370,7 @@ class Community
                 'ertips' => '缺少必要参数'
             ]);
         }
-        if(!$module_type = ucfirst(input('module_type'))){
+        if(!$module_type = input('module_type')){
            throw new BannerMissException([
                'code'=>400,
                'ertips'=>'缺少必要参数'
@@ -375,16 +378,50 @@ class Community
         }
         $explain = '';
 
-        $community = new $module_type.Model();
+        switch($module_type){
+            case 1:
+                //二手商品
+                $module_class = new UsedProductModel();
+                $module_type='used_product';
+                break;
+            case 2:
+                //房屋出租
+                $module_class = new RentHouseModel();
+                $module_type='rent_house';
+                break;
+            case 3:
+                //求职招聘
+                $module_class = new JobSeekModel();
+                $module_type='job_seek';
+                break;
+            case 4:
+                //社区动态
+                $module_class = new CommunityModel();
+                $module_type='community';
+                break;
+            case 5:
+                //酒店
+                $module_class = new UsedProductModel();
+                $module_type='used_product';
+                break;
+            case 6:
+                //美食
+                $module_class = new UsedProductModel();
+                $module_type='used_product';
+                break;
+            case 7:
+                //打车
+                $module_class = new UsedProductModel();
+                $module_type='used_product';
+                break;
+        }
 
-        return $community;
-//        $db = $community->db(false);
         Db::startTrans();
-        try {
-            $community = $community->get($module_id);
+//        try {
+            $module = $module_class->get($module_id);
 
             $collect = Db::name('member_collect')
-                ->where('module_id', 'eq', $community->id)
+                ->where('module_id', 'eq', $module->id)
                 ->where('module_type', $module_type)
                 ->where('user_id', 'eq', $id)
                 ->find();
@@ -394,32 +431,34 @@ class Community
                 if ($collect['delete_time']) {
                     //将软删除恢复
                     Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => null]);
-                    $community->collect = $community['collect'] + 1;
+                    $module->collect = $module['collect'] + 1;
                     $explain = '收藏成功';
                     //加积分
                     $this->addIntegral($id, 'collect');
                 } else {
                     //软删除收藏
                     Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => time()]);
-                    $community->collect = $community['collect'] - 1;
+                    $module->collect = $module['collect'] - 1;
                     $explain = '以取消收藏';
                 }
 
             } else {
-                $community->membercollect()->save(['user_id' => $id, 'module_id' => $community->id]);
-                $community->collect = $community['collect'] + 1;
+                return $id.'/'.$module_id;
+                $module->membercollect()->save(['user_id' => $id, 'module_id' => $module->id]);
+                return view();
+                $module->collect = $module['collect'] + 1;
                 $explain = '收藏成功';
                 //加积分
                 $this->addIntegral($id, 'collect');
             }
 
-            $community->save();
+            $module->save();
             Db::commit();
             return jsone($explain, 200);
-        } catch (Exception $e) {
-            Db::rollback();
-            throw new BannerMissException();
-        }
+//        } catch (Exception $e) {
+//            Db::rollback();
+//            throw new BannerMissException();
+//        }
     }
 
     /**
