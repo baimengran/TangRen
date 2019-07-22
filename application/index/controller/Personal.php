@@ -38,20 +38,14 @@ class Personal extends Controller
         //接收数据
         $get = $request->get('id');
 
-//        try{
         //获取用户积分
         $user = new UserModel();
         $fraction = $user->user_fraction($get);
-
 
         //获取商品信息
         $goods = new FractionModel();
         $goods_list = $goods->index();
 
-//        }catch(Exception $e){
-//            Log::error($e->getMessage());
-//        }
-        
         $date = ['fraction'=> $fraction,'goods'=>$goods_list];
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
@@ -142,7 +136,7 @@ class Personal extends Controller
     public function order(\think\Request $request)
     {
         //接收参数
-        $post = $request->post();
+        $post = $request->get();
 
         $rule =   [
             'id'              => 'require',
@@ -350,6 +344,7 @@ class Personal extends Controller
      */
     public function address(\think\Request $request)
     {
+
         //获取参数
         $post = $request->post();
 
@@ -382,6 +377,7 @@ class Personal extends Controller
         if(isset($post['default_address']) && $post['default_address'] == 0){
             $create_address = $FractionModel->create_address($post);
         }else{
+
             $data = [
                 'city'          =>$post['city'],
                 'area'          =>$post['area'],
@@ -390,6 +386,7 @@ class Personal extends Controller
                 'default_address' =>1,
                 'id'            =>$post['id']
             ];
+
             $create_address = Db::table('think_address_phone')->insert($data);
         }
 
