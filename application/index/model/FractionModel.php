@@ -53,7 +53,7 @@ class FractionModel extends Model
         $date = Db::table('think_goods_order')->alias('a')
             ->join('think_goods_fraction b','a.goods_id=b.goods_id')
             ->join('think_member c','a.id=c.id')
-            ->field('b.goods_id,b.goods_name,b.goods_img,b.goods_fraction,c.nickname,c.head_img,a.order_time')
+            ->field('b.goods_id,b.goods_name,b.goods_img,b.goods_fraction,c.nickname,c.head_img,a.logistics,a.order_time')
             ->order('a.order_time desc')
             ->paginate(25);
 
