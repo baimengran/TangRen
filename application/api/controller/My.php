@@ -36,17 +36,23 @@ class My
         //实例化收藏模型
         $modules = new MemberCollectModel();
         //查询当前用户收藏的内容
-        $modules = $modules->all(function($query)use($id){
-            $query->where('user_id',$id)->order('create_time','desc');
-        });
+        $modules = $modules::where('user_id',$id)->order('create_time','desc')->paginate(10);
+//        $modules = $modules->all(function($query)use($id){
+//            $query->where('user_id',$id)->order('create_time','desc');
+//        });
 //        return $modules;
-
+        $data['total'] = $modules->total();
+        $data['per_page']=$modules->listRows();
+        $data['current_page']=$modules->currentPage();
+        $data['last_page']=$modules->lastPage();
         foreach($modules as $module) {
-            if($module['module_type']=='community_model'){
-
+            if($module['module_type']=='used_protect_model'){
+                return 1;
+                $data['data']['user_issue']=$module->module;
             }
-            $data[]= $module->module;
+//            $data['data'][]= $module->module;
         }
+
 return $data;
 //        return $id;
         try {
