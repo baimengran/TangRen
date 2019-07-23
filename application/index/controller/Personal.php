@@ -762,6 +762,19 @@ class Personal extends Controller
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$task],320);
     }
 
+    /**
+     * 查看个人任务完成接口
+     * 输入：用户ID
+     * 返回：任务完成情况
+     */
+    public function about(\think\Request $request)
+    {
+        //查询关于我们表
+        $date = Db::table('think_about')->find();
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
+    }
+
 
 
 }

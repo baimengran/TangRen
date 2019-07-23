@@ -82,6 +82,9 @@ Route::post('index/personal/integral_task','index/Personal/integral_task');
 //查看个人任务完成接口
 Route::post('index/personal/select_task','index/Personal/select_task');
 
+//查看关于我们接口
+Route::get('index/personal/about','index/Personal/about');
+
 //购买积分接口
 Route::post('index/pay/shop','index/Pay/shop');
 //回调方法接口
