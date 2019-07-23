@@ -142,21 +142,32 @@ class Personal extends Controller
         $address = Db::table('think_address_phone')
             ->field('city')
             ->where('id',$get['id'])
-            ->where('default_address',0)
+            ->where('address_id',$get['address_id'])
             ->find();
+        if(!$address){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个地址'],320);
+        }
 
         $user = Db::table('think_member')
             ->where('id',$get['id'])
             ->find();
+        if(!$user){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个用户'],320);
+        }
 
         $goods = Db::table('think_goods_fraction')
             ->where('goods_id',$get['goods_id'])
             ->find();
 
-        if(!$user){
-            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个用户'],320);
+        if(!$goods){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个商品'],320);
         }
+
         $date = array_merge($user,$address,$goods);
+
+        if(!$date){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'查询失败'],320);
+        }
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
     }
