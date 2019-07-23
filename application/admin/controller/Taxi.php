@@ -91,11 +91,12 @@ class Taxi extends Controller
                 $region[] = $vv;
             }
         }
-        //获取营业时间
-        $taxiModel->
+        //获取营业时间周，时，分
+        $week = $taxiModel->select_week();
+        $day= $taxiModel->select_day();
+        $minute= $taxiModel->select_minute();
 
-        $date = ['region'=>$region];
-
+        $date = ['region'=>$region,'week'=>$week,'day'=>$day,'minute'=>$minute];
 
         //将数据传至页面
         $this->assign('list',$date);

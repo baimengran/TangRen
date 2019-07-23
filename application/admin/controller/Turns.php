@@ -27,7 +27,6 @@ class Turns extends Controller
     //添加轮播图
     public function add_turns(\think\Request $request)
     {
-
         //获取轮播图信息
         $post = $request->post();
 
@@ -66,19 +65,13 @@ class Turns extends Controller
         }
 
         return $this->fetch();
-
-        //将数据传至页面
-//        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$list],320);
     }
 
     //修改轮播图
     public function edit_turns($id)
     {
-
         $turns = new TurnsModel();
-
         $data = $turns->find($id);
-
         $this->assign('data',$data);
         return $this->fetch();
     }

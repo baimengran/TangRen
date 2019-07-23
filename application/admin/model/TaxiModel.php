@@ -23,6 +23,33 @@ class TaxiModel extends Model
 
         return $date;
     }
+    //获取一周营业时间
+    public function select_week()
+    {
+        $week =['周一','周二','周三','周四','周五','周六','周日'];
+
+        return $week;
+    }
+    //获取一天营业时间
+    public function select_day()
+    {
+        $day = [];
+        for ($i=0; $i<=24; $i++)
+        {
+            $day[] =  $i;
+        }
+        return $day;
+    }
+    //获取营业时间哪一分钟
+    public function select_minute()
+    {
+        $day = [];
+        for ($i=0; $i<=60; $i++)
+        {
+            $day[] =  $i;
+        }
+        return $day;
+    }
 
 
     //添加数据方法

@@ -65,8 +65,8 @@ Route::post('index/personal/update_account','index/Personal/update_account');
 Route::post('index/personal/update_defa','index/Personal/update_defa');
 //个人中心地址添加接口
 Route::post('index/personal/address','index/Personal/address');
-//个人中心地址添加接口
-Route::post('index/personal/address_select','index/Personal/address_select');
+//个人中心地址查看接口
+Route::get('index/personal/address_select','index/Personal/address_select');
 //个人中心编辑地址接口
 Route::post('index/personal/address_edit','index/Personal/address_edit');
 //个人中心删除地址接口
