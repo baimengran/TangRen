@@ -72,52 +72,44 @@ class Turns extends Controller
     }
 
     //修改轮播图
-    public function edit_turns(\think\Request $request)
+    public function edit_turns($id)
     {
-        $post = $request->post();
-        print_r($post);die;
+
         $turns = new TurnsModel();
+
         $data = $turns->find($id);
-
-        //获取轮播图信息
-        $post = $request->post();
-
-        $rule =   [
-            'title' => 'require|number'
-        ];
-        $message  = [
-            'title.require' => '轮播图类型不能为空',
-            'title.number'  => '轮播图类型错误',
-        ];
-
-        if(!empty($post)){
-            if($post['title'] > 6){
-                return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'类型不能大于6','retData'=>$post['title']],320);
-            }
-            //实例化验证器
-            $result=$this->validate($post,$rule,$message);
-            //判断有无错误
-            if(true !== $result){
-                $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
-                // 验证失败 输出错误信息
-                return json_encode($date,320);
-            }
-            $data = ['turns_class' => $post['title'], 'turns_img' => $post['photo'] ];
-            $res = Db::table('think_turns_list')->insert($data);
-
-            if($res){
-                $arr = ['code'=>1,'msg'=>'添加成功'];
-                return $arr;
-            }else{
-                $arr = ['code'=>2,'msg'=>'添加失败'];
-                return $arr;
-            }
-
-        }
 
         $this->assign('data',$data);
         return $this->fetch();
+    }
+    // 修改提交页面
+    public function update_turns(Request $request)
+    {
+        $post = $request->post();
+        $data['turns_img'] = $post['photo'];
+        $data['turns_class'] = $post['title'];
+        $res = Db::name('turns_list')->where('turns_id',$post['id'])->update($data);
 
+        if($res){
+            $arr = ['code'=>1,'msg'=>'修改成功'];
+            return $arr;
+        }else{
+            $arr = ['code'=>2,'msg'=>'修改失败'];
+            return $arr;
+        }
+    }
+
+    public function del($id)
+    {
+        $data['turns_status'] = date('Ymd H:i:s',time());
+        $res = Db::name('turns_list')->where('turns_id',$id)->update($data);
+        if($res){
+            $arr = ['code'=>1,'msg'=>'删除成功'];
+            return $arr;
+        }else{
+            $arr = ['code'=>2,'msg'=>'删除失败'];
+            return $arr;
+        }
     }
 
     //接收添加轮播图方法

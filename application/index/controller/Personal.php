@@ -139,24 +139,18 @@ class Personal extends Controller
         }
 
         $address = Db::table('think_address_phone')
-//            ->field('city,area,address')
+            ->field('city,area,address')
             ->where('id',$get['id'])
             ->where('default_address',0)
-            ->select();
+            ->find();
 
         $user = Db::table('think_member')
             ->field('account,nickname,head_img,integral')
             ->where('id',$get['id'])
-            ->select();
-
-
-        print_r($address);die;
+            ->find();
         $date = array_merge($user,$address);
 
-
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
-
-
     }
 
     /**

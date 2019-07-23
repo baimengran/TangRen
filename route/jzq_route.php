@@ -101,7 +101,7 @@ Route::rule('admin/turns/index','index/Turns/index');
 //添加轮播图
 Route::rule('admin/turns/add_turns','index/Turns/add_turns');
 //编辑轮播图
-Route::post('admin/turns/edit_turns/:id','index/Turns/edit_turns');
+Route::get('admin/turns/edit_turns','index/Turns/edit_turns');
 //删除轮播图
 Route::rule('admin/turns/del','index/Turns/del');
 
