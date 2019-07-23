@@ -134,6 +134,7 @@ class Personal extends Controller
     public function integral_shop(\think\Request $request)
     {
         $get = $request->get();
+
         if(!$get['id']){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'用户ID不能为空'],320);
         }
@@ -148,6 +149,10 @@ class Personal extends Controller
             ->field('account,nickname,head_img,integral')
             ->where('id',$get['id'])
             ->find();
+
+        if(!$user){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个用户'],320);
+        }
         $date = array_merge($user,$address);
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
@@ -199,6 +204,13 @@ class Personal extends Controller
 
         if(!$post['id']){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'用户ID不能为空'],320);
+        }
+        $user = Db::table('think_member')
+            ->where('id',$post['id'])
+            ->find();
+        
+        if(!$user){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个用户'],320);
         }
 
         if(!$post['address_id']){
