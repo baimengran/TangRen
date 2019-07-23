@@ -149,6 +149,7 @@ class Personal extends Controller
         }
 
         $user = Db::table('think_member')
+            ->field('id,account,nickname,nickname,password,sex,group_id,head_img,integral,money,mobile,create_time,update_time,login_num,status,closed,token,session_id')
             ->where('id',$get['id'])
             ->find();
         if(!$user){
