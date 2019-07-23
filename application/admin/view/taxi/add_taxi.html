@@ -52,8 +52,15 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">营业时间：</label>
-                            <select class="col-sm-4 control-label" name="parentid">
+                            <select class="col-sm-1 control-label" name="parentid">
                                 <option value="0"></option>
+                                {volist name="list['week']" id="vo"}
+                                <option value="1">{$vo}</option>
+                                {{/volist}}
+                            </select>
+                            <select class="col-sm-1 control-label" name="parentid">
+                                <option value="0"></option>
+                                {volist name="list['day']" id="vo"}
                                 <option value="1">{$vo}</option>
                                 {{/volist}}
                             </select>

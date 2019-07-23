@@ -140,20 +140,35 @@ class Personal extends Controller
         }
 
         $address = Db::table('think_address_phone')
-            ->field('city,area,address')
+            ->field('city')
             ->where('id',$get['id'])
-            ->where('default_address',0)
+            ->where('address_id',$get['address_id'])
             ->find();
+        if(!$address){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个地址'],320);
+        }
 
         $user = Db::table('think_member')
-            ->field('account,nickname,head_img,integral')
+            ->field('id,account,nickname,nickname,password,sex,group_id,head_img,integral,money,mobile,create_time,update_time,login_num,status,closed,token,session_id')
             ->where('id',$get['id'])
             ->find();
-
         if(!$user){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个用户'],320);
         }
-        $date = array_merge($user,$address);
+
+        $goods = Db::table('think_goods_fraction')
+            ->where('goods_id',$get['goods_id'])
+            ->find();
+
+        if(!$goods){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个商品'],320);
+        }
+
+        $date = array_merge($user,$address,$goods);
+
+        if(!$date){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'查询失败'],320);
+        }
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
     }
@@ -208,7 +223,7 @@ class Personal extends Controller
         $user = Db::table('think_member')
             ->where('id',$post['id'])
             ->find();
-        
+
         if(!$user){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个用户'],320);
         }
@@ -247,7 +262,7 @@ class Personal extends Controller
     /**
      * 修改绑定手机接口
      * 输入：用户ID
-     * 返回：用户昵称，头像，在线多少天，签到状态
+     * 返回：
      */
     public function update_account(\think\Request $request)
     {
@@ -392,14 +407,11 @@ class Personal extends Controller
             'address_id'=> 'require',
             'id'        => 'require',
             'city'      => 'require',
-            'area'      => 'require',
-            'address'   => 'require',
         ];
         $message  = [
             'id.require'         => '用户ID不能为空',
-            'city.require'       => '城市不能为空',
-            'area.require'       => '区域ID不能为空',
-            'address.require'    => '具体地址不能为空',
+            'city.require'       => '地址不能为空',
+            'address_id.address_id'    => '地址ID不能为空',
         ];
 
         //实例化验证器
@@ -428,7 +440,7 @@ class Personal extends Controller
 
     /**
      * 个人中心地址管理接口
-     * 输入：用户ID 商品ID
+     * 输入：用户ID
      * 返回：
      */
     public function address(\think\Request $request)
@@ -440,14 +452,10 @@ class Personal extends Controller
         $rule =   [
             'id'        => 'require',
             'city'      => 'require',
-            'area'      => 'require',
-            'address'   => 'require',
         ];
         $message  = [
             'id.require'         => '用户ID不能为空',
-            'city.require'       => '城市不能为空',
-            'area.require'       => '区域ID不能为空',
-            'address.require'    => '具体地址不能为空',
+            'city.require'       => '地址不能为空',
         ];
 
         //实例化验证器
@@ -467,8 +475,6 @@ class Personal extends Controller
 
             $data = [
                 'city'          =>$post['city'],
-                'area'          =>$post['area'],
-                'address'       =>$post['address'],
                 'default_address' =>1,
                 'id'            =>$post['id']
             ];

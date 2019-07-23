@@ -13,6 +13,17 @@ class UserModel extends Model
             ->where('id',$get)
             ->find();
 
+        $sign_time = date('Ymd',time());
+        //查询任务表
+        $sign = Db::table('think_user_task')
+            ->field('sign_type')
+            ->where('task_id',$get)
+            ->where('sign',$sign_time)
+            ->find();
+
+        if(!$sign) $sign = 1;
+        $user['sign_status'] = $sign['sign_type'];
+
         //获取之前的时间
         $create_time = date('Ymd',$user['create_time']);
 
