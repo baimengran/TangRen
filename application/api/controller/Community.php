@@ -443,8 +443,9 @@ class Community
                 }
 
             } else {
-//                return $id.'/'.$module_id;
-                $module->save(['user_id' => $id, 'module_id' => $module->id,'module_type'=>$module_type]);
+//                return $id.'/'.$module_id.'/'.$module_type;
+//                $module->memberCollect()->save(['user_id'=>$id]);
+                $memberCollect =MemberCollectModel::create(['user_id' => $id, 'module_id' => $module->id,'module_type'=>$module_type]);
 //                return view();
                 $module->collect = $module['collect'] + 1;
                 $explain = '收藏成功';
