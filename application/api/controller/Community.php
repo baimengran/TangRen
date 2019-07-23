@@ -443,9 +443,9 @@ class Community
                 }
 
             } else {
-                return $id.'/'.$module_id;
-                $module->membercollect()->save(['user_id' => $id, 'module_id' => $module->id]);
-                return view();
+//                return $id.'/'.$module_id;
+                $module->save(['user_id' => $id, 'module_id' => $module->id,'module_type'=>$module_type]);
+//                return view();
                 $module->collect = $module['collect'] + 1;
                 $explain = '收藏成功';
                 //加积分
