@@ -21,7 +21,7 @@ var lunhui = {
 	        $.getJSON(url, {'id' : id}, function(res){
 	            if(res.code == 1){
 	                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
-	                Ajaxpage()
+	                Ajaxpage();
 	            }else{
 	                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
 	            }
