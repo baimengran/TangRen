@@ -1,7 +1,6 @@
 <?php
 namespace app\index\controller;
 
-use app\admin\model\MemberModel;
 use app\index\model\FractionModel;
 use app\index\model\UserModel;
 use think\Controller;
@@ -112,7 +111,7 @@ class Personal extends Controller
                 ]);
 
             //将用户购买的商品加入到订单表中
-            $data = ['id' => $post['id'], 'goods_id' => $post['goods_id'],'order_status'=> '0','order_time'=>date('Y年m月d日',time()) ];
+            $data = ['id' => $post['id'], 'goods_id' => $post['goods_id'],'order_status'=> '0','order_time'=>date('Y年m月d日',time()),'logistics'=>'1' ];
             $order_id = Db::table('think_goods_order')->insertGetId($data);
 
             // 提交事务
@@ -126,6 +125,38 @@ class Personal extends Controller
         }
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'购买成功','retData'=>$order_id],320);
+    }
+    /**
+     * 马上兑换支付页接口(返回用户头像，昵称，默认地址，手机号)
+     * 输入：用户ID 商品ID
+     * 返回：购买成功状态
+     */
+    public function integral_shop(\think\Request $request)
+    {
+        $get = $request->get();
+        if(!$get['id']){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'用户ID不能为空'],320);
+        }
+
+        $address = Db::table('think_address_phone')
+//            ->field('city,area,address')
+            ->where('id',$get['id'])
+            ->where('default_address',0)
+            ->select();
+
+        $user = Db::table('think_member')
+            ->field('account,nickname,head_img,integral')
+            ->where('id',$get['id'])
+            ->select();
+
+
+        print_r($address);die;
+        $date = array_merge($user,$address);
+
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
+
+
     }
 
     /**
@@ -160,6 +191,100 @@ class Personal extends Controller
         $date = $FractionModel->order($post);
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'订单查询成功','retData'=>$date],320);
+    }
+
+    /**
+     * 修改默认地址接口
+     * 输入：用户ID
+     * 返回：用户昵称，头像，在线多少天，签到状态
+     */
+    public function update_defa(\think\Request $request)
+    {
+        //获取地址ID
+        $post = $request->post();
+
+        if(!$post['id']){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'用户ID不能为空'],320);
+        }
+
+        if(!$post['address_id']){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'修改地址不能为空'],320);
+        }
+        if(!isset($post['default_address']) || $post['default_address'] != 0){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'修改默认状态必须是0'],320);
+        }else{
+            //查看地址是否存在
+            $date = Db::table('think_address_phone')->find($post['address_id']);
+
+            if(!$date){
+                return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个地址'],320);
+            }
+            //将用户原来的默认地址改为普通状态
+            Db::table('think_address_phone')->where('id',$post['id'])
+                ->where(['default_address'=>0 ])->update(['default_address'=>1]);
+
+            //执行修改操作
+            $date = Db::name('address_phone')
+                ->update([
+                    'default_address' =>'0',
+                    'address_id'      =>$post['address_id']
+                ]);
+
+            if(!$date){
+                return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'修改失败','retData'=>$date],320);
+            }
+
+            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'修改成功','retData'=>$date],320);
+        }
+    }
+
+    /**
+     * 修改绑定手机接口
+     * 输入：用户ID
+     * 返回：用户昵称，头像，在线多少天，签到状态
+     */
+    public function update_account(\think\Request $request)
+    {
+        //获取地址ID
+        $post = $request->post();
+
+        $rule =   [
+            'id' => 'require|number',
+            'account' => 'require',
+        ];
+        $message  = [
+            'id.require'      => '用户ID不能为空',
+            'id.number'       => '用户ID类型错误',
+            'account.require' => '用户手机号不能为空',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
+        //查询之前有无绑定
+        $id = Db::table('think_member')
+            ->where('id',$post['id'])
+            ->find();
+        if(!$id){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个用户'],320);
+        }
+
+            //执行添加添加操作
+            $date = Db::name('member')
+                ->update([
+                    'account' =>$post['account'],
+                    'id'      =>$post['id']
+                ]);
+
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'手机绑定成功','retData'=>$date],320);
+
     }
 
     /**
@@ -263,14 +388,12 @@ class Personal extends Controller
             'city'      => 'require',
             'area'      => 'require',
             'address'   => 'require',
-            'mobile_phone' => 'require',
         ];
         $message  = [
             'id.require'         => '用户ID不能为空',
             'city.require'       => '城市不能为空',
             'area.require'       => '区域ID不能为空',
             'address.require'    => '具体地址不能为空',
-            'mobile_phone.require'=> '绑定电话不能为空',
         ];
 
         //实例化验证器
@@ -278,63 +401,23 @@ class Personal extends Controller
 
         //判断有无错误
         if(true !== $result){
-            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
             // 验证失败 输出错误信息
-            return json_encode($date,320);
+            return json_encode(['errcode'=> 1,'errMsg'=>'error','ertips'=>$result],320);
         }
         //查看有无这个地址
-        $date = Db::table('think_address_phone')->find($post['address_id']);
-
-        if(!$date){
+        $data = Db::table('think_address_phone')->find($post['address_id']);
+        if(!$data){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这条信息'],320);
         }
-        //修改这个用户的地址记录
-        $FractionModel = new FractionModel();
 
-        if(isset($post['default_address']) && $post['default_address'] == 0){
-            //查询出默认地址的主键
-            $res= Db::table('think_address_phone')
-                ->field('address_id')
-                ->where('id',$post['id'])
-                ->where('default_address',$post['default_address'])
-                ->find();
-            //将之前状态是0的ID改为1
-            $res = Db::name('address_phone')
-                ->update([
-                    'default_address'  =>1,
-                    'address_id'    =>$res['address_id']
-                ]);
 
-            //修改新的地址为默认地址
-            $res = Db::name('address_phone')
-                ->update([
-                    'city'          =>$post['city'],
-                    'area'          =>$post['area'],
-                    'address'       =>$post['address'],
-                    'mobile_phone'  =>$post['mobile_phone'],
-                    'default_address'  =>$post['default_address'],
-                    'id'            =>$post['id'],
-                    'address_id'    =>$post['address_id']
-                ]);
-
-            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$res],320);
-
-        }else{
-            $post['default_address'] = 1;
-            $res = Db::name('address_phone')
-                ->update([
-                    'city'          =>$post['city'],
-                    'area'          =>$post['area'],
-                    'address'       =>$post['address'],
-                    'mobile_phone'  =>$post['mobile_phone'],
-                    'default_address'  =>$post['default_address'],
-                    'id'            =>$post['id'],
-                    'address_id'    =>$post['address_id']
-                ]);
-
-            return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>$res],320);
-
+        if (isset($post['default_address']) && $post['default_address'] == 0){
+            Db::table('think_address_phone')->where(['id'=>$post['id']])->update(['default_address'=>1]);
         }
+
+        Db::table('think_address_phone')->where(['address_id'=>$post['address_id']])->update($post);
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'设置成功','retData'=>1],320);
+
     }
 
     /**
@@ -353,14 +436,12 @@ class Personal extends Controller
             'city'      => 'require',
             'area'      => 'require',
             'address'   => 'require',
-            'mobile_phone' => 'require',
         ];
         $message  = [
             'id.require'         => '用户ID不能为空',
             'city.require'       => '城市不能为空',
             'area.require'       => '区域ID不能为空',
             'address.require'    => '具体地址不能为空',
-            'mobile_phone.require'=> '绑定电话不能为空',
         ];
 
         //实例化验证器
@@ -382,7 +463,6 @@ class Personal extends Controller
                 'city'          =>$post['city'],
                 'area'          =>$post['area'],
                 'address'       =>$post['address'],
-                'mobile_phone'  =>$post['mobile_phone'],
                 'default_address' =>1,
                 'id'            =>$post['id']
             ];

@@ -55,8 +55,14 @@ Route::get('index/personal/index','index/Personal/index');
 Route::get('index/personal/fraction_goods','index/Personal/fraction_goods');
 //个人中心积分兑换商品接口
 Route::post('index/personal/buy','index/Personal/buy');
+//个人中心积分兑换商品支付页接口
+Route::get('index/personal/integral_shop','index/Personal/integral_shop');
 //个人中心积分兑换商品查看订单接口
 Route::post('index/personal/order','index/Personal/order');
+//个人中心手机号修改接口
+Route::post('index/personal/update_account','index/Personal/update_account');
+//个人中心默认地址修改接口
+Route::post('index/personal/update_defa','index/Personal/update_defa');
 //个人中心地址添加接口
 Route::post('index/personal/address','index/Personal/address');
 //个人中心地址添加接口
