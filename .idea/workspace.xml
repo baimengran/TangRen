@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb684b8e-68f3-42ef-8ea5-311b6ecf6be4" name="默认的" comment="">
-      <change beforePath="$PROJECT_DIR$/application/api/controller/Community.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/controller/Community.php" afterDir="false" />
-    </list>
+    <list default="true" id="fb684b8e-68f3-42ef-8ea5-311b6ecf6be4" name="默认的" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,8 +43,8 @@
       <file leaf-file-name="Community.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/api/controller/Community.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="446" column="47" selection-start-line="446" selection-start-column="47" selection-end-line="446" selection-end-column="47" />
+            <state relative-caret-position="142">
+              <caret line="445" column="61" selection-start-line="445" selection-start-column="61" selection-end-line="445" selection-end-column="61" />
               <folding>
                 <element signature="e#128#163#0#PHP" expanded="true" />
               </folding>
@@ -281,6 +279,19 @@
             <path>
               <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
               <item name="TangRen" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="index" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="index" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TangRen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TangRen" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -380,12 +391,12 @@
       <workItem from="1563692792958" duration="13695000" />
       <workItem from="1563758376447" duration="19288000" />
       <workItem from="1563781929251" duration="13561000" />
-      <workItem from="1563842831789" duration="1150000" />
+      <workItem from="1563842831789" duration="1967000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="406981000" />
+    <option name="totallyTimeSpent" value="407798000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -740,8 +751,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/api/controller/Community.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="446" column="47" selection-start-line="446" selection-start-column="47" selection-end-line="446" selection-end-column="47" />
+        <state relative-caret-position="142">
+          <caret line="445" column="61" selection-start-line="445" selection-start-column="61" selection-end-line="445" selection-end-column="61" />
           <folding>
             <element signature="e#128#163#0#PHP" expanded="true" />
           </folding>
