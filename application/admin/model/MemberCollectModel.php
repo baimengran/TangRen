@@ -20,12 +20,10 @@ class MemberCollectModel extends Model
     protected $autoWriteTimestamp = true;
     protected static $delete_time = 'delete_time';
 
-    public function community()
+    public function module()
     {
         return $this->morphTo('module');
     }
 
-    public function usedProduct(){
-        return $this->morphTo('module');
-    }
+
 }

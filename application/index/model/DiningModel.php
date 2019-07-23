@@ -6,6 +6,14 @@ use think\Model;
 
 class DiningModel extends Model
 {
+
+    protected $name='dining_list';
+    protected $pk = 'dining_id';
+
+    public function memberCollect(){
+        return $this->morphMany('MemberCollectModel','module');
+    }
+
     /**
      * index方法调用()
      * 查询1个默认地区

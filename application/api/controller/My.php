@@ -32,15 +32,42 @@ class My
                 'ertips' => '用户认证失败',
             ]);
         }
+
+        //实例化收藏模型
+        $modules = new MemberCollectModel();
+        //查询当前用户收藏的内容
+        $modules = $modules->all(function($query)use($id){
+            $query->where('user_id',$id)->order('create_time','desc');
+        });
+//        return $modules;
+
+        foreach($modules as $module) {
+            if($module['module_type']=='community_model'){
+
+            }
+            $data[]= $module->module;
+        }
+return $data;
 //        return $id;
         try {
             //获取当前用户收藏id
-            $module_ids = Db::name('member_collect')->where('user_id', $id)
-                ->where('module_type','community')
-                ->where('delete_time',null)
-                ->column('module_id');
+            $modules = Db::name('member_collect')->where('user_id', $id)
+//                ->where('module_type','community')
+                ->where('delete_time', null)
+                ->select();
+            foreach($modules as $module){
+                if($module['module_type']=='used_product'){
 
-//            //获取以收藏动态
+                }
+            }
+//            return $modules;
+            Db::name('community')->field('*')
+                ->union(function ($query) use ($modules) {
+
+                    $query->name('used_product')->where('');
+                });
+
+//            //获取用户以收藏数据
             $community = CommunityModel::with('user,topic,communityFile')
                 ->where('id', 'in', $module_ids)
                 ->paginate(20);
@@ -49,7 +76,7 @@ class My
             $data['current_page'] = $community->currentPage();
             $data['last_page'] = $community->lastPage();
             $data['data'] = [];
-                foreach($community as $val){
+                foreach ($community as $val) {
                     //获取点赞数据
                     $praise = Db::name('member_praise')->where('user_id', 'eq', getUserId())
                         ->where('module_id', 'eq', $val['id'])
@@ -60,7 +87,7 @@ class My
                     $collect = Db::name('member_collect')->where('user_id', 'eq', getUserId())
                         ->where('module_id', 'eq', $val['id'])
                         ->where('module_type', 'eq', 'community')
-                        ->where('delete_time',null)
+                        ->where('delete_time', null)
                         ->find();
 
 //                $data[]=$community;
@@ -89,7 +116,7 @@ class My
 
                     $val['user_praise'] = $praise;
                     $val['user_collect'] = $collect;
-                    $data['data'][] =$val;
+                    $data['data'][] = $val;
                 }
 
 

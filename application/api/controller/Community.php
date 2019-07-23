@@ -18,6 +18,9 @@ use app\admin\model\RentHouseModel;
 use app\admin\model\UsedProductModel;
 use app\admin\model\UserTaskModel;
 use app\api\exception\BannerMissException;
+use app\index\model\DiningModel;
+use app\index\model\HotelModel;
+use app\index\model\TaxiModel;
 use think\Db;
 use think\Exception;
 use think\Log;
@@ -33,14 +36,14 @@ class Community
     {
         if (!$search = input('search')) {
             if (!$order = input('order')) {
-                $order=3;
+                $order = 3;
             }
         }
         //判断是否有首页推荐状态参数
-        if($recommend = input('recommend')){
+        if ($recommend = input('recommend')) {
             $recommend_status = 0;
-        }else{
-            $recommend_status=1;
+        } else {
+            $recommend_status = 1;
         }
 
         $topic = input('topic_id');
@@ -53,16 +56,16 @@ class Community
         try {
             //查询有置顶的动态
             $communitySticky = new CommunityModel();
-            $stickies = $communitySticky->where('sticky_status',0)
-                ->where('recommend_status',1)->select();
+            $stickies = $communitySticky->where('sticky_status', 0)
+                ->where('recommend_status', 1)->select();
             //检查置顶是否过期
-            $updates=[];
-            foreach($stickies as $sticky){
-                if(time()>$sticky['sticky_end_time']){
+            $updates = [];
+            foreach ($stickies as $sticky) {
+                if (time() > $sticky['sticky_end_time']) {
 
-                     $val['id']=$sticky['id'];
-                     $val['sticky_status']=1;
-                     $updates[]=$val;
+                    $val['id'] = $sticky['id'];
+                    $val['sticky_status'] = 1;
+                    $updates[] = $val;
                 }
             }
             //批量更新过期置顶数据
@@ -71,9 +74,9 @@ class Community
             $community = new CommunityModel();
             if ($search) {
                 $community->where('body', 'like', '%' . $search . '%')
-                    ->where('recommend_status',$recommend_status);
+                    ->where('recommend_status', $recommend_status);
             } else {
-                $community = $community->where('recommend_status',$recommend_status);
+                $community = $community->where('recommend_status', $recommend_status);
                 switch ($order) {
                     case 1:
                         //热门
@@ -370,92 +373,116 @@ class Community
                 'ertips' => '缺少必要参数'
             ]);
         }
-        if(!$module_type = input('module_type')){
-           throw new BannerMissException([
-               'code'=>400,
-               'ertips'=>'缺少必要参数'
-           ]);
+        if (!$module_type = input('module_type')) {
+            throw new BannerMissException([
+                'code' => 400,
+                'ertips' => '缺少必要参数'
+            ]);
         }
         $explain = '';
 
-        switch($module_type){
+        switch ($module_type) {
             case 1:
                 //二手商品
                 $module_class = new UsedProductModel();
-                $module_type='used_product';
+                $module_type = 'used_product_model';
+                $pk = 'id';
                 break;
             case 2:
                 //房屋出租
                 $module_class = new RentHouseModel();
-                $module_type='rent_house';
+                $module_type = 'rent_house_model';
+                $pk = 'id';
                 break;
             case 3:
                 //求职招聘
                 $module_class = new JobSeekModel();
-                $module_type='job_seek';
+                $module_type = 'job_seek_model';
+                $pk = 'id';
                 break;
             case 4:
                 //社区动态
                 $module_class = new CommunityModel();
-                $module_type='community';
+                $module_type = 'community_model';
+                $pk = 'id';
                 break;
             case 5:
                 //酒店
-                $module_class = new UsedProductModel();
-                $module_type='used_product';
+                $module_class = new DiningModel();
+                $module_type = 'dining_list_model';
+                $pk = 'dining_id';
                 break;
             case 6:
                 //美食
-                $module_class = new UsedProductModel();
-                $module_type='used_product';
+                $module_class = new HotelModel();
+                $module_type = 'hotel_list_model';
+                $pk = 'hotel_id';
                 break;
             case 7:
                 //打车
-                $module_class = new UsedProductModel();
-                $module_type='used_product';
+                $module_class = new TaxiModel();
+                $module_type = 'taxi_list_model';
+                $pk = 'taxi_id';
                 break;
+            default:
+                throw new BannerMissException([
+                    'code' => 404,
+                    'ertips' => '请求错误',
+                ]);
         }
 
         Db::startTrans();
 //        try {
-            $module = $module_class->get($module_id);
+        $module = $module_class->get($module_id);
+        if (!$module) {
+            throw new BannerMissException([
+                'code' => 404,
+                'ertips' => '请求错误',
+            ]);
+        }
+        $collect = Db::name('member_collect')
+            ->where('module_id', 'eq', $module[$pk])
+            ->where('module_type', $module_type)
+            ->where('user_id', 'eq', $id)
+            ->find();
 
-            $collect = Db::name('member_collect')
-                ->where('module_id', 'eq', $module->id)
-                ->where('module_type', $module_type)
-                ->where('user_id', 'eq', $id)
-                ->find();
-            //判断是否有收藏数据
-            if ($collect) {
-                //判断点赞数据是否软删除
-                if ($collect['delete_time']) {
-                    //将软删除恢复
-                    Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => null]);
-                    $module->collect = $module['collect'] + 1;
-                    $explain = '收藏成功';
-                    //加积分
-                    $this->addIntegral($id, 'collect');
-                } else {
-                    //软删除收藏
-                    Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => time()]);
-                    $module->collect = $module['collect'] - 1;
-                    $explain = '以取消收藏';
-                }
-
-            } else {
-//                return $id.'/'.$module_id.'/'.$module_type;
-//                $module->memberCollect()->save(['user_id'=>$id]);
-                $memberCollect =MemberCollectModel::create(['user_id' => $id, 'module_id' => $module->id,'module_type'=>$module_type]);
-//                return view();
+        //判断是否有收藏数据
+        if ($collect) {
+            //判断点赞数据是否软删除
+            if ($collect['delete_time']) {
+                //将软删除恢复
+                Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => null]);
                 $module->collect = $module['collect'] + 1;
                 $explain = '收藏成功';
                 //加积分
                 $this->addIntegral($id, 'collect');
+            } else {
+                //软删除收藏
+                Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => time()]);
+                $module->collect = $module['collect'] - 1;
+                $explain = '以取消收藏';
             }
 
-            $module->save();
-            Db::commit();
-            return jsone($explain, 200);
+        } else {
+//                return $id.'/'.$module_id.'/'.$module_type;
+//                $module->memberCollect()->save(['user_id'=>$id]);
+            $memberCollect = Db::name('member_collect')->insert([
+                'user_id' => $id,
+                'module_id' => $module[$pk],
+                'module_type' => $module_type,
+                'create_time' => time(),
+                'update_time' => time()
+            ]);
+//                return view();
+            $module->collect = $module['collect'] + 1;
+            $explain = '收藏成功';
+            //加积分
+            $this->addIntegral($id, 'collect');
+        }
+
+        $module->save();
+        Db::commit();
+        return jsone($explain, 200);
 //        } catch (Exception $e) {
 //            Db::rollback();
 //            throw new BannerMissException();

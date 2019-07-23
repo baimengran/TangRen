@@ -6,6 +6,14 @@ use think\Model;
 
 class HotelModel extends Model
 {
+
+    protected $name='hotel_list';
+    protected $pk='hotel_id';
+
+
+    public function memberCollect(){
+        return $this->morphMany('MemberCollectModel','module');
+    }
     /**
      * first方法调用()
      * 查询1个默认地区

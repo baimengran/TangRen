@@ -46,4 +46,8 @@ class RentHouseModel extends Model
     {
         return $this->morphMany('MemberPraiseModel', 'module');
     }
+
+    public function memberCollect(){
+        return $this->morphMany('MemberCollectModel','module');
+    }
 }

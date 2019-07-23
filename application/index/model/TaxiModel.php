@@ -6,6 +6,13 @@ use think\Model;
 
 class TaxiModel extends Model
 {
+
+    protected $name='taxi_list';
+    protected $pk = 'taxi_id';
+
+    public function memberCollect(){
+        return $this->morphMany('MemberCollectModel','module');
+    }
     /**
      * index方法调用
      * 查询1个默认地区
