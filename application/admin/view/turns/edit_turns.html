@@ -12,7 +12,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>编辑轮播图</h5>
+                    <h5>修改叫车</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -27,30 +27,107 @@
                 </div>
 
                 <div class="ibox-content">
-                    <form class="form-horizontal m-t" name="add" id="add" method="post" action="{:url('admin/turns/update_turns')}">
+                    <form class="form-horizontal m-t" name="title" id="title" method="post" action="{:url('admin/taxi/add_taxi')}">
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">分类：</label>
+                            <label class="col-sm-3 control-label">地区：</label>
+                            <select class="col-sm-4 control-label" name="taxi_class">
+
+                                {volist name="list['region']" id="vo"}
+                                <option value="{$vo}">{$vo}</option>
+                                {{/volist}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">名称：</label>
                             <div class="input-group col-sm-4">
-                                <input id="title" value="{$data.turns_class}" type="text" class="form-control" name="title" placeholder="(0首页，1招聘，2出租，3买卖，4美食，5叫车，6酒店)">
+                                <input id="taxi_name" type="text" class="form-control" name="taxi_name" placeholder="名称">
                             </div>
                         </div>
-                        <input type="hidden" name="id" value="{$data.turns_id}">
-                        <!--<div class="hr-line-dashed"></div>-->
-                        <!--<div class="form-group">-->
-                        <!--<label class="col-sm-3 control-label">链接：</label>-->
-                        <!--<div class="input-group col-sm-4">-->
-                        <!--<textarea type="text" rows="5" name="remark" id="remark" placeholder="输入文章描述" class="form-control"></textarea>-->
-                        <!--</div>-->
-                        <!--</div>-->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">介绍：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="taxi_content" type="text" class="form-control" name="taxi_content" placeholder="介绍">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">每周营业时间：</label>
+                            <div style="position: relative;width:20px;height:3px;left:330px;bottom:18px;">——</div>
+                            <select class="col-sm-0.5 control-label" name="taxi_time_one">
+                                {volist name="list['week']" id="vo"}
+                                <option value="{$vo}">{$vo}</option>
+                                {{/volist}}
+                            </select>
+                            <select name="taxi_time_two" style="position: relative;left:40px;" class="col-sm-0.5  control-label" >
+                                <!--<option value="0">aaa</option>-->
+                                {volist name="list['week']" id="vo"}
+                                <option value="{$vo}">{$vo}</option>
+                                {{/volist}}
+                            </select>
+                        </div>
+
+
+                        <div class="form-group" style="height:33px;">
+                            <label class="col-sm-3 control-label">每天营业时间：</label>
+                            <div style="position: relative;width:20px;height:3px;left:372px;bottom:18px;">——</div>
+                            <select class="col-sm-0.5 control-label" name="taxi_day_one">
+                                {volist name="list['day']" id="vo"}
+                                <option value="{$vo}">{$vo}</option>
+                                {{/volist}}
+                            </select>
+                            <div style="position: relative;left:316px;width:3px;bottom:24px;">:</div>
+
+                            <select name="taxi_day_ones" style="position: relative;left:324px;bottom:47px;" class="col-sm-0.5 control-label" >
+                                {volist name="list['minute']" id="vo"}
+                                <option value="{$vo}">{$vo}</option>
+                                {{/volist}}
+                            </select>
+
+                            <select name="taxi_day_two" style="position: relative;left:368px;bottom:47px;" class="col-sm-0.5  control-label" >
+                                <!--<option value="0">aaa</option>-->
+                                {volist name="list['day']" id="vo"}
+                                <option value="{$vo}">{$vo}</option>
+                                {{/volist}}
+                            </select>
+                            <div style="position: relative;left:453px;width:3px;bottom:70px;">:</div>
+                            <select name="taxi_day_twos" style="position: relative;left:462px;bottom:94px;" class="col-sm-0.5 control-label" >
+                                {volist name="list['minute']" id="vo"}
+                                <option value="{$vo}">{$vo}</option>
+                                {{/volist}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">手机号：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="taxi_phone" type="text" class="form-control" name="taxi_phone" placeholder="手机号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">详细地址：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="taxi_address" type="text" class="form-control" name="taxi_address" placeholder="详细地址">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">标签：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="taxi_label" type="text" class="form-control" name="taxi_label" placeholder="标签1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">标签2：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="taxi_label_two" type="text" class="form-control" name="taxi_label_two" placeholder="标签2">
+                            </div>
+                        </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">轮播图：</label>
+                            <label class="col-sm-3 control-label">叫车主图：</label>
                             <div class="input-group col-sm-4">
                                 <input type="hidden" id="data_photo" name="photo" >
                                 <div id="fileList" class="uploader-list" style="float:right"></div>
                                 <div id="imgPicker" style="float:left">选择图片</div>
-                                <img id="img_data" height="100px" style="float:left;margin-left: 50px;margin-top: -10px;" src="/uploads/images/{$data.turns_img}"/>
+                                <img id="img_data" height="100px" style="float:left;margin-left: 50px;margin-top: -10px;" src="/static/admin/images/no_img.jpg"/>
                             </div>
                         </div>
 
@@ -140,7 +217,7 @@
                 layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
 
                     layer.close(index);
-                    window.location.href="{:url('turns/index')}";
+                    window.location.href="{:url('article/index')}";
                 });
             }else{
                 layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1}, function(index){

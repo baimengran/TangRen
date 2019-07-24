@@ -117,11 +117,11 @@ Route::rule('admin/hotel/add','index/Hotel/add');
 //叫车列表
 Route::rule('admin/taxi/index','index/Taxi/index');
 //添加叫车
-Route::rule('admin/taxi/add','index/Taxi/add');
+Route::rule('admin/taxi/add_taxi','index/Taxi/add_taxi');
 //编辑叫车
-Route::rule('admin/taxi/add','index/Taxi/add');
+Route::rule('admin/taxi/edit_taxi','index/Taxi/edit_taxi');
 //删除叫车
-Route::rule('admin/taxi/del','index/Taxi/del');
+Route::rule('admin/taxi/del_taxi','index/Taxi/del_taxi');
 
 //美食列表
 Route::rule('admin/taxi/index','index/Taxi/index');

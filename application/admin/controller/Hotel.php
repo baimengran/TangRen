@@ -11,9 +11,16 @@ class Hotel extends Controller
     //查询酒店列表接口
     public function index()
     {
-        $hotel= new HotelModel();
-        $list =  $hotel->select_hotel();
-        //统计多少条数据
+        //执行查询操作
+        $list= Db::table('think_hotel_list')
+            ->where('exits_status',0)
+            ->paginate(10);
+
+        //统计多少数据
+        $count= Db::table('think_hotel_list')
+            ->where('exits_status',0)
+            ->select();
+
         $count = count($list);
         $date = ['list'=>$list,'count'=>$count];
 

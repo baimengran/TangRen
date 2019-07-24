@@ -22,8 +22,8 @@ var lunhui = {
 	            if(res.code == 1){
 	                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
 	                // Ajaxpage();
-                    // location.href = './index/'+'.html';
-                    // location.replace(location.href);
+                    console.log(location.href);
+                    location.replace(location.href);
 	            }else{
 	                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
 	            }
@@ -34,18 +34,20 @@ var lunhui = {
 
     //状态
     status : function(id,url,sign1='禁用',sign2='开启'){
-	    $.post(url,{id:id},function(data){	         
+	    $.post(url,{id:id},function(data){
 	        if(data.code==1){
 	            var a='<span class="label label-danger">'+data.msg+'</span>'
 	            $('#zt'+id).html(a);
 	            layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
+                location.replace(location.href);
 	            return false;
 	        }else{
 	            var b='<span class="label label-info">'+data.msg+'</span>'
 	            $('#zt'+id).html(b);
-	            layer.msg(data.msg,{icon:1,time:1500,shade: 0.1,});
+	            layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
+                location.replace(location.href);
 	            return false;
-	        }         	        
+	        }
 	    });
 	    return false;
 	}
