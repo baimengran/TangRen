@@ -1,5 +1,31 @@
 <?php
 
+use app\admin\model\MemberModel;
+use app\api\exception\BannerMissException;
+
+
+/**
+ * 根据token查询指定用户
+ * @return bool
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\ModelNotFoundException
+ * @throws \think\exception\DbException
+ */
+function getUserId()
+{
+    $token = input('authorization');
+    try {
+        if ($token) {
+            $member = MemberModel::where('token', 'eq', $token)->field('id')->find();
+            return $member['id'] ?: false;
+        }
+        return false;
+    } catch (Exception $e) {
+        throw new BannerMissException();
+    }
+}
+
+
 /**
  * 名  称 : userToken()
  * 功  能 : 生成Token标识字符串

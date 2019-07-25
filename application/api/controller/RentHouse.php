@@ -32,40 +32,38 @@ class RentHouse extends Controller
         if (!$search = input('search')) {
             //搜索不存在时设定区域参数
             if (!$region = input('region_id')) {
-                throw new BannerMissException([
-                    'code' => 400,
-                    'ertips' => '缺少必要参数'
-                ]);
+                $region=1;
             }
         }
 
         try {
             //查询有置顶的动态
             $rentSticky = new RentHouseModel();
-            $stickies = $rentSticky->where('sticky_status',0)->select();
+            $stickies = $rentSticky->where('sticky_status', 0)->select();
             //检查置顶是否过期
-            $updates=[];
-            foreach($stickies as $sticky){
-                if(time()>$sticky['sticky_end_time']){
+            $updates = [];
+            foreach ($stickies as $sticky) {
+                if (time() > $sticky['sticky_end_time']) {
 
-                    $val['id']=$sticky['id'];
-                    $val['sticky_status']=1;
-                    $updates[]=$val;
+                    $val['id'] = $sticky['id'];
+                    $val['sticky_status'] = 1;
+                    $updates[] = $val;
                 }
             }
             //批量更新过期置顶数据
             $rentSticky->saveAll($updates);
 
-
-
             $rentHouse = new RentHouseModel();
+
             //搜索
             if ($search) {
-                $rentHouse->where('body', 'like', '%' . $search . '%');
+                $rent = Db::name('rent_house')->where('body', 'like', '%' . $search . '%')->buildSql();
             } else {
-                $rentHouse = $rentHouse->where('region_id', 'eq', $region);
+                $rent = Db::name('rent_house')->where('region_id', $region)->buildSql();
             }
-            $rentHouse = $rentHouse->order('create_time')->paginate(20);
+            $rentSticky = Db::name('rent_house')->where('sticky_status', 0)->union($rent)->buildSql();
+            $rentHouse = $rentHouse->table($rentSticky . 'a')->order('sticky_status asc ,create_time desc')->paginate(20);
+
 
             $data['total'] = $rentHouse->total();
             $data['per_page'] = $rentHouse->listRows();
@@ -79,39 +77,39 @@ class RentHouse extends Controller
                 $region = Db::name('region_list')->where('region_id', 'eq', $rent['region_id'])->find();
 
                 //获取点赞数据
-                $praise = Db::name('member_praise')->where('user_id','eq',getUserId())
-                    ->where('module_type','eq','rent_house')
-                    ->where('module_id','eq',$rent['id'])->find();
+                $praise = Db::name('member_praise')->where('user_id', 'eq', getUserId())
+                    ->where('module_type', 'eq', 'rent_house')
+                    ->where('module_id', 'eq', $rent['id'])->find();
 //                return $praise;
                 //获取收藏数据
-                $collect = Db::name('member_collect')->where('user_id','eq',getUserId())
-                    ->where('module_type','eq','rent_house')
-                    ->where('module_id','eq',$rent['id'])->find();
+                $collect = Db::name('member_collect')->where('user_id', 'eq', getUserId())
+                    ->where('module_type', 'eq', 'rent_house_model')
+                    ->where('module_id', 'eq', $rent['id'])->find();
 //                $data[]=$community;
-                if(!$praise){
+                if (!$praise) {
                     //如果是空，证明没点攒
-                    $praise=1;
-                }else{
+                    $praise = 1;
+                } else {
                     //如果存在，证明以软删除点赞
-                    if($praise['delete_time']){
-                        $praise=1;
-                    }else{
-                        $praise=0;
+                    if ($praise['delete_time']) {
+                        $praise = 1;
+                    } else {
+                        $praise = 0;
                     }
                 }
-                if(!$collect){
+                if (!$collect) {
                     //如果是空，证明没点攒
-                    $collect=1;
-                }else{
+                    $collect = 1;
+                } else {
                     //如果存在，证明以软删除点赞
-                    if($collect['delete_time']){
-                        $collect=1;
-                    }else{
-                        $collect=0;
+                    if ($collect['delete_time']) {
+                        $collect = 1;
+                    } else {
+                        $collect = 0;
                     }
                 }
-                $rent['user_praise']=$praise;
-                $rent['user_collect']=$collect;
+                $rent['user_praise'] = $praise;
+                $rent['user_collect'] = $collect;
 
                 $rent['user'] = $user;
                 $rent['region'] = $region;
@@ -163,8 +161,8 @@ class RentHouse extends Controller
 
             } else {
                 throw new BannerMissException([
-                    'code'=>422,
-                    'ertips'=>'积分不足'
+                    'code' => 422,
+                    'ertips' => '积分不足'
                 ]);
             }
             if ($day = $sticky['day_num']) {
@@ -178,25 +176,25 @@ class RentHouse extends Controller
         }
 
 //        try {
-            $rent = RentHouseModel::create([
-                'user_id' => $data['user_id'],
-                'region_id' => $data['region_id'],
-                'body' => $data['body'],
-                'price' => $data['price'],
-                'sticky_status' => $data['sticky_id'] ? 0 : 1,
-                'sticky_create_time' => $sticky_create_time,
-                'sticky_end_time' => $sticky_end_time,
-                'phone' => $data['phone'],
-            ]);
-            //保存图片
-            $path = explode(',', $data['path']);
-            $data = [];
-            foreach ($path as $k => $value) {
-                $data[$k]['path'] = $value;
-            }
-            if (count($data)) {
-                $rent->rentImage()->saveAll($data);
-            }
+        $rent = RentHouseModel::create([
+            'user_id' => $data['user_id'],
+            'region_id' => $data['region_id'],
+            'body' => $data['body'],
+            'price' => $data['price'],
+            'sticky_status' => $data['sticky_id'] ? 0 : 1,
+            'sticky_create_time' => $sticky_create_time,
+            'sticky_end_time' => $sticky_end_time,
+            'phone' => $data['phone'],
+        ]);
+        //保存图片
+        $path = explode(',', $data['path']);
+        $data = [];
+        foreach ($path as $k => $value) {
+            $data[$k]['path'] = $value;
+        }
+        if (count($data)) {
+            $rent->rentImage()->saveAll($data);
+        }
 //            if (array_key_exists('path', $data)) {
 //                $path = [];
 //                foreach ($data['path'] as $value) {
@@ -205,8 +203,8 @@ class RentHouse extends Controller
 //                count($path) ? $rent->rentImage()->saveAll($path) : null;
 //            }
 
-            $data = $rent->with('user,regionList,rentImage')->find($rent->id);
-            return jsone('创建成功', 201, $data);
+        $data = $rent->with('user,regionList,rentImage')->find($rent->id);
+        return jsone('创建成功', 201, $data);
 //        } catch (Exception $e) {
 //            throw new BannerMissException();
 //        }
@@ -229,43 +227,43 @@ class RentHouse extends Controller
             $rent = RentHouseModel::with('user,regionList,rentImage')->find($id);
 
             //获取点赞数据
-            $praise = Db::name('member_praise')->where('user_id','eq',getUserId())
-                ->where('module_id','eq',$rent['id'])
-                ->where('module_type','eq','rent_house')
+            $praise = Db::name('member_praise')->where('user_id', 'eq', getUserId())
+                ->where('module_id', 'eq', $rent['id'])
+                ->where('module_type', 'eq', 'rent_house')
                 ->find();
 
             //获取收藏数据
-            $collect = Db::name('member_collect')->where('user_id','eq',getUserId())
-                ->where('module_id','eq',$rent->id)
-                ->where('module_type','eq','rent_house')
+            $collect = Db::name('member_collect')->where('user_id', 'eq', getUserId())
+                ->where('module_id', 'eq', $rent->id)
+                ->where('module_type', 'eq', 'rent_house_model')
                 ->find();
 //            return $praise;
-            if(!$praise){
+            if (!$praise) {
                 //如果是空，证明没点攒
-                $praise=1;
-            }else{
+                $praise = 1;
+            } else {
                 //如果存在，证明以软删除点赞
-                if($praise['delete_time']){
-                    $praise=1;
-                }else{
-                    $praise=0;
+                if ($praise['delete_time']) {
+                    $praise = 1;
+                } else {
+                    $praise = 0;
                 }
             }
-            if(!$collect){
+            if (!$collect) {
                 //如果是空，证明没点攒
-                $collect=1;
-            }else{
+                $collect = 1;
+            } else {
                 //如果存在，证明以软删除点赞
-                if($collect['delete_time']){
-                    $collect=1;
-                }else{
-                    $collect=0;
+                if ($collect['delete_time']) {
+                    $collect = 1;
+                } else {
+                    $collect = 0;
                 }
             }
 
-            $data=$rent->toArray();
-            $data['user_praise']=$praise;
-            $data['user_collect']=$collect;
+            $data = $rent->toArray();
+            $data['user_praise'] = $praise;
+            $data['user_collect'] = $collect;
             $rent->browse = $rent['browse'] + 1;
             $rent->save();
             return jsone('查询成功', 200, $data);

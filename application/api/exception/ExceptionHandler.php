@@ -31,11 +31,14 @@ class ExceptionHandler extends Handle
     {
 
         if ($e instanceof HttpException || request()->isAjax()) {
-            $this->code = $e->getStatusCode();
-            $this->errmsg = 'error';
-            $this->errcode = 1;
-            $this->ertips = '请求异常';
-            return $this->send();
+            if(\request()->isAjax()){
+                $this->code = $e->getStatusCode();
+                $this->errmsg = 'error';
+                $this->errcode = 1;
+                $this->ertips = '请求异常';
+                return $this->send();
+            }
+            header("Location:".url('admin/error/index'));die;
         } else if ($e instanceof BaseException) {
 
             $this->code = $e->code;

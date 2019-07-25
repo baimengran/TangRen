@@ -12,7 +12,7 @@
                 <div class="col-sm-12">   
                 <div  class="col-sm-2" style="width: 100px">
                     <div class="input-group" >
-                        <a href="{:url('create')}"><button class="btn btn-outline btn-primary" type="button">添加区域</button></a>
+                        <a href="{:url('add_article')}"><button class="btn btn-outline btn-primary" type="button">添加</button></a>
                     </div>
                 </div>
                     <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
@@ -45,8 +45,7 @@
 
                         </script>
                         <tbody id="list-content">
-
-                        {volist name="regions" id="data" empty='$empty'}
+                        {volist name="regions" id="data"}
                         <tr class="long-td">
                             <td>{$data.region_id}</td>
                             <td>{$data.region_name}</td>

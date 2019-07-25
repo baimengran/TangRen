@@ -24,7 +24,7 @@ return [
     // +----------------------------------------------------------------------
     // | Trace设置 开启 app_trace 后 有效
     // +----------------------------------------------------------------------
-    'app_trace' =>  true,      //开启应用Trace调试
+    'app_trace' =>  false,      //开启应用Trace调试
     'trace' => [
         'type' => 'html',       // 在当前Html页面显示Trace信息,显示方式console、html
     ],
@@ -45,7 +45,7 @@ return [
     'log'       => [       
         'type'  => 'file',// 日志记录方式，内置 file socket 支持扩展
         'path'  => LOG_PATH,// 日志保存目录
-        'level' => ['info'],// 日志记录级别
+        'level' => ['error'],// 日志记录级别
     ],
 
 
@@ -111,5 +111,10 @@ return [
 
     //异常处理
     'exception_handle'=> 'app\api\exception\ExceptionHandler',
+
+    //404页面
+    'http_exception_template'=>[
+        '404'=>APP_PATH.'/404.html',
+    ]
 
 ];

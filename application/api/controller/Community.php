@@ -73,25 +73,32 @@ class Community
 
             $community = new CommunityModel();
             if ($search) {
-                $community->where('body', 'like', '%' . $search . '%')
-                    ->where('recommend_status', $recommend_status);
+                $comm = Db::name('community')->where('body', 'like', '%' . $search . '%')->buildSql();
+                $commSticky = Db::name('community')->where('recommend_status', $recommend_status)->union($comm)->buildSql();
+                $community = $community->table($commSticky . 'a')->order('sticky_status asc ,create_time desc')->paginate(20);
             } else {
-                $community = $community->where('recommend_status', $recommend_status);
                 switch ($order) {
                     case 1:
                         //热门
-                        $community = $community->order('browse', 'desc');
+                        $comm = Db::name('community')->where('recommend_status', $recommend_status)->buildSql();
+                        $commSticky = Db::name('community')->where('sticky_status', 0)->union($comm)->buildSql();
+                        $community = $community->table($commSticky . 'a')->order('sticky_status asc ,browse desc')->paginate(20);
                         break;
                     case 2:
                         //精华
-                        $community = $community->where('essence', 'eq', 0)->order('create_time', 'desc');
+                        $comm = Db::name('community')->where('recommend_status', $recommend_status)->buildSql();
+                        $commSticky = Db::name('community')->where('sticky_status', 0)->union($comm)->buildSql();
+                        $community = $community->table($commSticky . 'a')->order('sticky_status asc ,essence asc')->paginate(20);
                         break;
                     default:
-                        $community = $community->order('create_time', 'desc');
+                        //最新
+                        $comm = Db::name('community')->where('recommend_status', $recommend_status)->buildSql();
+                        $commSticky = Db::name('community')->where('sticky_status', 0)->union($comm)->buildSql();
+                        $community = $community->table($commSticky . 'a')->order('sticky_status asc ,create_time desc')->paginate(20);
                 }
             }
-            $community = $community->paginate(20);
-//            return $community;
+
+
             $data['total'] = $community->total();
             $data['per_page'] = $community->listRows();
             $data['current_page'] = $community->currentPage();
@@ -107,13 +114,13 @@ class Community
                     ->where('module_id', 'eq', $val['id'])
                     ->where('module_type', 'eq', 'community')
                     ->find();
-//                return $praise;
+
                 //获取收藏数据
                 $collect = Db::name('member_collect')->where('user_id', 'eq', getUserId())
                     ->where('module_id', 'eq', $val['id'])
-                    ->where('module_type', 'eq', 'community')
+                    ->where('module_type', 'eq', 'community_model')
                     ->find();
-//                $data[]=$community;
+
                 if (!$praise) {
                     //如果是空，证明没点攒
                     $praise = 1;
@@ -255,7 +262,7 @@ class Community
             //获取收藏数据
             $collect = Db::name('member_collect')->where('user_id', 'eq', getUserId())
                 ->where('module_id', 'eq', $community->id)
-                ->where('module_type', 'eq', 'community')
+                ->where('module_type', 'eq', 'community_model')
                 ->find();
 
             if (!$praise) {
@@ -374,10 +381,7 @@ class Community
             ]);
         }
         if (!$module_type = input('module_type')) {
-            throw new BannerMissException([
-                'code' => 400,
-                'ertips' => '缺少必要参数'
-            ]);
+            $module_type = 4;
         }
         $explain = '';
 
@@ -407,13 +411,13 @@ class Community
                 $pk = 'id';
                 break;
             case 5:
-                //酒店
+                //美食
                 $module_class = new DiningModel();
                 $module_type = 'dining_list_model';
                 $pk = 'dining_id';
                 break;
             case 6:
-                //美食
+                //酒店
                 $module_class = new HotelModel();
                 $module_type = 'hotel_list_model';
                 $pk = 'hotel_id';
@@ -432,61 +436,61 @@ class Community
         }
 
         Db::startTrans();
-//        try {
-        $module = $module_class->get($module_id);
-        if (!$module) {
-            throw new BannerMissException([
-                'code' => 404,
-                'ertips' => '请求错误',
-            ]);
-        }
-        $collect = Db::name('member_collect')
-            ->where('module_id', 'eq', $module[$pk])
-            ->where('module_type', $module_type)
-            ->where('user_id', 'eq', $id)
-            ->find();
+        try {
+            $module = $module_class->get($module_id);
+            if (!$module) {
+                throw new BannerMissException([
+                    'code' => 404,
+                    'ertips' => '请求错误',
+                ]);
+            }
+            $collect = Db::name('member_collect')
+                ->where('module_id', 'eq', $module[$pk])
+                ->where('module_type', $module_type)
+                ->where('user_id', 'eq', $id)
+                ->find();
 
-        //判断是否有收藏数据
-        if ($collect) {
-            //判断点赞数据是否软删除
-            if ($collect['delete_time']) {
-                //将软删除恢复
-                Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => null]);
+            //判断是否有收藏数据
+            if ($collect) {
+                //判断点赞数据是否软删除
+                if ($collect['delete_time']) {
+                    //将软删除恢复
+                    Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => null]);
+                    $module->collect = $module['collect'] + 1;
+                    $explain = '收藏成功';
+                    //加积分
+                    $this->addIntegral($id, 'collect');
+                } else {
+                    //软删除收藏
+                    Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => time()]);
+                    $module->collect = $module['collect'] - 1;
+                    $explain = '以取消收藏';
+                }
+
+            } else {
+//                return $id.'/'.$module_id.'/'.$module_type;
+//                $module->memberCollect()->save(['user_id'=>$id]);
+                $memberCollect = Db::name('member_collect')->insert([
+                    'user_id' => $id,
+                    'module_id' => $module[$pk],
+                    'module_type' => $module_type,
+                    'create_time' => time(),
+                    'update_time' => time()
+                ]);
+//                return view();
                 $module->collect = $module['collect'] + 1;
                 $explain = '收藏成功';
                 //加积分
                 $this->addIntegral($id, 'collect');
-            } else {
-                //软删除收藏
-                Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => time()]);
-                $module->collect = $module['collect'] - 1;
-                $explain = '以取消收藏';
             }
 
-        } else {
-//                return $id.'/'.$module_id.'/'.$module_type;
-//                $module->memberCollect()->save(['user_id'=>$id]);
-            $memberCollect = Db::name('member_collect')->insert([
-                'user_id' => $id,
-                'module_id' => $module[$pk],
-                'module_type' => $module_type,
-                'create_time' => time(),
-                'update_time' => time()
-            ]);
-//                return view();
-            $module->collect = $module['collect'] + 1;
-            $explain = '收藏成功';
-            //加积分
-            $this->addIntegral($id, 'collect');
+            $module->save();
+            Db::commit();
+            return jsone($explain, 200);
+        } catch (Exception $e) {
+            Db::rollback();
+            throw new BannerMissException();
         }
-
-        $module->save();
-        Db::commit();
-        return jsone($explain, 200);
-//        } catch (Exception $e) {
-//            Db::rollback();
-//            throw new BannerMissException();
-//        }
     }
 
     /**

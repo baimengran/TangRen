@@ -29,36 +29,36 @@ class UsedProduct extends Controller
         if (!$search = input('search')) {
             //搜索不存在时设定区域参数
             if (!$region = input('region_id')) {
-                throw new BannerMissException([
-                    'code' => 400,
-                    'ertips' => '缺少必要参数'
-                ]);
+                $region = 1;
             }
         }
         try {
             //查询有置顶的动态
             $usedSticky = new UsedProductModel();
-            $stickies = $usedSticky->where('sticky_status',0)->select();
+            $stickies = $usedSticky->where('sticky_status', 0)->select();
             //检查置顶是否过期
-            $updates=[];
-            foreach($stickies as $sticky){
-                if(time()>$sticky['sticky_end_time']){
+            $updates = [];
+            foreach ($stickies as $sticky) {
+                if (time() > $sticky['sticky_end_time']) {
 
-                    $val['id']=$sticky['id'];
-                    $val['sticky_status']=1;
-                    $updates[]=$val;
+                    $val['id'] = $sticky['id'];
+                    $val['sticky_status'] = 1;
+                    $updates[] = $val;
                 }
             }
             //批量更新过期置顶数据
             $usedSticky->saveAll($updates);
 
             $usedProduct = new UsedProductModel();
+
             if ($search) {
-                $usedProduct->where('body', 'like', '%' . $search . '%');
+                $used = Db::name('used_product')->where('body', 'like', '%' . $search . '%')->buildSql();
             } else {
-                $usedProduct = $usedProduct->where('region_id', 'eq', $region);
+                $used = Db::name('used_product')->where('region_id', $region)->buildSql();
             }
-            $usedProduct = $usedProduct->order('create_time', 'desc')->paginate(20);
+            $usedSticky = Db::name('rent_house')->where('sticky_status', 0)->union($used)->buildSql();
+            $usedProduct = $usedProduct->table($usedSticky . 'a')->order('sticky_status asc ,create_time desc')->paginate(20);
+
             $data['total'] = $usedProduct->total();
             $data['per_page'] = $usedProduct->listRows();
             $data['current_page'] = $usedProduct->currentPage();
@@ -81,8 +81,9 @@ class UsedProduct extends Controller
                 //获取收藏数据
                 $collect = Db::name('member_collect')->where('user_id', 'eq', getUserId())
                     ->where('module_id', 'eq', $val['id'])
-                    ->where('module_type', 'eq', 'used_product')
+                    ->where('module_type', 'eq', 'used_product_model')
                     ->find();
+
 //                $data[]=$community;
                 if (!$praise) {
                     //如果是空，证明没点攒
@@ -158,8 +159,8 @@ class UsedProduct extends Controller
 
             } else {
                 throw new BannerMissException([
-                    'code'=>422,
-                    'ertips'=>'积分不足'
+                    'code' => 422,
+                    'ertips' => '积分不足'
                 ]);
             }
             if ($day = $sticky['day_num']) {
@@ -227,7 +228,7 @@ class UsedProduct extends Controller
             //获取收藏数据
             $collect = Db::name('member_collect')->where('user_id', 'eq', getUserId())
                 ->where('module_id', 'eq', $usedProduct->id)
-                ->where('module_type', 'eq', 'used_product')
+                ->where('module_type', 'eq', 'used_product_model')
                 ->find();
 
             if (!$praise) {

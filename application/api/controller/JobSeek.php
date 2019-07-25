@@ -61,16 +61,15 @@ class JobSeek
             $job = new JobSeekModel();
 
             if ($search) {
-                $job->where('body', 'like', '%' . $search . '%');
+                $jobs= Db::name('job_seek')->where('body', 'like', '%' . $search . '%')->buildSql();
             } else {
-                if($region){
-                    $job = $job->where('region_id', 'eq', $region);
-                }
-//
-                $job = $job->where('profession_id', 'eq', $profession);
+                $jobs = Db::name('job_seek')->where('profession_id',$profession)->buildSql();
             }
+            $jobSticky = Db::name('job_seek')->where('sticky_status',0)->union($jobs)->buildSql();
+            $job= $job->table($jobSticky.'a')->order('sticky_status asc ,create_time desc')->paginate(20);
 
-            $job = $job->order('create_time', 'desc')->paginate(20);
+
+
 
             $data['total'] = $job->total();
             $data['per_page'] = $job->listRows();
@@ -94,7 +93,7 @@ class JobSeek
                 //获取收藏数据
                 $collect = Db::name('member_collect')->where('user_id','eq',getUserId())
                     ->where('module_id','eq',$val['id'])
-                    ->where('module_type','eq','job_seek')
+                    ->where('module_type','eq','job_seek_model')
                     ->find();
 //                $data[]=$community;
                 if(!$praise){
@@ -227,7 +226,7 @@ class JobSeek
             //获取收藏数据
             $collect = Db::name('member_collect')->where('user_id','eq',getUserId())
                 ->where('module_id','eq',$job->id)
-                ->where('module_type','eq','job_seek')
+                ->where('module_type','eq','job_seek_model')
                 ->find();
 
             if(!$praise){

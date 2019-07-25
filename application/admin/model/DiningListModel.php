@@ -13,10 +13,16 @@ use think\Model;
 
 class DiningListModel extends Model
 {
-    protected $name='dining_list';
-    protected $pk='dining_id';
+    protected $name = 'dining_list';
+    protected $pk = 'dining_id';
 
-    public function memberCollect(){
-        return $this->morphMany('MemberCollectModel','module');
+    public function memberCollect()
+    {
+        return $this->morphMany('MemberCollectModel', 'module');
+    }
+
+    public function getCreateTimeAttr($value)
+    {
+        return date('m月d日', $value);
     }
 }

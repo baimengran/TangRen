@@ -16,7 +16,13 @@ class HotelListModel extends Model
     protected $name = 'hotel_list';
     protected $pk = 'hotel_id';
 
-    public function memberCollect(){
-        return $this->morphMany('MemberCollectModel','module');
+    public function memberCollect()
+    {
+        return $this->morphMany('MemberCollectModel', 'module');
+    }
+
+    public function getCreateTimeAttr($value)
+    {
+        return date('m月d日', $value);
     }
 }
