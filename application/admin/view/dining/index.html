@@ -12,7 +12,7 @@
                 <div class="col-sm-12">
                     <div  class="col-sm-2" style="width: 100px">
                         <div class="input-group" >
-                            <a href="{:url('add_dining')}"><button class="btn btn-outline btn-primary" type="button">添加叫车</button></a>
+                            <a href="{:url('add_dining')}"><button class="btn btn-outline btn-primary" type="button">添加美食</button></a>
                         </div>
                     </div>
                     <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
@@ -50,7 +50,7 @@
                         {volist name="list['list']" id="vo"}
                         <tr class="long-td">
                             <td style="width:2%">{$vo.dining_id}</td>
-                            <td style="width:12%"><img width="100" style="height:50px;" src="/uploads/images/{$vo.dining_logo}"  /></td>
+                            <td style="width:12%"><img width="100" style="height:50px;" src="/public/uploads/images/{$vo.dining_logo}"  /></td>
                             <td style="width:2%">{$vo.dining_class}</td>
                             <td style="width:2%">{$vo.dining_name}</td>
                             <td style="width:2%">{$vo.dining_time}</td>
