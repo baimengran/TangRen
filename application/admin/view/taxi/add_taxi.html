@@ -169,7 +169,7 @@
 
         'onUploadSuccess': function(file, data, response) {
             $("#data_photo").val(data._raw);
-            $("#img_data").attr('src', '/uploads/images/' + data._raw).show();
+            $("#img_data").attr('src', '/public/uploads/images/' + data._raw).show();
         }
     });
 

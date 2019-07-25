@@ -377,18 +377,38 @@ class Hotel extends Controller
         $date = ['hotel_id'=>$post['hotel_id'],'hotel_images'=>$post['photo'],'img_status'=>0];
         //执行添加操作
         $res = Db::table('think_hotel_img')->insert($date);
-        dump($res);die;
-//        if($res){
-//            return $arr = ['code'=>1,'msg'=>'添加成功'];
-//        }else{
-//            return $arr = ['code'=>2,'msg'=>'添加失败'];
-//        }
+
+        if($res){
+            return $arr = ['code'=>1,'msg'=>'添加成功'];
+        }else{
+            return $arr = ['code'=>2,'msg'=>'添加失败'];
+        }
 
         //加载视图
         $this->assign('data');
         // 模板输出
         return $this->fetch('hotel/add_detailed');
     }
+
+    //修改详情图片
+    public function edit_detailed($id)
+    {
+        if(!$id){
+            return $arr = ['code'=>'2','msg'=>'修改失败'];
+        }
+
+        //查询出这条数据(图片)
+        $data = Db::table('think_hotel_img')->where('hotel_img_id',$id)->find();
+//        $data = ['data'=>$data];
+//        print_r($data);die;
+        //加载视图
+        $this->assign('data', $data);
+        // 模板输出
+        return $this->fetch('hotel/edit_detailed');
+    }
+
+
+
 
 
 }

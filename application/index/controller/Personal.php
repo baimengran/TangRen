@@ -129,7 +129,7 @@ class Personal extends Controller
     /**
      * 马上兑换支付页接口(返回用户头像，昵称，默认地址，手机号)
      * 输入：用户ID 商品ID
-     * 返回：购买成功状态
+     * 返回：
      */
     public function integral_shop(\think\Request $request)
     {
@@ -781,6 +781,9 @@ class Personal extends Controller
         //查询关于我们表
         $date = Db::table('think_about')->find();
 
+        $res = parse_url($date['img']);
+        $img = substr($res['path'], 1);
+        $date['img'] = $img;
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
     }
 
@@ -788,6 +791,27 @@ class Personal extends Controller
     public function idea(\think\Request $request)
     {
         $post = $request->post();
+
+        $rule =   [
+            'id'        => 'require|number',
+            'content'   => 'require|max:200'
+        ];
+        $message  = [
+            'id.require'      => '用户ID不能为空',
+            'id.number'       => '用户ID类型错误',
+            'content.require'  => '提交内容不能为空',
+            'content.max'  => '提交内容不能过长',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 0,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
 
         //将信息添加到意见表中
         $date=['user_id'=>$post['id'],'content'=>$post['content'] ];

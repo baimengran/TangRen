@@ -12,7 +12,7 @@
                 <div class="col-sm-12">
                     <div  class="col-sm-2" style="width: 100px">
                         <div class="input-group" >
-                            <a href=""><button class="btn btn-outline btn-primary" type="button">添加酒店</button></a>
+                            <!--<a href=""><button class="btn btn-outline btn-primary" type="button">添加酒店</button></a>-->
                         </div>
                     </div>
                     <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
@@ -49,7 +49,7 @@
                             <td style="width:13%">
                                 <a href="{:url('add_detailed',['id'=>$vo.hotel_id])}" onclick="edit_article({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
                                     <i class="fa fa-paste"></i> 添加</a>&nbsp;&nbsp;
-                                <a href="javascript:;" onclick="edit_article({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
+                                <a href="{:url('edit_detailed',['id'=>$vo.hotel_id])}" onclick="edit_article({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
                                     <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
                                 <a href="javascript:;" onclick="del_article({$vo.hotel_id})" class="btn btn-danger btn-xs btn-outline">
                                     <i class="fa fa-trash-o"></i> 删除</a>
@@ -96,7 +96,7 @@
 
     //编辑文章
     function edit_article(id){
-        location.href = './edit/id/'+id+'.html';
+        location.href = './edit_detailed/id/'+id+'.html';
     }
 
     //删除文章

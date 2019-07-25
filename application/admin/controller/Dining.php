@@ -45,7 +45,6 @@ class Dining extends Controller
             'taxi_day_two'  => 'require',
             'taxi_day_twos' => 'require',
             'dining_address'  => 'require',
-            'photo'           => 'require',
         ];
         $message  = [
             'dining_class.require'      => '地区不能为空',
@@ -60,7 +59,6 @@ class Dining extends Controller
             'taxi_day_twos.require'   => '每天结束营业时间不能为空',
             'dining_phone.require'      => '联系电话不能为空',
             'dining_address.require'    => '具体地址不能为空',
-            'photo.require'             => '上传图片不能为空',
         ];
         if(!empty($post)) {
 
