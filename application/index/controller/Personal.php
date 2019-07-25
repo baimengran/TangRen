@@ -789,6 +789,27 @@ class Personal extends Controller
     {
         $post = $request->post();
 
+        $rule =   [
+            'id'        => 'require|number',
+            'cotnent'   => 'require|max:200'
+        ];
+        $message  = [
+            'id.require'      => '用户ID不能为空',
+            'id.number'       => '用户ID类型错误',
+            'cotnent.number'  => '提交内容不能为空',
+            'cotnent.number'  => '提交内容不能过长',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 0,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+
         //将信息添加到意见表中
         $date=['user_id'=>$post['id'],'content'=>$post['content'] ];
         $res = Db::table('think_idea')->insert($date);
