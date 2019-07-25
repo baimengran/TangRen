@@ -29,43 +29,43 @@ class ExceptionHandler extends Handle
 
     public function render(Exception $e)
     {
+        if (config('app_debug')) {
+            return parent::render($e);
+        } else
+            if ($e instanceof HttpException || request()->isAjax()) {
+                if (\request()->isAjax()) {
+                    $this->code = $e->getStatusCode();
+                    $this->errmsg = 'error';
+                    $this->errcode = 1;
+                    $this->ertips = '请求异常';
+                    return $this->send();
+                } else {
+                    if ($e->getStatusCode() == 404) {
+                        header("Location:" . url('admin/error/index'));
+                        die;
+                    }
+                    if ($e->getStatusCode() == 500) {
+                        header("Location:" . url('admin/error/error'));
+                        die;
+                    }
+                }
+            } else if ($e instanceof BaseException) {
 
-        if ($e instanceof HttpException || request()->isAjax()) {
-            if(\request()->isAjax()){
-                $this->code = $e->getStatusCode();
+                $this->code = $e->code;
+                $this->errmsg = $e->errmsg;
+                $this->errcode = $e->errcode;
+                $this->ertips = $e->ertips;
+                return $this->send();
+            } else {
+                //系统异常
+                $this->code = 500;
                 $this->errmsg = 'error';
-                $this->errcode = 1;
-                $this->ertips = '请求异常';
+                $this->errcode = 999;//未知错误，不想让客户端知道
+                $this->ertips = '服务器内部错误';
+                $this->recordErrorLog($e);
                 return $this->send();
             }
-            if($e->getStatusCode()==404){
-                header("Location:".url('admin/error/index'));die;
-            }
-            if($e->getStatusCode()==500){
-                header("Location:".url('admin/error/error'));die;
-            }
 
-        } else if ($e instanceof BaseException) {
-
-            $this->code = $e->code;
-            $this->errmsg = $e->errmsg;
-            $this->errcode = $e->errcode;
-            $this->ertips = $e->ertips;
-            return $this->send();
-        } else if (config('app_debug')) {
-            return parent::render($e);
-        } else {
-            //系统异常
-            $this->code = 500;
-            $this->errmsg = 'error';
-            $this->errcode = 999;//未知错误，不想让客户端知道
-            $this->ertips = '服务器内部错误';
-            $this->recordErrorLog($e);
-            return $this->send();
-        }
-//        if ($e instanceof ErrorException) {
-//            return response(122);
-//        }
     }
 
     /**

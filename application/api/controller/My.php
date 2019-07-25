@@ -43,12 +43,14 @@ class My
         $data['current_page'] = $modules->currentPage();
         $data['last_page'] = $modules->lastPage();
         foreach ($modules as $module) {
+
             //转数组
             $moduleValues = $module->module->toArray();
+
             if ($module['module_type'] == 'dining_list_model') {
-                $keys = ['id', 'logo', 'class', 'name', 'content', 'time', 'phone',
+                $keys = ['id', 'logo', 'class', 'name', 'content', 'time','day', 'phone',
                     'address', 'all', 'service', 'hygiene', 'taste', 'label', 'status',
-                    'collect', 'create_time', 'update_time'];
+                    'home','collect', 'create_time', 'update_time','exits_status'];
                 //重新组合数组key和value
                 $moduleValues = array_combine($keys, $moduleValues);
                 $moduleValues['cate'] = 'dining';
@@ -56,18 +58,18 @@ class My
                 $moduleValues['image']['path']=$moduleValues['logo'];
             }
             if ($module['module_type'] == 'hotel_list_model') {
-                $keys = ['id', 'logo', 'class', 'name', 'content', 'time', 'phone',
+                $keys = ['id', 'logo', 'class', 'name', 'content', 'time','day', 'phone',
                     'address', 'all', 'status', 'hygiene', 'ambient', 'service', 'label',
-                    'collect', 'create_time', 'update_time'];
+                    'collect', 'create_time', 'update_time','exits_status'];
                 $moduleValues = array_combine($keys, $moduleValues);
                 $moduleValues['cate'] = 'hotel';
                 $moduleValues['hidden'] = 0;
                 $moduleValues['image']['path']=$moduleValues['logo'];
             }
             if ($module['module_type'] == 'taxi_list_model') {
-                $keys = ['id', 'logo', 'class', 'name', 'content', 'time', 'phone',
+                $keys = ['id', 'logo', 'class', 'name', 'content', 'time','day', 'phone',
                     'address', 'speed', 'quality', 'service', 'all', 'label', 'status',
-                    'collect', 'create_time', 'update_time'];
+                    'collect', 'create_time', 'update_time','exits_status'];
                 $moduleValues = array_combine($keys, $moduleValues);
                 $moduleValues['cate'] = 'taxi';
                 $moduleValues['hidden'] = 0;

@@ -78,11 +78,11 @@ function jsone($ertips = '查询成功', $code = 200, $retData = [])
 
 
 //图片上传
-function uploadImage($file, $dir)
+function uploadImage($files, $dir)
 {
     $dir = 'issue';
     $path = [];
-//    foreach($files as $file){
+    foreach($files as $file){
     // 移动到框架应用根目录/public/uploads/ 目录下
     $info = $file->validate(['size' => 5242880, 'ext' => 'jpg,png,jpeg'])->move('public' . DS . 'uploads' . DS . $dir);
     if ($info) {
@@ -92,6 +92,6 @@ function uploadImage($file, $dir)
         // 上传失败获取错误信息
         return $file->getError();
     }
-//    }
+    }
     return $path;
 }

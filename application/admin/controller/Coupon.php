@@ -12,6 +12,7 @@ namespace app\admin\controller;
 use think\Db;
 use think\Exception;
 use think\exception\HttpException;
+use think\Loader;
 use think\Validate;
 
 class Coupon extends Base
@@ -50,23 +51,18 @@ class Coupon extends Base
     public function store()
     {
         $form = input('post.');
-        $rule = [
-            'region_name' => 'require|unique:region_list',
-            'region_status' => 'require'
-        ];
 
-        $msg = [
-            'region_name.require' => '区域名称必须填写',
-            'region_name.unique' => '区域名称已经存在',
-            'region_status' => '区域状态必须填写',
-        ];
-        $validate = new Validate($rule, $msg);
+
+        $validate = Loader::validate('Coupon');
         if (!$validate->check($form)) {
             return json(['code' => 0, 'data', 'msg' => $validate->getError()]);
         }
-
+        $create = strtotime($form['activity_create_time']);
+        $end =strtotime($form['activity_end_time']);
+        $form['activity_create_time'] =$create;
+        $form['activity_end_time']=$end;
         try {
-            $region_id = Db::name('region_list')->insert($form);
+            $region_id = Db::name('coupon')->insert($form);
             if ($region_id) {
                 return json(['code' => 1, 'data', 'msg' => '创建成功']);
             } else {
