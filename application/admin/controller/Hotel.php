@@ -326,7 +326,6 @@ class Hotel extends Controller
     //酒店详情列表
     public function detailed_hotel($id)
     {
-
         //执行查询操作
         $list= Db::table('think_hotel_img')
             ->where('hotel_id',$id)
@@ -348,7 +347,6 @@ class Hotel extends Controller
     //添加详情图片
     public function add_detailed($id)
     {
-
         //加载视图
         $this->assign('data', $id);
         // 模板输出
@@ -395,11 +393,9 @@ class Hotel extends Controller
     //修改详情图片
     public function edit_detailed($id)
     {
-
-
-//        if(!$id){
-//            return $arr = ['code'=>'2','msg'=>'修改失败'];
-//        }
+        if(!$id){
+            return $arr = ['code'=>'2','msg'=>'修改失败'];
+        }
 
         //查询出这条数据(图片)
         $data = Db::table('think_hotel_img')->where('hotel_img_id',$id)->find();
@@ -413,25 +409,29 @@ class Hotel extends Controller
     //接收修改
     public function update_detailed(\think\Request $request)
     {
-        return json(($arr = ['code'=>'1','msg'=>'删除成功']));
         $post = $request->post();
-        die($post);die;
-//        $res = Db::name('hotel_img')
-//            ->update([
-//                'taxi_speed'   =>$taxi_speed,
-//                'taxi_quality' =>$taxi_quality,
-//                'taxi_id'      =>$taxi_id
-//            ]);
+
+        $res = Db::name('hotel_img')
+            ->update([
+                'hotel_images' =>$post['photo'],
+                'hotel_img_id' =>$post['hotel_img_id']
+            ]);
+
+        if($res){
+            return $arr = ['code'=>'1','msg'=>'修改成功'];
+        }else{
+            return $arr = ['code'=>'2','msg'=>'修改失败'];
+        }
     }
 
+    //删除详情图片
     public function del_detailed($id)
     {
-        dump($id);die;
         //判断有无这个数据
         $res = Db::table('think_hotel_img')->where('hotel_img_id',$id)->find();
 
         if(!$res){
-            return $arr = ['code'=>'2','msg'=>'没有这条数据'];
+            return $arr = ['code'=>'2','msg'=>'删除失败'];
         }
         //执行删除
         $res = Db::name('hotel_img')
@@ -442,9 +442,8 @@ class Hotel extends Controller
 
         if($res){
              return $arr = ['code'=>'1','msg'=>'删除成功'];
-//            return json_encode($arr,320);
         }else{
-            return $arr = ['code'=>'2','msg'=>'删除失败'];
+             return $arr = ['code'=>'2','msg'=>'删除失败'];
         }
 
 

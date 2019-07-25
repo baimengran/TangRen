@@ -53,7 +53,7 @@
                                     <!--<i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;-->
                                 <a href="javascript:location.href='/admin/hotel/edit_detailed.html?id={$vo.hotel_img_id}'"  class="btn btn-primary btn-xs btn-outline">
                                     <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
-                                <a href="" onclick="del_article({$vo.hotel_img_id})" class="btn btn-danger btn-xs btn-outline">
+                                <a href="javascript:;" onclick="del_article({$vo.hotel_img_id})" class="btn btn-danger btn-xs btn-outline">
                                     <i class="fa fa-trash-o"></i> 删除</a>
                             </td>
                         </tr>
@@ -99,14 +99,13 @@
     //编辑文章
     function edit_article(id){
         // location.href = './edit_detailed/id/'+id+'.html';
-        location.href = "{:url('hotel/edit_detailed')}?id=+id;
+        location.href = "{:url('hotel/edit_detailed')}?id=+id;"
         // location.href='admin/index/index';
     }
 
     //删除文章
     function del_article(id){
-        lunhui.confirm(id,'{:url("hotel/del_detailed")}');
-    }
+        lunhui.confirm(id,'{:url("hotel/del_detailed")}');}
 
     //审核状态
     function used_state(id){

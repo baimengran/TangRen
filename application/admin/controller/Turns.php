@@ -80,7 +80,7 @@ class Turns extends Controller
     {
 
         $post = $request->post();
-        
+
         $data['turns_img'] = $post['photo'];
         $data['turns_class'] = $post['title'];
 
