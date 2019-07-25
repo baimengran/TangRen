@@ -781,6 +781,9 @@ class Personal extends Controller
         //查询关于我们表
         $date = Db::table('think_about')->find();
 
+        $res = parse_url($date['img']);
+        $img = substr($res['path'], 1);
+        $date['img'] = $img;
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
     }
 
