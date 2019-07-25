@@ -237,9 +237,9 @@ class Dining extends Controller
         //图片logo
         $post['dining_logo'] = $post['photo'];
 
-
         //执行修改逻辑
         $data['dining_logo'] = $post['dining_logo'];
+        $data['dining_class'] = $post['dining_class'];
         $data['dining_name'] = $post['dining_name'];
         $data['dining_content'] = $post['dining_content'];
         $data['dining_day'] = $post['taxi_time_one'].'到'.$post['taxi_time_two'];

@@ -70,6 +70,7 @@ class Taxi extends Controller
             //实例化验证器
             $result = $this->validate($post, $rule, $message);
 
+
             //判断有无错误
             if (true !== $result) {
                 $date = ['errcode' => 1, 'errMsg' => 'error', 'ertips' => $result];
@@ -91,6 +92,7 @@ class Taxi extends Controller
             }else if($post['taxi_label_two']){
                 $label = $post['taxi_label_two'];
             }
+
             $post['taxi_label'] =json_encode($label,320);
 
             //每周营业时间
@@ -104,8 +106,10 @@ class Taxi extends Controller
             $taxiModel = new TaxiModel();
             $res = $taxiModel->add_taxi($post);
 
+
             if($res){
-                return  $arr = ['code'=>1,'msg'=>'添加成功'];
+                $arr = ['code'=>1,'msg'=>'添加成功'];
+                return  $arr;
             }else{
                 return  $arr = ['code'=>2,'msg'=>'添加失败'];
             }
@@ -189,7 +193,6 @@ class Taxi extends Controller
     {
         //接收参数
         $post = $request->post();
-
         $rule =   [
             'taxi_class'    => 'require',
             'taxi_name'     => 'require',
@@ -201,7 +204,6 @@ class Taxi extends Controller
             'taxi_day_two'  => 'require',
             'taxi_day_twos' => 'require',
             'taxi_address'  => 'require',
-            'photo'         => 'require',
         ];
         $message  = [
             'taxi_class.require'      => '地区不能为空',
@@ -216,7 +218,6 @@ class Taxi extends Controller
             'taxi_day_twos.require'   => '每天结束营业时间不能为空',
             'taxi_phone.require'      => '联系电话不能为空',
             'taxi_address.require'    => '具体地址不能为空',
-            'photo.require'           => '上传图片不能为空',
         ];
 
         //实例化验证器
@@ -230,7 +231,7 @@ class Taxi extends Controller
         }
 
         //判断标签是否有值
-        if (!$post['taxi_label'] && !$post['taxi_label_two'] && !$post['taxi_label_three']) {
+        if (!$post['taxi_label'] && !$post['taxi_label_two']) {
             return $err = json_encode(['errCode' => '0', 'msg' => 'success', 'ertips' => '标签不能为空'], 320);
         }
 
@@ -256,6 +257,7 @@ class Taxi extends Controller
 
         //执行修改逻辑
         $data['taxi_logo'] = $post['taxi_logo'];
+        $data['taxi_class'] = $post['taxi_class'];
         $data['taxi_name'] = $post['taxi_name'];
         $data['taxi_content'] = $post['taxi_content'];
         $data['taxi_day'] = $post['taxi_time_one'].'到'.$post['taxi_time_two'];
@@ -344,13 +346,12 @@ class Taxi extends Controller
     }
 
     //管理详情图片
-    public function detailed_taxi()
+    public function detailed_taxi($id)
     {
-//        dump('111');die;
         //根据id查询出详情图
         $list = Db::table('think_taxi_img')->where('taxi_id',1)->select();
 
-//        print_r($data);die;
+        print_r($list);die;
         $data = ['list'=>$list,];
         //加载视图
         $this->assign('list',$data);
