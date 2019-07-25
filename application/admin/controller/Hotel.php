@@ -324,7 +324,71 @@ class Hotel extends Controller
     }
 
     //酒店详情列表
+    public function detailed_hotel($id)
+    {
+        //执行查询操作
+        $list= Db::table('think_hotel_img')
+            ->where('img_status',0)
+            ->paginate(10);
 
+        //统计多少数据
+        $count= Db::table('think_hotel_img')
+            ->where('img_status',0)
+            ->select();
+
+        $count = count($list);
+        $date = ['list'=>$list,'count'=>$count];
+        //将数据传至页面
+        $this->assign('list',$date);
+        return $this->fetch('hotel/detailed');
+    }
+
+    //添加详情图片
+    public function add_detailed($id)
+    {
+
+        //加载视图
+        $this->assign('data', $id);
+        // 模板输出
+        return $this->fetch('hotel/add_detailed');
+    }
+
+    //接收详情图片
+    public function store(\think\Request $request)
+    {
+        $post = $request->post();
+
+        $rule =   [
+            'hotel_id'  => 'require',
+        ];
+        $message  = [
+            'hotel_id.require'      => '酒店ID不能为空',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+        $date = ['hotel_id'=>$post['hotel_id'],'hotel_images'=>$post['photo'],'img_status'=>0];
+        //执行添加操作
+        $res = Db::table('think_hotel_img')->insert($date);
+        dump($res);die;
+//        if($res){
+//            return $arr = ['code'=>1,'msg'=>'添加成功'];
+//        }else{
+//            return $arr = ['code'=>2,'msg'=>'添加失败'];
+//        }
+
+        //加载视图
+        $this->assign('data');
+        // 模板输出
+        return $this->fetch('hotel/add_detailed');
+    }
 
 
 }
