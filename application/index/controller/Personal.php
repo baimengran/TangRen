@@ -129,7 +129,7 @@ class Personal extends Controller
     /**
      * 马上兑换支付页接口(返回用户头像，昵称，默认地址，手机号)
      * 输入：用户ID 商品ID
-     * 返回：购买成功状态
+     * 返回：
      */
     public function integral_shop(\think\Request $request)
     {
@@ -791,13 +791,13 @@ class Personal extends Controller
 
         $rule =   [
             'id'        => 'require|number',
-            'cotnent'   => 'require|max:200'
+            'content'   => 'require|max:200'
         ];
         $message  = [
             'id.require'      => '用户ID不能为空',
             'id.number'       => '用户ID类型错误',
-            'cotnent.number'  => '提交内容不能为空',
-            'cotnent.number'  => '提交内容不能过长',
+            'content.require'  => '提交内容不能为空',
+            'content.max'  => '提交内容不能过长',
         ];
 
         //实例化验证器
