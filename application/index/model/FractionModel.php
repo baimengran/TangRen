@@ -466,7 +466,7 @@ class FractionModel extends Model
 
         //如果查不到则赋值为未完成
         if(!$sign){
-            $sign['sign_type'] = '2';
+            $sign['sign_type_type'] = '2';
         }
 
         //查询用户今天收藏任务完成情况
@@ -477,7 +477,7 @@ class FractionModel extends Model
             ->find();
         //如果查不到则赋值为未完成
         if(!$collect){
-            $collect['collect'] = '2';
+            $collect['collect_type'] = '2';
         }
 
         //查询用户今天发表任务完成情况
@@ -488,7 +488,7 @@ class FractionModel extends Model
             ->find();
         //如果查不到则赋值为未完成
         if(!$publish){
-            $publish['publish'] = '2';
+            $publish['publish_type'] = '2';
         }
 
         //查询用户今天分享任务完成情况
@@ -499,7 +499,7 @@ class FractionModel extends Model
             ->find();
         //如果查不到则赋值为未完成
         if(!$share){
-            $share['share'] = '2';
+            $share['share_type'] = '2';
         }
         //将所有数据压缩进一个数组
         $task = array_merge($sign,$collect,$publish,$share);
