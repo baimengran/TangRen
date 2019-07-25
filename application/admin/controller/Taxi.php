@@ -188,7 +188,10 @@ class Taxi extends Controller
         return $this->fetch('taxi/edit');
     }
 
-    //修改逻辑
+
+    /**
+     * 修改逻辑
+     */
     public function update_taxi(\think\Request $request)
     {
         //接收参数
@@ -276,7 +279,9 @@ class Taxi extends Controller
 
     }
 
-    //删除叫车
+    /**
+     * 删除叫车
+     */
     public function del_taxi($id)
     {
         //查询有无这条数据
@@ -357,7 +362,5 @@ class Taxi extends Controller
         $this->assign('list',$data);
         return $this->fetch('taxi/detailed');
     }
-
-
 
 }

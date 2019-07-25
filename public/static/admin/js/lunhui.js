@@ -22,7 +22,6 @@ var lunhui = {
 	            if(res.code == 1){
 	                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
 	                // Ajaxpage();
-                    console.log(location.href);
                     location.replace(location.href);
 	            }else{
 	                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});

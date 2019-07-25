@@ -111,7 +111,11 @@ Route::rule('admin/turns/del','index/Turns/del');
 //酒店列表
 Route::rule('admin/hotel/index','index/Hotel/index');
 //添加酒店
-Route::rule('admin/hotel/add','index/Hotel/add');
+Route::post('admin/hotel/add','index/Hotel/add');
+//编辑酒店
+Route::post('admin/hotel/edit','index/Hotel/edit');
+//删除酒店
+Route::post('admin/hotel/del_hotel','index/Hotel/del_hotel');
 
 
 //叫车列表
