@@ -111,17 +111,21 @@ Route::rule('admin/turns/del','index/Turns/del');
 //酒店列表
 Route::rule('admin/hotel/index','index/Hotel/index');
 //添加酒店
-Route::rule('admin/hotel/add','index/Hotel/add');
+Route::post('admin/hotel/add','index/Hotel/add');
+//编辑酒店
+Route::post('admin/hotel/edit','index/Hotel/edit');
+//删除酒店
+Route::post('admin/hotel/del_hotel','index/Hotel/del_hotel');
 
 
 //叫车列表
 Route::rule('admin/taxi/index','index/Taxi/index');
 //添加叫车
-Route::rule('admin/taxi/add','index/Taxi/add');
+Route::rule('admin/taxi/add_taxi','index/Taxi/add_taxi');
 //编辑叫车
-Route::rule('admin/taxi/add','index/Taxi/add');
+Route::rule('admin/taxi/edit_taxi','index/Taxi/edit_taxi');
 //删除叫车
-Route::rule('admin/taxi/del','index/Taxi/del');
+Route::rule('admin/taxi/del_taxi','index/Taxi/del_taxi');
 
 //美食列表
 Route::rule('admin/taxi/index','index/Taxi/index');

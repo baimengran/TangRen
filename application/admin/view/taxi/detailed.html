@@ -1,0 +1,136 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>汽车管理列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div  class="col-sm-2" style="width: 100px">
+                        <div class="input-group" >
+                            <a href="{:url('add_taxi')}"><button class="btn btn-outline btn-primary" type="button">添加叫车</button></a>
+                        </div>
+                    </div>
+                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input type="text" id="key" class="form-control" name="key" value="" placeholder="输入需查询的文章名称" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr class="long-tr">
+                            <th width="3%">ID</th>
+                            <th width="2%">主图logo</th>
+                            <th width="5%">叫车地区</th>
+                            <th width="5%">叫车名称</th>
+                            <th width="5%">营业时间</th>
+                            <th width="5%">联系电话</th>
+                            <th width="5%">地址</th>
+                            <th width="5%">叫车标签</th>
+                            <th width="5%">推荐状态</th>
+                            <th width="10%">操作</th>
+                        </tr>
+                        </thead>
+                        {volist name="list['list']" id="vo"}
+                        <tr class="long-td">
+                            <td>{$vo.taxi_id}</td>
+                            <td ><img width="100" style="height:50px;" src="/uploads/images/{$vo.taxi_logo}"  /></td>
+                            <td>{$vo.taxi_class}</td>
+                            <td>{$vo.taxi_name}</td>
+                            <td>{$vo.taxi_time}</td>
+                            <td>{$vo.taxi_phone}</td>
+                            <td>{$vo.taxi_address}</td>
+                            <td>{$vo.taxi_label}</td>
+                            <td >
+                                {if condition="$vo.taxi_status==0"}
+                                <a href="javascript:;" onclick="used_state({$vo.taxi_id});">
+                                    <div id=""><span class="label label-info">已推荐</span></div>
+                                </a>
+                                {else /}
+                                <a href="javascript:;" onclick="used_state({$vo.taxi_id});">
+                                    <div id="zt{$vo.taxi_id}"><span class="label label-danger">未推荐</span></div>
+                                </a>
+                                {/if}
+                            </td>
+                            <td style="width:13%">
+                                <a href="{:url('detailed_taxi')}" onclick="({$vo.taxi_id})" class="btn btn-primary btn-xs btn-outline">
+                                    <i class="fa fa-paste"></i> 详情</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="edit_article({$vo.taxi_id})" class="btn btn-primary btn-xs btn-outline">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del_article({$vo.taxi_id})" class="btn btn-danger btn-xs btn-outline">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+
+                            </td>
+                        </tr>
+                        {/volist}
+                        <tbody id="list-content"></tbody>
+                    </table>
+                    {$list.list->render()}
+
+                    <div id="AjaxPage" style="text-align:right;"></div>
+                    <div style="text-align: right;">
+                        共{$list.count}条数据<span ></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- 加载动画 -->
+<!--<div class="spiner-example">-->
+<!--<div class="sk-spinner sk-spinner-three-bounce">-->
+<!--<div class="sk-bounce1"></div>-->
+<!--<div class="sk-bounce2"></div>-->
+<!--<div class="sk-bounce3"></div>-->
+<!--</div>-->
+<!--</div>-->
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+    /**
+     * [Ajaxpage laypage分页]
+     * @param {[type]} curr [当前页]
+     */
+    // Ajaxpage();
+    //新增文章
+    function add_taxi(){
+        location.href = './add_taxi/'+'.html';
+    }
+
+    //编辑文章
+    function edit_article(id){
+        location.href = './edit_taxi/id/'+id+'.html';
+    }
+
+    //删除文章
+    function del_article(id){
+        lunhui.confirm(id,'{:url("taxi/del_taxi")}');
+    }
+
+    //审核状态
+    function used_state(id){
+        lunhui.status(id,'{:url("status_taxi")}','已推荐','未推荐');
+    }
+
+</script>
+</body>
+</html>

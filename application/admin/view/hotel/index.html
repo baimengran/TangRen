@@ -12,7 +12,7 @@
                 <div class="col-sm-12">
                     <div  class="col-sm-2" style="width: 100px">
                         <div class="input-group" >
-                            <a href="{:url('add_hotel')}"><button class="btn btn-outline btn-primary" type="button">添加酒店</button></a>
+                            <a href="{:url('add')}"><button class="btn btn-outline btn-primary" type="button">添加叫车</button></a>
                         </div>
                     </div>
                     <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
@@ -35,17 +35,12 @@
                         <thead>
                         <tr class="long-tr">
                             <th width="3%">ID</th>
-                            <th width="5%">主图logo</th>
+                            <th width="2%">主图logo</th>
                             <th width="5%">酒店地区</th>
                             <th width="5%">酒店名称</th>
-                            <th width="5%">酒店介绍</th>
                             <th width="5%">营业时间</th>
                             <th width="5%">联系电话</th>
                             <th width="5%">地址</th>
-                            <th width="5%">综合评分</th>
-                            <th width="5%">卫生评分</th>
-                            <th width="5%">环境评分</th>
-                            <th width="5%">服务评分</th>
                             <th width="5%">酒店标签</th>
                             <th width="5%">推荐状态</th>
                             <th width="10%">操作</th>
@@ -54,42 +49,42 @@
                         {volist name="list['list']" id="vo"}
                         <tr class="long-td">
                             <td>{$vo.hotel_id}</td>
-                            <td>{$vo.hotel_logo}</td>
+                            <td ><img width="100" style="height:50px;" src="/uploads/images/{$vo.hotel_logo}"  /></td>
                             <td>{$vo.hotel_class}</td>
                             <td>{$vo.hotel_name}</td>
-                            <td>{$vo.hotel_content}</td>
                             <td>{$vo.hotel_time}</td>
                             <td>{$vo.hotel_phone}</td>
                             <td>{$vo.hotel_address}</td>
-                            <td>{$vo.hotel_all}</td>
-                            <td>{$vo.hotel_hygiene}</td>
-                            <td>{$vo.hotel_ambient}</td>
-                            <td>{$vo.hotel_service}</td>
                             <td>{$vo.hotel_label}</td>
-                            <td>
-                            {if condition="$vo.hotel_status==0"}
-                            <a href="javascript:;" onclick="used_state();">
-                            <div id=""><span class="label label-info">已推荐</span></div>
-                            </a>
-                            {else /}
-                            <a href="javascript:;" onclick="used_state();">
-                            <div id="zt{$vo.turns_id}"><span class="label label-danger">未推荐</span></div>
-                            </a>
-                            {/if}
+                            <td >
+                                {if condition="$vo.hotel_status==0"}
+                                <a href="javascript:;" onclick="used_state({$vo.hotel_id});">
+                                    <div id=""><span class="label label-info">已推荐</span></div>
+                                </a>
+                                {else /}
+                                <a href="javascript:;" onclick="used_state({$vo.hotel_id});">
+                                    <div id="zt{$vo.hotel_id}"><span class="label label-danger">未推荐</span></div>
+                                </a>
+                                {/if}
                             </td>
-                            <td>
+                            <td style="width:13%">
+                                <a href="{:url('detailed_hotel')}" onclick="detailed({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
+                                    <i class="fa fa-paste"></i> 详情</a>&nbsp;&nbsp;
                                 <a href="javascript:;" onclick="edit_article({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
                                     <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
-                                <a href="javascript:;" onclick="del_article($vo.hotel_id})" class="btn btn-danger btn-xs btn-outline">
+                                <a href="javascript:;" onclick="del_article({$vo.hotel_id})" class="btn btn-danger btn-xs btn-outline">
                                     <i class="fa fa-trash-o"></i> 删除</a>
+
                             </td>
                         </tr>
                         {/volist}
                         <tbody id="list-content"></tbody>
                     </table>
+                    {$list.list->render()}
+
                     <div id="AjaxPage" style="text-align:right;"></div>
                     <div style="text-align: right;">
-                        共x条数据，<span ></span>
+                        共{$list.count}条数据<span ></span>
                     </div>
                 </div>
             </div>
@@ -117,23 +112,28 @@
      */
     // Ajaxpage();
     //新增文章
-    function add_turns(){
-        location.href = './add/'+'.html';
+    function add_taxi(){
+        location.href = './add_taxi/'+'.html';
     }
 
     //编辑文章
     function edit_article(id){
-        location.href = './edit_article/id/'+id+'.html';
+        location.href = './edit/id/'+id+'.html';
     }
 
     //删除文章
     function del_article(id){
-        lunhui.confirm(id,'{:url("del_article")}');
+        lunhui.confirm(id,'{:url("hotel/del_hotel")}');
     }
 
     //审核状态
     function used_state(id){
-        lunhui.status(id,'{:url("used_state")}','已审核','未审核');
+        lunhui.status(id,'{:url("status_hotel")}','已推荐','未推荐');
+    }
+
+    //详情列表
+    function detailed(id){
+        location.href = './detailed/id/'+id+'.html';
     }
 
 </script>

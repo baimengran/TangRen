@@ -34,9 +34,10 @@ class TaxiModel extends Model
     public function select_day()
     {
         $day = [];
-        for ($i=0; $i<=24; $i++)
+        for ($i=0; $i<=23; $i++)
         {
-            $day[] =  $i;
+            $day[] =  $i<10?'0'.$i:$i;
+
         }
         return $day;
     }
@@ -44,9 +45,9 @@ class TaxiModel extends Model
     public function select_minute()
     {
         $day = [];
-        for ($i=0; $i<=60; $i++)
+        for ($i=0; $i<=59; $i++)
         {
-            $day[] =  $i;
+            $day[] =  $i<10?'0'.$i:$i;
         }
         return $day;
     }
@@ -68,5 +69,17 @@ class TaxiModel extends Model
             ];
         $res = Db::table('think_taxi_list')->insert($data);
         return $res;
+    }
+
+    //查询叫车公司
+    public function find_taxi($id)
+    {
+
+        $date = Db::name('taxi_list')
+            ->where('taxi_id',$id)
+            ->find();
+
+        return $date;
+
     }
 }
