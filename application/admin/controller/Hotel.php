@@ -324,7 +324,7 @@ class Hotel extends Controller
     }
 
     //酒店详情列表
-    
+
 
 
 }
