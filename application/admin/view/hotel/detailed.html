@@ -4,7 +4,7 @@
     <!-- Panel Other -->
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>叫车管理列表</h5>
+            <h5>酒店详情图列表</h5>
         </div>
         <div class="ibox-content">
             <!--搜索框开始-->
@@ -12,7 +12,7 @@
                 <div class="col-sm-12">
                     <div  class="col-sm-2" style="width: 100px">
                         <div class="input-group" >
-                            <a href="{:url('add_taxi')}"><button class="btn btn-outline btn-primary" type="button">添加叫车</button></a>
+                            <a href=""><button class="btn btn-outline btn-primary" type="button">添加酒店</button></a>
                         </div>
                     </div>
                     <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
@@ -34,47 +34,25 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr class="long-tr">
-                            <th width="3%">ID</th>
+                            <th width="2%">ID</th>
+                            <th width="2%">主图ID</th>
                             <th width="2%">主图logo</th>
-                            <th width="5%">叫车地区</th>
-                            <th width="5%">叫车名称</th>
-                            <th width="5%">营业时间</th>
-                            <th width="5%">联系电话</th>
-                            <th width="5%">地址</th>
-                            <th width="5%">叫车标签</th>
-                            <th width="5%">推荐状态</th>
                             <th width="10%">操作</th>
                         </tr>
                         </thead>
                         {volist name="list['list']" id="vo"}
                         <tr class="long-td">
-                            <td>{$vo.taxi_id}</td>
-                            <td ><img width="100" style="height:50px;" src="/public/uploads/images/{$vo.taxi_logo}"  /></td>
-                            <td>{$vo.taxi_class}</td>
-                            <td>{$vo.taxi_name}</td>
-                            <td>{$vo.taxi_time}</td>
-                            <td>{$vo.taxi_phone}</td>
-                            <td>{$vo.taxi_address}</td>
-                            <td>{$vo.taxi_label}</td>
-                            <td >
-                                {if condition="$vo.taxi_status==0"}
-                                <a href="javascript:;" onclick="used_state({$vo.taxi_id});">
-                                    <div id=""><span class="label label-info">已推荐</span></div>
-                                </a>
-                                {else /}
-                                <a href="javascript:;" onclick="used_state({$vo.taxi_id});">
-                                    <div id="zt{$vo.taxi_id}"><span class="label label-danger">未推荐</span></div>
-                                </a>
-                                {/if}
-                            </td>
-                            <td style="width:13%">
-                                <a href="{:url('detailed_taxi',['id'=>$vo.taxi_id])}"  class="btn btn-primary btn-xs btn-outline">
-                                    <i class="fa fa-paste"></i> 详情</a>&nbsp;&nbsp;
-                                <a href="javascript:;" onclick="edit_article({$vo.taxi_id})" class="btn btn-primary btn-xs btn-outline">
-                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
-                                <a href="javascript:;" onclick="del_article({$vo.taxi_id})" class="btn btn-danger btn-xs btn-outline">
-                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            <td>{$vo.hotel_img_id}</td>
+                            <td>{$vo.hotel_id}</td>
+                            <td ><img width="100" style="height:50px;" src="/public/uploads/images/{$vo.hotel_images}"  /></td>
 
+                            <td style="width:13%">
+                                <a href="{:url('add_detailed',['id'=>$vo.hotel_id])}" onclick="edit_article({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
+                                    <i class="fa fa-paste"></i> 添加</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="edit_article({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del_article({$vo.hotel_id})" class="btn btn-danger btn-xs btn-outline">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
                             </td>
                         </tr>
                         {/volist}
@@ -118,17 +96,17 @@
 
     //编辑文章
     function edit_article(id){
-        location.href = './edit_taxi/id/'+id+'.html';
+        location.href = './edit/id/'+id+'.html';
     }
 
     //删除文章
     function del_article(id){
-        lunhui.confirm(id,'{:url("taxi/del_taxi")}');
+        lunhui.confirm(id,'{:url("hotel/del_hotel")}');
     }
 
     //审核状态
     function used_state(id){
-        lunhui.status(id,'{:url("status_taxi")}','已推荐','未推荐');
+        lunhui.status(id,'{:url("status_hotel")}','已推荐','未推荐');
     }
 
     //详情列表

@@ -12,7 +12,7 @@
                 <div class="col-sm-12">
                     <div  class="col-sm-2" style="width: 100px">
                         <div class="input-group" >
-                            <a href="{:url('add')}"><button class="btn btn-outline btn-primary" type="button">添加叫车</button></a>
+                            <a href="{:url('add')}"><button class="btn btn-outline btn-primary" type="button">添加酒店</button></a>
                         </div>
                     </div>
                     <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
@@ -49,7 +49,7 @@
                         {volist name="list['list']" id="vo"}
                         <tr class="long-td">
                             <td>{$vo.hotel_id}</td>
-                            <td ><img width="100" style="height:50px;" src="/uploads/images/{$vo.hotel_logo}"  /></td>
+                            <td ><img width="100" style="height:50px;" src="/public/uploads/images/{$vo.hotel_logo}"  /></td>
                             <td>{$vo.hotel_class}</td>
                             <td>{$vo.hotel_name}</td>
                             <td>{$vo.hotel_time}</td>
@@ -68,7 +68,7 @@
                                 {/if}
                             </td>
                             <td style="width:13%">
-                                <a href="{:url('detailed_hotel')}" onclick="detailed({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
+                                <a href="{:url('detailed_hotel',['id'=>$vo.hotel_id])}" onclick="detailed({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
                                     <i class="fa fa-paste"></i> 详情</a>&nbsp;&nbsp;
                                 <a href="javascript:;" onclick="edit_article({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
                                     <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;

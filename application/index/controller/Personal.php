@@ -140,10 +140,10 @@ class Personal extends Controller
         }
 
         $address = Db::table('think_address_phone')
-            ->field('city')
             ->where('id',$get['id'])
-            ->where('address_id',$get['address_id'])
+            ->where('default_address',0)
             ->find();
+
         if(!$address){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个地址'],320);
         }
@@ -406,12 +406,16 @@ class Personal extends Controller
         $rule =   [
             'address_id'=> 'require',
             'id'        => 'require',
+            'name'      => 'require',
+            'phone'     => 'require',
             'city'      => 'require',
         ];
         $message  = [
             'id.require'         => '用户ID不能为空',
             'city.require'       => '地址不能为空',
-            'address_id.address_id'    => '地址ID不能为空',
+            'name.require'       => '姓名不能为空',
+            'phone.require'      => '电话不能为空',
+            'address_id.address_id'=> '地址ID不能为空',
         ];
 
         //实例化验证器
@@ -427,7 +431,6 @@ class Personal extends Controller
         if(!$data){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这条信息'],320);
         }
-
 
         if (isset($post['default_address']) && $post['default_address'] == 0){
             Db::table('think_address_phone')->where(['id'=>$post['id']])->update(['default_address'=>1]);
@@ -451,10 +454,14 @@ class Personal extends Controller
 
         $rule =   [
             'id'        => 'require',
+            'name'      => 'require',
+            'phone'     => 'require',
             'city'      => 'require',
         ];
         $message  = [
             'id.require'         => '用户ID不能为空',
+            'name.require'       => '姓名不能为空',
+            'phone.require'      => '电话不能为空',
             'city.require'       => '地址不能为空',
         ];
 
@@ -475,6 +482,8 @@ class Personal extends Controller
 
             $data = [
                 'city'          =>$post['city'],
+                'name'          =>$post['name'],
+                'phone'         =>$post['phone'],
                 'default_address' =>1,
                 'id'            =>$post['id']
             ];
@@ -773,6 +782,21 @@ class Personal extends Controller
         $date = Db::table('think_about')->find();
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$date],320);
+    }
+
+
+    public function idea(\think\Request $request)
+    {
+        $post = $request->post();
+
+        //将信息添加到意见表中
+        $date=['user_id'=>$post['id'],'content'=>$post['content'] ];
+        $res = Db::table('think_idea')->insert($date);
+
+        if(!$res){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'提交失败'],320);
+        }
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'提交成功'],320);
     }
 
 

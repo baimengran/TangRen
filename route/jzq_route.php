@@ -49,6 +49,8 @@ Route::post('index/dining/selectcomm','index/Dining/selectcomm');
 
 //个人中心首页接口
 Route::get('index/personal/index','index/Personal/index');
+//意见反馈接口
+Route::post('index/personal/idea','index/Personal/idea');
 
 
 //个人中心积分商城接口
