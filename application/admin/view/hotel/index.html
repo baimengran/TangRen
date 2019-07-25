@@ -68,7 +68,9 @@
                                 {/if}
                             </td>
                             <td style="width:13%">
-                                <a href="{:url('detailed_hotel',['id'=>$vo.hotel_id])}" onclick="detailed({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
+                                <!--<a href="{:url('detailed_hotel',['id'=>$vo.hotel_id])}" onclick="detailed({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">-->
+                                    <!--<i class="fa fa-paste"></i> 详情</a>&nbsp;&nbsp;-->
+                                <a href="javascript:;" onclick="detailed({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
                                     <i class="fa fa-paste"></i> 详情</a>&nbsp;&nbsp;
                                 <a href="javascript:;" onclick="edit_article({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
                                     <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
@@ -133,7 +135,7 @@
 
     //详情列表
     function detailed(id){
-        location.href = './detailed/id/'+id+'.html';
+        location.href = './detailed_hotel/id/'+id+'.html';
     }
 
 </script>
