@@ -17,6 +17,8 @@ class BaseException extends Exception
     public $code = 400;
     //错误信息
     public $errmsg = 'error';
+    //后台
+    public $msg = '';
     //自定义错误码
     public $errcode = 10000;
     //状态说明
@@ -41,6 +43,9 @@ class BaseException extends Exception
 
         if(array_key_exists('ertips',$params)){
             $this->ertips = $params['ertips'];
+        }
+        if(array_key_exists('msg',$params)){
+            $this->ertips = $params['msg'];
         }
     }
 

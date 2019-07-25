@@ -23,6 +23,7 @@ class BannerMissException extends BaseException
     public $errcode = 1;
     //状态说明
     public $ertips = '服务器内部错误';
+    public $msg = '出错啦';
 
 
 }

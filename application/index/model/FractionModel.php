@@ -466,7 +466,7 @@ class FractionModel extends Model
 
         //如果查不到则赋值为未完成
         if(!$sign){
-            $sign['sign_type_type'] = '2';
+            $sign['sign_type'] = '2';
         }
 
         //查询用户今天收藏任务完成情况

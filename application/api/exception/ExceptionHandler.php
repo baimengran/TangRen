@@ -26,12 +26,23 @@ class ExceptionHandler extends Handle
     private $errcode;
     //状态说明
     private $ertips;
+    //后台
+    private $msg;
 
     public function render(Exception $e)
     {
-        if (config('app_debug')) {
-            return parent::render($e);
-        } else
+//        if (config('app_debug')) {
+//            return parent::render($e);
+//        } else
+        if ($e instanceof BaseException) {
+
+            $this->code = $e->code;
+            $this->errmsg = $e->errmsg;
+            $this->errcode = $e->errcode;
+            $this->ertips = $e->ertips;
+            return $this->send();
+        }
+
             if ($e instanceof HttpException || request()->isAjax()) {
                 if (\request()->isAjax()) {
                     $this->code = $e->getStatusCode();
@@ -91,6 +102,7 @@ class ExceptionHandler extends Handle
             'errcode' => $this->errcode,
             'errmsg' => $this->errmsg,
             'ertips' => $this->ertips,
+            'msg'=>$this->msg,
             'request_url' => $request->url()
         ];
 

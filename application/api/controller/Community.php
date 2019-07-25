@@ -325,7 +325,12 @@ class Community
         $explain = '';
         try {
             $community = CommunityModel::get($community_id);
-
+            if (!$community) {
+                throw new BannerMissException([
+                    'code' => 400,
+                    'ertips' => '没有这条数据'
+                ]);
+            }
             $praise = Db::name('member_praise')
                 ->where('module_id', 'eq', $community->id)
                 ->where('module_type', 'community')
@@ -434,16 +439,15 @@ class Community
                     'ertips' => '请求错误',
                 ]);
         }
-
+        $module = $module_class->get($module_id);
+        if (!$module) {
+            throw new BannerMissException([
+                'code' => 404,
+                'ertips' => '没有这条数据',
+            ]);
+        }
         Db::startTrans();
         try {
-            $module = $module_class->get($module_id);
-            if (!$module) {
-                throw new BannerMissException([
-                    'code' => 404,
-                    'ertips' => '请求错误',
-                ]);
-            }
             $collect = Db::name('member_collect')
                 ->where('module_id', 'eq', $module[$pk])
                 ->where('module_type', $module_type)

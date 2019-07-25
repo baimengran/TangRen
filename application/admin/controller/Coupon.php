@@ -9,9 +9,9 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\CouponModel;
+use app\api\exception\BannerMissException;
 use think\Db;
-use think\Exception;
-use think\exception\HttpException;
 use think\Loader;
 use think\Validate;
 
@@ -34,7 +34,7 @@ class Coupon extends Base
                 ]);
             }
         } catch (Exception $e) {
-            throw new HttpException(500);
+            return view('error/500');
         }
     }
 
@@ -58,11 +58,11 @@ class Coupon extends Base
             return json(['code' => 0, 'data', 'msg' => $validate->getError()]);
         }
         $create = strtotime($form['activity_create_time']);
-        $end =strtotime($form['activity_end_time']);
-        $form['activity_create_time'] =$create;
-        $form['activity_end_time']=$end;
-        $form['create_time']=time();
-        $form['update_time']=time();
+        $end = strtotime($form['activity_end_time']);
+        $form['activity_create_time'] = $create;
+        $form['activity_end_time'] = $end;
+        $form['create_time'] = time();
+        $form['update_time'] = time();
         try {
             $region_id = Db::name('coupon')->insert($form);
             if ($region_id) {
@@ -71,7 +71,7 @@ class Coupon extends Base
                 return json(['code' => 1, 'data', 'msg' => '添加失败，稍候再试吧']);
             }
         } catch (Exception $e) {
-            throw new HttpException(500);
+            return view('error/500');
         }
     }
 
@@ -82,11 +82,15 @@ class Coupon extends Base
     public function edit()
     {
 
-        $region = new RegionListModel();
-//        return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
+        $coupon = new CouponModel();
         $id = input('param.id');
-        $data = $region->where('region_id', $id)->find();
-        return view('edit', ['region' => $data]);
+        $data = $coupon->where('id', $id)->find();
+        if ($data) {
+            $data['activity_create_time'] = date('Y-m-d H:i:s', $data['activity_create_time']);
+            $data['activity_end_time'] = date('Y-m-d H:i:s', $data['activity_end_time']);
+            return view('edit', ['coupon' => $data]);
+        }
+        return view('error/500');
     }
 
     /**
@@ -102,8 +106,12 @@ class Coupon extends Base
                 $region = new RegionListModel($param['region_id']);
                 $result = $region->update($param);
                 return json(['code' => 1, 'data' => '', 'msg' => '区域编辑成功']);
-            } catch (Exception $e) {
-                return json(['code' => 0, 'data' => '', 'msg' => '出错啦']);
+            } catch (\Exception $e) {
+                \think\Log::error('fffffff');
+                throw new BannerMissException([
+                    'code'=>1,
+
+                ]);
             }
         }
     }
