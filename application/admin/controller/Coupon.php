@@ -61,6 +61,8 @@ class Coupon extends Base
         $end =strtotime($form['activity_end_time']);
         $form['activity_create_time'] =$create;
         $form['activity_end_time']=$end;
+        $form['create_time']=time();
+        $form['update_time']=time();
         try {
             $region_id = Db::name('coupon')->insert($form);
             if ($region_id) {
@@ -113,12 +115,12 @@ class Coupon extends Base
      */
     public function destroy()
     {
-        return json(['code' => 0, 'data', 'msg' => '没有这种功能']);
+
         if (request()->isAjax()) {
-            $region_id = input('get.id');
+            $id = input('get.id');
             try {
-                $region_id = Db::name('region_list')->delete($region_id);
-                if ($region_id) {
+                $id = Db::name('coupon')->delete($id);
+                if ($id) {
                     return json(['code' => 1, 'data' => '', 'msg' => '删除成功']);
                 } else {
                     return json(['code' => 0, 'data' => '', 'msg' => '删除失败']);
