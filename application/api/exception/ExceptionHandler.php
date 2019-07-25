@@ -38,7 +38,13 @@ class ExceptionHandler extends Handle
                 $this->ertips = '请求异常';
                 return $this->send();
             }
-            header("Location:".url('admin/error/index'));die;
+            if($e->getStatusCode()==404){
+                header("Location:".url('admin/error/index'));die;
+            }
+            if($e->getStatusCode()==500){
+                header("Location:".url('admin/error/error'));die;
+            }
+
         } else if ($e instanceof BaseException) {
 
             $this->code = $e->code;

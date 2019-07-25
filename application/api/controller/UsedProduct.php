@@ -56,7 +56,7 @@ class UsedProduct extends Controller
             } else {
                 $used = Db::name('used_product')->where('region_id', $region)->buildSql();
             }
-            $usedSticky = Db::name('rent_house')->where('sticky_status', 0)->union($used)->buildSql();
+            $usedSticky = Db::name('used_product')->where('sticky_status', 0)->union($used)->buildSql();
             $usedProduct = $usedProduct->table($usedSticky . 'a')->order('sticky_status asc ,create_time desc')->paginate(20);
 
             $data['total'] = $usedProduct->total();

@@ -4,27 +4,31 @@
     <!-- Panel Other -->
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>话题列表</h5>
+            <h5>行业列表</h5>
         </div>
         <div class="ibox-content">
-            <!--搜索框开始-->           
+            <!--搜索框开始-->
             <div class="row">
-                <div class="col-sm-12">   
-                <div  class="col-sm-2" style="width: 100px">
-                    <div class="input-group" >
-                        <a href="{:url('create')}"><button class="btn btn-outline btn-primary" type="button">添加</button></a>
+                <div class="col-sm-12">
+                    <div class="col-sm-2" style="width: 100px">
+                        <div class="input-group">
+                            <a href="{:url('create')}">
+                                <button class="btn btn-outline btn-primary" type="button">添加行业</button>
+                            </a>
+                        </div>
                     </div>
-                </div>
                     <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <input type="text" id="key" class="form-control" name="key" value="{$val}" placeholder="输入需查询的区域名称" />
+                                <input type="text" id="key" class="form-control" name="key" value="{$val}"
+                                       placeholder="输入需查询的行业名称"/>
                                 <span class="input-group-btn"> 
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button> 
+                                    <button type="submit" class="btn btn-primary"><i
+                                            class="fa fa-search"></i> 搜索</button>
                                 </span>
                             </div>
                         </div>
-                    </form>                         
+                    </form>
                 </div>
             </div>
             <!--搜索框结束-->
@@ -33,18 +37,19 @@
                 <div class="example">
                     <table class="table table-bordered table-hover">
                         <thead>
-                            <tr class="long-tr">
-                                <th width="25%">ID</th>
-                                <th width="25%">话题名称</th>
-                                <th width="25%">状态</th>
-                            </tr>
+                        <tr class="long-tr">
+                            <th width="25%">ID</th>
+                            <th width="25%">行业名称</th>
+                            <th width="25%">状态</th>
+                        </tr>
                         </thead>
 
                         <script id="list-template" type="text/html">
 
                         </script>
                         <tbody id="list-content">
-                        {volist name="topics" id="data"}
+
+                        {volist name="professions" id="data" empty='$empty'}
                         <tr class="long-td">
                             <td>{$data.id}</td>
                             <td>{$data.name}</td>
@@ -59,12 +64,13 @@
                                 </a>
                                 {/if}
                             </td>
+
                         </tr>
                         {/volist}
 
                         </tbody>
                     </table>
-                    <div id="AjaxPage" style="text-align:right;">{$topics->render()}</div>
+                    <div id="AjaxPage" style="text-align:right;">{$professions->render()}</div>
 
                 </div>
             </div>
@@ -78,10 +84,9 @@
 
 {include file="public/footer" /}
 <script>
-
     //文章状态
-    function status(id){
-        lunhui.status(id,'{:url("status")}');
+    function status(id) {
+        lunhui.status(id, '{:url("status")}');
     }
 </script>
 

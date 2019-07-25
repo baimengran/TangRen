@@ -113,8 +113,8 @@ return [
     'exception_handle'=> 'app\api\exception\ExceptionHandler',
 
     //404页面
-    'http_exception_template'=>[
-        '404'=>APP_PATH.'/404.html',
-    ]
+//    'http_exception_template'=>[
+//        '404'=>APP_PATH.'/404.html',
+//    ]
 
 ];

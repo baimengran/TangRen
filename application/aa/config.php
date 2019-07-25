@@ -24,13 +24,13 @@ return [
     // +----------------------------------------------------------------------
     // | Trace设置 开启 app_trace 后 有效
     // +----------------------------------------------------------------------
-    'app_trace' =>  TRUE,      //开启应用Trace调试
+    'app_trace' =>  false,      //开启应用Trace调试
     'trace' => [
         'type' => 'html',       // 在当前Html页面显示Trace信息,显示方式console、html
     ],
     'sql_explain' => false,     // 是否需要进行SQL性能分析  
     'extra_config_list' => ['database', 'route', 'validate'],//各模块公用配置
-    'app_debug' => true,
+    'app_debug' => false,
 	'default_module' => 'admin',//默认模块	
     //'default_filter' => ['strip_tags', 'htmlspecialchars'],
 

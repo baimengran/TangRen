@@ -14,4 +14,7 @@ class Error
     public function index(){
         return view('error/404');
     }
+    public function error(){
+        return view('error/500');
+    }
 }

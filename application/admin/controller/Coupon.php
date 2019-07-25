@@ -2,36 +2,33 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2019/7/22
- * Time: 9:50
+ * Date: 2019/7/25
+ * Time: 11:04
  */
 
 namespace app\admin\controller;
 
 
-use app\admin\model\RegionListModel;
-use app\api\exception\BannerMissException;
 use think\Db;
 use think\Exception;
 use think\exception\HttpException;
-use think\exception\PDOException;
 use think\Validate;
 
-class Region extends Base
+class Coupon extends Base
 {
     public function index()
     {
         try {
-            $region_name = input('key');
-            $region = Db::name('region_list');
-            if ($region) {
-                $region->where('region_name', 'like', '%' . $region_name . '%');
+            $key = input('key');
+            $coupon = Db::name('coupon');
+            if ($coupon) {
+                $coupon->where('title', 'like', '%' . $key . '%');
             }
-            $region = $region->order('')->paginate(20);
-            if ($region) {
+            $coupon = $coupon->order('')->paginate(20);
+            if ($coupon) {
                 return view('index', [
-                    'val' => $region_name,
-                    'regions' => $region,
+                    'val' => $key,
+                    'coupons' => $coupon,
                     'empty' => '<tr><td colspan="4" align="center"><span>暂无数据</span></td></tr>'
                 ]);
             }
@@ -76,7 +73,7 @@ class Region extends Base
                 return json(['code' => 1, 'data', 'msg' => '添加失败，稍候再试吧']);
             }
         } catch (Exception $e) {
-            return json(['code'=>0,'data','msg'=>'出错啦']);
+            throw new HttpException(500);
         }
     }
 
@@ -86,7 +83,7 @@ class Region extends Base
      */
     public function edit()
     {
-        return json(['code' => 0, 'data', 'msg' => '没有这种功能']);
+
         $region = new RegionListModel();
 //        return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         $id = input('param.id');
@@ -100,8 +97,7 @@ class Region extends Base
      */
     public function update()
     {
-        return json(['code' => 0, 'data', 'msg' => '没有这种功能']);
-//        return json(['code'=>1,'data'=>input('region_id')]);
+
         if (request()->isAjax()) {
             try {
                 $param = input('post.');
@@ -132,30 +128,30 @@ class Region extends Base
                     return json(['code' => 0, 'data' => '', 'msg' => '删除失败']);
                 }
             } catch (Exception $e) {
-                return json(['code'=>0,'data','msg'=>'出错啦']);
+                return json(['code' => 0, 'data' => '', 'msg' => '出错啦']);
             }
         }
 
     }
 
     /**
-     * [article_state 文章状态]
+     * [article_state 优惠卷状态]
      * @return [type] [descriptio]
      */
     public function status()
     {
         $id = input('param.id');
         try {
-            $status = Db::name('region_list')->where(array('region_id' => $id))->value('region_status');//判断当前状态情况
+            $status = Db::name('coupon')->where(array('id' => $id))->value('status');//判断当前状态情况
             if ($status == 0) {
-                $flag = Db::name('region_list')->where(array('region_id' => $id))->setField(['region_status' => 1]);
+                $flag = Db::name('coupon')->where(array('id' => $id))->setField(['status' => 1]);
                 return json(['code' => 1, 'data' => $flag['data'], 'msg' => '已禁止']);
             } else {
-                $flag = Db::name('region_list')->where(array('region_id' => $id))->setField(['region_status' => 0]);
+                $flag = Db::name('coupon')->where(array('id' => $id))->setField(['status' => 0]);
                 return json(['code' => 0, 'data' => $flag['data'], 'msg' => '已开启']);
             }
         } catch (Exception $e) {
-            return json(['code'=>0,'data','msg'=>'出错啦']);
+            throw new HttpException(500);
         }
     }
 }
