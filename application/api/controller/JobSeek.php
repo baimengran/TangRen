@@ -9,9 +9,12 @@
 namespace app\api\controller;
 
 use app\admin\model\JobSeekModel;
+use app\admin\model\MemberModel;
+use app\api\exception\BannerMissException;
 use think\Db;
 use think\Exception;
 use think\Log;
+use think\Request;
 
 class JobSeek
 {
@@ -22,25 +25,51 @@ class JobSeek
      */
     public function index()
     {
+        if (!$search = input('search')) {
+            //搜索不存在时设定区域参数
+            if (!$profession = input('profession_id')) {
+                throw new BannerMissException([
+                    'code' => 400,
+                    'ertips' => '缺少必要参数'
+                ]);
+            }
+        }
+//        return JobSeekModel::get(1);
         //区域ID
-        $region = request()->get('region_id');
+        $region = input('region_id');
         //行业ID
-        $profession = request()->get('profession_id');
+        $profession = input('profession_id');
         //搜索
-        $search = request()->get('search');
+
         try {
-            $job = Db::name('job_seek');
+            //查询有置顶的动态
+            $jobSticky = new JobSeekModel();
+            $stickies = $jobSticky->where('sticky_status',0)->select();
+            //检查置顶是否过期
+            $updates=[];
+            foreach($stickies as $sticky){
+                if(time()>$sticky['sticky_end_time']){
+
+                    $val['id']=$sticky['id'];
+                    $val['sticky_status']=1;
+                    $updates[]=$val;
+                }
+            }
+            //批量更新过期置顶数据
+            $jobSticky->saveAll($updates);
+
+            $job = new JobSeekModel();
 
             if ($search) {
-                $job->where('body', 'like', '%' . $search . '%');
+                $jobs= Db::name('job_seek')->where('body', 'like', '%' . $search . '%')->buildSql();
+            } else {
+                $jobs = Db::name('job_seek')->where('profession_id',$profession)->buildSql();
             }
-            if ($region) {
-                $job = $job->where('region_id', 'eq', $region);
-            }
-            if ($profession) {
-                $job = $job->where('profession_id', 'eq', $profession);
-            }
-            $job = $job->order('create_time', 'desc')->paginate(20);
+            $jobSticky = Db::name('job_seek')->where('sticky_status',0)->union($jobs)->buildSql();
+            $job= $job->table($jobSticky.'a')->order('sticky_status asc ,create_time desc')->paginate(20);
+
+
+
 
             $data['total'] = $job->total();
             $data['per_page'] = $job->listRows();
@@ -49,21 +78,55 @@ class JobSeek
             $data['data'] = [];
             foreach ($job as $k => $val) {
                 //查询对应招聘信息用户
-                $member = Db::name('member')->where('id', 'eq', $val['user_id'])->select();
+                $member = Db::name('member')->where('id', 'eq', $val['user_id'])->find();
                 //查询对应招聘信息行业
-                $profession = Db::name('profession_cate')->where('id', 'eq', $val['profession_id'])->select();
+                $profession = Db::name('profession_cate')->where('id', 'eq', $val['profession_id'])->find();
                 //查询对应招聘信息区域
-                $region = Db::name('region_list')->where('region_id', 'eq', $val['region_id'])->select();
+                $region = Db::name('region_list')->where('region_id', 'eq', $val['region_id'])->find();
 
-                $val['region'] = $region[0];
-                $val['user'] = $member[0];
-                $val['profession'] = $profession[0];
+                //获取点赞数据
+                $praise = Db::name('member_praise')->where('user_id','eq',getUserId())
+                    ->where('module_id','eq',$val['id'])
+                    ->where('module_type','eq','job_seek')
+                    ->find();
+//                return $praise;
+                //获取收藏数据
+                $collect = Db::name('member_collect')->where('user_id','eq',getUserId())
+                    ->where('module_id','eq',$val['id'])
+                    ->where('module_type','eq','job_seek_model')
+                    ->find();
+//                $data[]=$community;
+                if(!$praise){
+                    //如果是空，证明没点攒
+                    $praise=1;
+                }else{
+                    //如果存在，证明以软删除点赞
+                    if($praise['delete_time']){
+                        $praise=1;
+                    }else{
+                        $praise=0;
+                    }
+                }
+                if(!$collect){
+                    //如果是空，证明没点攒
+                    $collect=1;
+                }else{
+                    //如果存在，证明以软删除点赞
+                    if($collect['delete_time']){
+                        $collect=1;
+                    }else{
+                        $collect=0;
+                    }
+                }
+                $val['user_praise']=$praise;
+                $val['user_collect']=$collect;
+                $val['user'] = $member;
+                $val['profession'] = $profession;
                 $data['data'][] = $val;
             }
-            return jsone('查询成功', $data);
+            return jsone('查询成功', 200, $data);
         } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            throw new BannerMissException();
         }
 
     }
@@ -74,19 +137,47 @@ class JobSeek
      */
     public function save()
     {
-        $data = request()->post();
+
         //获取用户ID
-        $id = getUserId();
+        if (!$id = getUserId()) {
+            throw new BannerMissException([
+                'code' => 401,
+                'ertips' => '用户认证失败',
+            ]);
+        }
+
+        $data = input();
         $data['user_id'] = $id;
         $validate = validate('JobSeek');
         if (!$validate->check($data)) {
-            return jsone($validate->getError(), [], 1, 'error');
+            throw new BannerMissException([
+                'code' => 422,
+                'ertips' => $validate->getError(),
+            ]);
         }
+        $sticky = Db::name('sticky')->where('id', $data['sticky_id'])->find();
+//        return $sticky;
         //确定置顶状态，计算置顶结束日期
-        if ($day = input('post.sticky_num')) {
-            $sticky_create_time = time();
-            $sticky_end_time = $sticky_create_time + $day * 24 * 3600;
+        if ($sticky) {
+            //查询积分
+            $integral = MemberModel::where('id', $id)->find();
+            if ($integral['integral'] - $sticky['integral'] >= 0) {
+                $integral->update([
+                    'integral' => $integral['integral'] - $sticky['integral']
+                ], ['id' => $id]);
+
+            } else {
+                throw new BannerMissException([
+                    'code'=>422,
+                    'ertips'=>'积分不足'
+                ]);
+            }
+            if ($day = $sticky['day_num']) {
+                $sticky_create_time = time();
+                $sticky_end_time = $sticky_create_time + $day * 24 * 3600;
+            }
         } else {
+
             $sticky_create_time = 0;
             $sticky_end_time = 0;
         }
@@ -99,16 +190,15 @@ class JobSeek
                 'salary' => $data['salary'],
                 'sticky_create_time' => $sticky_create_time,
                 'sticky_end_time' => $sticky_end_time,
-                'sticky_status' => $day ? 0 : 1,
+                'sticky_status' => $data['sticky_id'] ? 0 : 1,
                 'phone' => $data['phone'],
             ]);
 
-            $data = JobSeekModel::with('user,Profession,region')->select($job->id);
+            $data = JobSeekModel::with('user,Profession,region')->find($job->id);
         } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            throw new BannerMissException();
         }
-        return $data ? jsone('创建成功', $data) : json('创建失败', [], 1, 'error');
+        return jsone('创建成功', 201, $data);
     }
 
     /**
@@ -117,18 +207,61 @@ class JobSeek
      */
     public function show()
     {
+        if (!$job_id = input('job_id')) {
+            throw new BannerMissException([
+                'code' => 400,
+                'ertips' => '缺少必要参数'
+            ]);
+        }
 
-        $id = request()->get('job_id');
         try {
-            $job = JobSeekModel::with('user,region,profession')->find($id);
+            $job = JobSeekModel::with('user,region,profession')->find($job_id);
+
+            //获取点赞数据
+            $praise = Db::name('member_praise')->where('user_id','eq',getUserId())
+                ->where('module_id','eq',$job['id'])
+                ->where('module_type','eq','job_seek')
+                ->find();
+
+            //获取收藏数据
+            $collect = Db::name('member_collect')->where('user_id','eq',getUserId())
+                ->where('module_id','eq',$job->id)
+                ->where('module_type','eq','job_seek_model')
+                ->find();
+
+            if(!$praise){
+                //如果是空，证明没点攒
+                $praise=1;
+            }else{
+                //如果存在，证明以软删除点赞
+                if($praise['delete_time']){
+                    $praise=1;
+                }else{
+                    $praise=0;
+                }
+            }
+            if(!$collect){
+                //如果是空，证明没点攒
+                $collect=1;
+            }else{
+                //如果存在，证明以软删除点赞
+                if($collect['delete_time']){
+                    $collect=1;
+                }else{
+                    $collect=0;
+                }
+            }
+
+            $data=$job->toArray();
+            $data['user_praise']=$praise;
+            $data['user_collect']=$collect;
             $job->browse = $job['browse'] + 1;
             $job->save();
 
         } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return jsone('服务器错误，请稍候重试', [], '1', 'error');
+            throw new BannerMissException();
         }
-        return jsone('查询成功', $job);
+        return jsone('查询成功', 200, $data);
     }
 
     /**
@@ -137,47 +270,57 @@ class JobSeek
      */
     public function praise()
     {
+
         //获取登录用户ID
-        $id = getUserId();
+        if (!$id = getUserId()) {
+            throw new BannerMissException([
+                'code' => 401,
+                'ertips' => '用户认证失败',
+            ]);
+        }
+
+        if (!$job_id = input('job_id')) {
+            throw new BannerMissException([
+                'code' => 400,
+                'ertips' => '缺少必要参数'
+            ]);
+        }
         $explain = '';
-        if ($id) {
-            try {
-                $job = JobSeekModel::get(request()->get('job_id'));
 
-                $praise = Db::name('member_praise')
-                    ->where('module_id', 'eq', $job->id)
-                    ->where('module_type', 'job_seek')
-                    ->where('user_id', 'eq', $id)
-                    ->find();
+        try {
+            $job = JobSeekModel::get($job_id);
 
-                //判断是否有点赞数据
-                if ($praise) {
-                    //判断点赞数据是否软删除
-                    if ($praise['delete_time']) {
-                        //将软删除恢复
-                        Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => null]);
-                        $job->praise = $job['praise'] + 1;
-                        $explain = '点赞成功';
-                    } else {
-                        //软删除点赞
-                        Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => time()]);
-                        $job->praise = $job['praise'] - 1;
-                        $explain = '点赞以取消';
-                    }
-                } else {
-                    $job->memberPraise()->save(['user_id' => $id, 'module_id' => $job->id]);
+            $praise = Db::name('member_praise')
+                ->where('module_id', 'eq', $job->id)
+                ->where('module_type', 'job_seek')
+                ->where('user_id', 'eq', $id)
+                ->find();
+
+            //判断是否有点赞数据
+            if ($praise) {
+                //判断点赞数据是否软删除
+                if ($praise['delete_time']) {
+                    //将软删除恢复
+                    Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => null]);
                     $job->praise = $job['praise'] + 1;
                     $explain = '点赞成功';
+                } else {
+                    //软删除点赞
+                    Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => time()]);
+                    $job->praise = $job['praise'] - 1;
+                    $explain = '点赞以取消';
                 }
-
-                $job->save();
-                return jsone($explain, $job->with('user,region,profession')->find($job->id));
-            } catch (Exception $e) {
-                Log::error($e->getMessage());
-                return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            } else {
+                $job->memberPraise()->save(['user_id' => $id, 'module_id' => $job->id]);
+                $job->praise = $job['praise'] + 1;
+                $explain = '点赞成功';
             }
-        } else {
-            return jsone('请登录后重试', [], 1, 'error');
+
+            $job->save();
+            return jsone($explain, 200);
+        } catch (Exception $e) {
+            throw new BannerMissException();
         }
+
     }
 }

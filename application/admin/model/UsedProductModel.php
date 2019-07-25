@@ -17,6 +17,17 @@ class UsedProductModel extends Model
 // 开启自动写入时间戳字段
     protected $autoWriteTimestamp = true;
 
+
+    public function getCreateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
+    public function getUpdateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
     public function usedImage()
     {
         return $this->hasMany('UsedImageModel', 'used_id', 'id');
@@ -37,6 +48,9 @@ class UsedProductModel extends Model
         return $this->morphMany('MemberPraiseModel', 'module');
     }
 
+    public function memberCollect(){
+        return $this->morphMany('MemberCollectModel','module');
+    }
     /**
      * 根据搜索条件获取用户列表信息
      * @author [田建龙] [864491238@qq.com]

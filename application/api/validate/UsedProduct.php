@@ -19,7 +19,7 @@ class UsedProduct extends Validate
         'user_id' => 'require|number|userId',
         'body' => 'require|max:550|min:5',
         'price' => 'require|number',
-        'sticky_num' => 'number',
+        'sticky_id' => 'require|number',
         'phone' => 'require',
         'images'=>'image',
 
@@ -37,7 +37,8 @@ class UsedProduct extends Validate
         'body.max' => '商品信息最大不能超过550个字',
         'price.require' => '价格必须填写',
         'price.number' => '价格填写错误',
-        'sticky_num.number' => '置顶填写错误',
+        'sticky_id.require' => '置顶填写错误',
+        'sticky_id.number' => '置顶填写错误',
         'phone.require' => '电话必须填写',
         'images.image' => '请上传图片',
 

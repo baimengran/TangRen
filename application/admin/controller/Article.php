@@ -65,7 +65,7 @@ class Article extends Base
      */
     public function edit_article()
     {
-        $article = new ArticleModel();     
+        $article = new ArticleModel();
         if(request()->isAjax()){
 
             $param = input('post.');         

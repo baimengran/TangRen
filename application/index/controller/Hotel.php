@@ -44,7 +44,7 @@ class Hotel extends Controller
         $elect = $HotelModel->select();
 
         //获取区域分类下的酒店
-        $hotel = $HotelModel->hotel($get);
+        $hotel = $HotelModel->hotel($get,getUserId());
 
         $date = ['elect'=>$elect,'hotel'=>$hotel];
 
@@ -89,7 +89,46 @@ class Hotel extends Controller
         if(count($hotel)<=0){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'酒店信息不存在','retData'=>$hotel],320);
         }
+        //获取用户ID
+        $user_id = getUserId();
 
+        //获取点赞数据
+        $praise = Db::name('member_praise')->where('user_id', 'eq', $user_id)
+            ->where('module_id', 'eq', $hotel[0]['hotel_id'])
+            ->where('module_type', 'eq', 'hotel_list_model')
+            ->find();
+
+        //获取收藏数据
+        $collect = Db::name('member_collect')->where('user_id', 'eq', $user_id)
+            ->where('module_id', 'eq', $hotel[0]['hotel_id'])
+            ->where('module_type', 'eq', 'hotel_list_model')
+            ->find();
+
+        if (!$praise) {
+            //如果是空，证明没点攒
+            $praise = 1;
+        } else {
+            //如果存在，证明以软删除点赞
+            if ($praise['delete_time']) {
+                $praise = 1;
+            } else {
+                $praise = 0;
+            }
+        }
+        if (!$collect) {
+            //如果是空，证明没点攒
+            $collect = 1;
+        } else {
+            //如果存在，证明以软删除点赞
+            if ($collect['delete_time']) {
+                $collect = 1;
+            } else {
+                $collect = 0;
+            }
+        }
+
+        $hotel[0]['user_praise'] = $praise;
+        $hotel[0]['user_collect'] = $collect;
         //查酒店详情图片
         $images = Db::table('think_hotel_img')
             ->field('hotel_images')

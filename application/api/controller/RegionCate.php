@@ -19,12 +19,9 @@ class RegionCate
     {
         try {
             $region = RegionListModel::all(['region_status' => 0]);
-
-            return jsone('查询成功', $region);
-
+            return jsone('查询成功', 200,$region);
         } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            throw new BannerMissException();
         }
 
     }

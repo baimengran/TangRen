@@ -5,9 +5,7 @@ class Index
 {
     public function index()
     {
-        //return ROOT_PATH;
-        return$_SERVER['SERVER_NAME'];
-        return view();
+        return view('application/index/view/index/aaa.php');
     }
 	
 	public function test() {

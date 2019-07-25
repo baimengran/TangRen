@@ -69,8 +69,15 @@ Route::post('api/upload_image/upload', 'api/UploadImage/upload');
 Route::get('api/region_cate/index', 'api/RegionCate/index');
 //获取行业
 Route::get('api/profession_cate/index', 'api/ProfessionCate/index');
+//获取话题
+Route::get('api/topic_cate/index','api/TopicCate/index');
+//获取置顶积分
+Route::get('api/sticky/index','api/Sticky/index');
+
+//跑马灯
+Route::get('api/marquee/index','api/Marquee/index');
 
 //我的收藏
 Route::get('api/my/collect', 'api/my/collect');
-
+//发现
 Route::get('api/coupon/index', 'api/coupon/index');

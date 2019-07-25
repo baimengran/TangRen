@@ -1,0 +1,106 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>区域列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->           
+            <div class="row">
+                <div class="col-sm-12">   
+                <div  class="col-sm-2" style="width: 100px">
+                    <div class="input-group" >
+                        <a href="{:url('create')}"><button class="btn btn-outline btn-primary" type="button">添加区域</button></a>
+                    </div>
+                </div>
+                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input type="text" id="key" class="form-control" name="key" value="{$val}" placeholder="输入需查询的区域名称" />
+                                <span class="input-group-btn"> 
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button> 
+                                </span>
+                            </div>
+                        </div>
+                    </form>                         
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th width="25%">ID</th>
+                                <th width="25%">区域名称</th>
+                                <th width="25%">状态</th>
+                                <th width="55%">操作</th>
+                            </tr>
+                        </thead>
+
+                        <script id="list-template" type="text/html">
+
+                        </script>
+                        <tbody id="list-content">
+
+                        {volist name="regions" id="data" empty='$empty'}
+                        <tr class="long-td">
+                            <td>{$data.region_id}</td>
+                            <td>{$data.region_name}</td>
+                            <td>
+                                {if condition="$data.region_status==0"}
+                                <a href="javascript:;" onclick="region_status({$data.region_id});">
+                                    <div id="zt{$data.region_id}"><span class="label label-info">开启</span></div>
+                                </a>
+                                {else /}
+                                <a href="javascript:;" onclick="region_status({$data.region_id});">
+                                    <div id="zt{$data.region_id}"><span class="label label-danger">禁用</span></div>
+                                </a>
+                                {/if}
+                            </td>
+                            <td>
+                                <a href="javascript:;" onclick="edit_region({$data.region_id})" class="btn btn-primary btn-xs btn-outline">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del_region({$data.region_id})" class="btn btn-danger btn-xs btn-outline">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style="text-align:right;">{$regions->render()}</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 加载动画 -->
+
+
+{include file="public/footer" /}
+<script>
+    //编辑文章
+    function edit_region(id){
+        location.href = './edit/id/'+id+'.html';
+    }
+
+    //删除文章
+    function del_region(id){
+        lunhui.confirm(id,'{:url("destroy")}');
+    }
+
+    //文章状态
+    function region_status(id){
+        lunhui.status(id,'{:url("status")}');
+    }
+</script>
+
+</body>
+</html>

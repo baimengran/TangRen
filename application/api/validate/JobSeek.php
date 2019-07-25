@@ -22,7 +22,7 @@ class JobSeek extends Validate
         'profession_id' => 'require|number|professionId',
         'body' => 'require|min:5|max:550',
         'salary' => 'require',
-        'sticky_num' => 'number',
+        'sticky_id' => 'require|number',
         'phone' => 'require',
     ];
 
@@ -39,7 +39,8 @@ class JobSeek extends Validate
         'body.min' => '招聘内容不能少于5个字',
         'body.max' => '招聘内容不能大于550个字',
         'salary.require' => '请填写薪资',
-        'sticky_num.number' => '置顶状态错误',
+        'sticky_id.require' => '置顶状态错误',
+        'sticky_id.number' => '置顶状态错误',
         'phone.require'=>'请填写电话'
     ];
 

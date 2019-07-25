@@ -16,6 +16,17 @@ class CommunityModel extends Model
     protected $name = 'community';
     protected $autoWriteTimestamp = true;
 
+
+    public function getCreateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
+    public function getUpdateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
     public function user()
     {
         return $this->belongsTo('MemberModel', 'user_id');

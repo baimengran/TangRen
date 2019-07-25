@@ -10,6 +10,7 @@ namespace app\api\controller;
 
 
 use app\admin\model\ProfessionCateModel;
+use app\api\exception\BannerMissException;
 use think\Exception;
 use think\Log;
 
@@ -19,12 +20,9 @@ class ProfessionCate
     {
         try {
             $profession = ProfessionCateModel::all(['status' => 0]);
-
-            return jsone('查询成功', $profession);
-
+            return jsone('查询成功',200,$profession);
         } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return jsone('服务器错误，请稍候重试', [], 1, 'error');
+            throw new BannerMissException();
         }
     }
 }

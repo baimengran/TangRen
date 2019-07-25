@@ -16,6 +16,17 @@ class RentHouseModel extends Model
     protected $name = 'rent_house';
     protected $autoWriteTimestamp = true;
 
+
+    public function getCreateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
+    public function getUpdateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
     public function rentImage()
     {
         return $this->hasMany('RentImageModel', 'rent_id','id');
@@ -34,5 +45,9 @@ class RentHouseModel extends Model
     public function memberPraise()
     {
         return $this->morphMany('MemberPraiseModel', 'module');
+    }
+
+    public function memberCollect(){
+        return $this->morphMany('MemberCollectModel','module');
     }
 }

@@ -6,6 +6,14 @@ use think\Model;
 
 class DiningModel extends Model
 {
+
+    protected $name='dining_list';
+    protected $pk = 'dining_id';
+
+    public function memberCollect(){
+        return $this->morphMany('MemberCollectModel','module');
+    }
+
     /**
      * index方法调用()
      * 查询1个默认地区
@@ -65,7 +73,7 @@ class DiningModel extends Model
      * index方法调用
      * 查询与区分类下的餐厅
      */
-    public function dining($get)
+    public function dining($get,$user_id)
     {
         //查询区域分类下的酒店
         $date = Db::table('think_dining_list')
@@ -83,6 +91,44 @@ class DiningModel extends Model
             $date['data'][$k]['dining_label'] = json_decode(
                 $date['data'][$k]['dining_label']
             );
+            //获取点赞数据
+            $praise = Db::name('member_praise')->where('user_id','eq',$user_id)
+                ->where('module_id','eq',$date['data'][$k]['dining_id'])
+                ->where('module_type','eq','dining_list_model')
+                ->find();
+
+            //获取收藏数据
+            $collect = Db::name('member_collect')->where('user_id','eq',$user_id)
+                ->where('module_id','eq',$date['data'][$k]['dining_id'])
+                ->where('module_type','eq','dining_list_model')
+                ->find();
+
+            if(!$praise){
+                //如果是空，证明没点攒
+                $praise=1;
+            }else{
+                //如果存在，证明以软删除点赞
+                if($praise['delete_time']){
+                    $praise=1;
+                }else{
+                    $praise=0;
+                }
+            }
+            if(!$collect){
+                //如果是空，证明没点攒
+                $collect=1;
+            }else{
+                //如果存在，证明以软删除点赞
+                if($collect['delete_time']){
+                    $collect=1;
+                }else{
+                    $collect=0;
+                }
+            }
+
+
+            $date['data'][$k]['user_praise']=$praise;
+            $date['data'][$k]['user_collect']=$collect;
         }
 
         return $date;

@@ -16,6 +16,17 @@ class JobCommentModel extends Model
     protected $name = 'job_comment';
     protected $autoWriteTimestamp = true;
 
+
+    public function getCreateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
+    public function getUpdateTimeAttr($value)
+    {
+        return date('m月d日', $value);
+    }
+
     public function job()
     {
         return $this->belongsTo('JobSeekModel', 'job_id','id');

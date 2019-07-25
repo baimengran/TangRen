@@ -15,4 +15,23 @@ class CouponModel extends Model
 {
     protected $name = 'coupon';
     protected $autoWriteTimestamp = true;
+
+    public function getExpireAttr($value, $data)
+    {
+        if ($data['activity_end_time'] <= time()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+//    public function getActivityCreateTimeAttr($value)
+//    {
+//        return date('Y.m.d',$value);
+//    }
+//
+//    public function getActivityEndTimeAttr($value)
+//    {
+//        return date('Y.m.d',$value);
+//    }
 }
