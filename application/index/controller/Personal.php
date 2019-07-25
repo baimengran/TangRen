@@ -767,7 +767,7 @@ class Personal extends Controller
         $FractionModel = new FractionModel();
         //执行查询操作
         $task = $FractionModel->select_task($post['id'],$today);
-
+//        print_r($task);die;
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'查询成功','retData'=>$task],320);
     }
 

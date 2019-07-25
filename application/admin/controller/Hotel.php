@@ -399,12 +399,18 @@ class Hotel extends Controller
 
         //查询出这条数据(图片)
         $data = Db::table('think_hotel_img')->where('hotel_img_id',$id)->find();
-//        $data = ['data'=>$data];
-//        print_r($data);die;
+
         //加载视图
         $this->assign('data', $data);
         // 模板输出
         return $this->fetch('hotel/edit_detailed');
+    }
+
+    //接收修改
+    public function update_detailed(\think\Request $request)
+    {
+        $post = $request->post();
+        dump($post);die;
     }
 
 

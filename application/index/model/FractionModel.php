@@ -504,6 +504,7 @@ class FractionModel extends Model
         //将所有数据压缩进一个数组
         $task = array_merge($sign,$collect,$publish,$share);
 
+
         return $task;
     }
 
