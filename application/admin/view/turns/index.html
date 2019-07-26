@@ -72,9 +72,12 @@
 
                     <div id="AjaxPage" style="text-align:right;"></div>
                     <div style="text-align: right;">
-                        共{$list.count}条数据，<span ></span>
+                        共{$list.count}条数据<span ></span>
                     </div>
-                    {$list.list->render()}
+                    <div style="text-align:center;">
+                        {$list.list->render()}
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -100,17 +103,17 @@
      * @param {[type]} curr [当前页]
      */
     // Ajaxpage();
-    //新增文章
+    //新增轮播图
     function add_turns(){
         location.href = './add/'+'.html';
     }
 
-    //编辑文章
+    //编辑轮播图
     function edit_article(id){
         location.href = './edit_turns/id/'+id+'.html';
     }
 
-    //删除文章
+    //删除轮播图
     function del_article(id){
         lunhui.confirm(id,'{:url("turns/del")}');}
 

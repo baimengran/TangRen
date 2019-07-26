@@ -8,7 +8,9 @@ use think\Db;
 
 class Hotel extends Controller
 {
-    //查询酒店列表接口
+    /**
+     * 查询酒店列表接口
+     */
     public function index()
     {
         //执行查询操作
@@ -29,7 +31,9 @@ class Hotel extends Controller
         return $this->fetch();
     }
 
-    //添加酒店接口
+    /**
+     * 添加酒店接口
+     */
     public function add(\think\Request $request)
     {
         //获取参数
@@ -133,10 +137,11 @@ class Hotel extends Controller
         return $this->fetch();
     }
 
-    //编辑酒店接口
+    /**
+     * 编辑酒店接口
+     */
     public function edit($id)
     {
-
         //查询出数据
         $hotelModel = new HotelModel();
         $data = $hotelModel->find_taxi($id);
@@ -162,7 +167,9 @@ class Hotel extends Controller
         return $this->fetch('hotel/edit');
     }
 
-    //修改逻辑
+    /**
+     * 编辑酒店逻辑接口
+     */
     public function update_hotel(\think\Request $request)
     {
         //接收参数
@@ -206,7 +213,7 @@ class Hotel extends Controller
         }
 
         //判断标签是否有值
-        if (!$post['taxi_label'] && !$post['taxi_label_two'] && !$post['taxi_label_three']) {
+        if (!$post['taxi_label'] && !$post['taxi_label_two']) {
             return $err = json_encode(['errCode' => '0', 'msg' => 'success', 'ertips' => '标签不能为空'], 320);
         }
 
@@ -251,7 +258,7 @@ class Hotel extends Controller
     }
 
     /**
-     * 删除酒店
+     * 删除酒店接口
      */
     public function del_hotel($id)
     {

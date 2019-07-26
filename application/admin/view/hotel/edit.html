@@ -1,6 +1,6 @@
 {include file="public/header" /}
-<link rel="stylesheet" type="text/css" href="/static/admin/webupload/webuploader.css">
-<link rel="stylesheet" type="text/css" href="/static/admin/webupload/style.css">
+<link rel="stylesheet" type="text/css" href="__ADMIN__/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="__ADMIN__/webupload/style.css">
 <style>
     .file-item{float: left; position: relative; width: 110px;height: 110px; margin: 0 20px 20px 0; padding: 4px;}
     .file-item .info{overflow: hidden;}
@@ -12,7 +12,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>修改美食信息</h5>
+                    <h5>修改酒店信息</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -137,13 +137,15 @@
                         </div>
                     </form>
                 </div>
+
             </div>
+
         </div>
     </div>
 </div>
 {include file="public/footer" /}
 
-<script type="text/javascript" src="/static/admin/webupload/webuploader.min.js"></script>
+<script type="text/javascript" src="/public/static/admin/webupload/webuploader.min.js"></script>
 
 <script type="text/javascript">
     var $list = $('#fileList');
@@ -210,6 +212,7 @@
             console.log(data);
             if(data.code == 1){
                 layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+
                     layer.close(index);
                     window.location.href="{:url('hotel/index')}";
                 });
