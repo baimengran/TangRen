@@ -39,8 +39,8 @@ class Turns extends Controller
         ];
 
         if(!empty($post)){
-            if($post['title'] > 6){
-                return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'类型不能大于6','retData'=>$post['title']],320);
+            if($post['title'] > 7){
+                return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'类型不能大于7','retData'=>$post['title']],320);
             }
             //实例化验证器
             $result=$this->validate($post,$rule,$message);
@@ -94,7 +94,7 @@ class Turns extends Controller
             return $arr;
         }
     }
-
+    // 删除轮播图
     public function del($id)
     {
         $data['turns_status'] = date('Ymd H:i:s',time());

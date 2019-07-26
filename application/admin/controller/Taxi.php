@@ -9,7 +9,9 @@ use think\index\validator;
 
 class Taxi extends Controller
 {
-    //叫车列表
+    /**
+     * 叫车列表
+     */
     public function index()
     {
         //执行查询操作
@@ -188,7 +190,6 @@ class Taxi extends Controller
         return $this->fetch('taxi/edit');
     }
 
-
     /**
      * 修改逻辑
      */
@@ -303,7 +304,9 @@ class Taxi extends Controller
         }
     }
 
-    //修改状态
+    /**
+     * 修改状态
+     */
     public function status_taxi($id)
     {
         //判断有无这条信息
@@ -350,12 +353,15 @@ class Taxi extends Controller
 
     }
 
-    //酒店详情列表
+    /**
+     * 叫车详情列表
+     */
     public function detailed_hotel($id)
     {
+
         //执行查询操作
         $list= Db::table('think_taxi_img')
-            ->where('taxi_img_id',$id)
+            ->where('taxi_id',$id)
             ->where('img_status',0)
             ->paginate(10);
 
@@ -371,7 +377,9 @@ class Taxi extends Controller
         return $this->fetch('taxi/detailed');
     }
 
-    //添加详情图片
+    /**
+     * 添加叫车详情
+     */
     public function add_detailed($id)
     {
         //加载视图
@@ -380,7 +388,9 @@ class Taxi extends Controller
         return $this->fetch('taxi/add_detailed');
     }
 
-    //接收详情图片
+    /**
+     * 接收叫车详情
+     */
     public function store(\think\Request $request)
     {
         $post = $request->post();
@@ -417,7 +427,9 @@ class Taxi extends Controller
         return $this->fetch('taxi/add_detailed');
     }
 
-    //修改详情图片
+    /**
+     * 修改叫车详情
+     */
     public function edit_detailed($id)
     {
         if(!$id){
@@ -433,7 +445,9 @@ class Taxi extends Controller
         return $this->fetch('taxi/edit_detailed');
     }
 
-    //接收修改
+    /**
+     * 修改叫车详情逻辑
+     */
     public function update_detailed(\think\Request $request)
     {
         $post = $request->post();
@@ -451,17 +465,20 @@ class Taxi extends Controller
         }
     }
 
-    //删除详情图片
+    /**
+     * 删除叫车详情
+     */
     public function del_detailed($id)
     {
+
         //判断有无这个数据
         $res = Db::table('think_taxi_img')->where('taxi_img_id',$id)->find();
-
+        die('111');
         if(!$res){
             return $arr = ['code'=>'2','msg'=>'删除失败'];
         }
         //执行删除
-        $res = Db::name('taxi_img_id')
+        $res = Db::name('taxi_img')
             ->update([
                 'img_status'   =>1,
                 'taxi_img_id' =>$id

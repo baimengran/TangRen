@@ -51,7 +51,7 @@
                                     <i class="fa fa-paste"></i> 添加</a>&nbsp;&nbsp;
                                 <a href="javascript:location.href='/admin/taxi/edit_detailed.html?id={$vo.taxi_img_id}'"  class="btn btn-primary btn-xs btn-outline">
                                     <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
-                                <a href="javascript:;" onclick="del_article({$vo.taxi_img_id})" class="btn btn-danger btn-xs btn-outline">
+                                <a href="javascript:location.href='/admin/taxi/del_detailed.html?id={$vo.taxi_img_id}'" onclick="del_article({$vo.taxi_img_id})" class="btn btn-danger btn-xs btn-outline">
                                     <i class="fa fa-trash-o"></i> 删除</a>
                             </td>
                         </tr>
@@ -89,21 +89,22 @@
      * @param {[type]} curr [当前页]
      */
     // Ajaxpage();
-    //新增文章
+    //新增
     function add_taxi(){
         location.href = './add_taxi/'+'.html';
     }
 
-    //编辑文章
+    //编辑叫车详情
     function edit_article(id){
         // location.href = './edit_detailed/id/'+id+'.html';
         location.href = "{:url('taxi/edit_detailed')}?id=+id;"
-        // location.href='admin/index/index';
     }
 
-    //删除文章
+    //删除叫车详情
     function del_article(id){
-        lunhui.confirm(id,'{:url("taxi/del_detailed")}');}
+        // console.log(id);
+        // lunhui.confirm(id,'{:url("taxi/del_detailed")}');}
+        location.href = "{:url('taxi/del_detailed')}?id=+id;"
 
     //审核状态
     function used_state(id){
