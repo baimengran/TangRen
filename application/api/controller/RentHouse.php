@@ -32,7 +32,7 @@ class RentHouse extends Controller
         if (!$search = input('search')) {
             //搜索不存在时设定区域参数
             if (!$region = input('region_id')) {
-                $region=1;
+                $region = 1;
             }
         }
 
@@ -312,7 +312,7 @@ class RentHouse extends Controller
                 } else {
                     //软删除点赞
                     Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => time()]);
-                    $rent->praise = $rent['praise'] - 1;
+                    $rent->praise = $rent['praise'] > 0 ? $rent['praise'] - 1 : 0;
                     $explain = '点赞以取消';
                 }
 

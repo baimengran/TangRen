@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Administrator
  * Date: 2019/7/26
- * Time: 0:26
+ * Time: 14:19
  */
 
 namespace app\admin\controller;
@@ -11,24 +11,20 @@ namespace app\admin\controller;
 
 use app\api\exception\BannerMissException;
 use think\Db;
-use think\Loader;
 use think\Validate;
 
-class Marquee
+class CustomerService
 {
     public function index()
     {
         try {
             $key = input('key');
-            $coupon = Db::name('marquee');
-            if ($coupon) {
-                $coupon->where('content', 'like', '%' . $key . '%');
-            }
-            $coupon = $coupon->order('')->paginate(20);
-            if ($coupon) {
+            $customer = Db::name('customer_service');
+            $customer = $customer->order('')->paginate(20);
+            if ($customer) {
                 return view('index', [
                     'val' => $key,
-                    'marquees' => $coupon,
+                    'customers' => $customer,
                     'empty' => '<tr><td colspan="4" align="center"><span>暂无数据</span></td></tr>'
                 ]);
             }
@@ -51,18 +47,15 @@ class Marquee
     {
         $form = input('post.');
         $rule = [
-            'content' => 'require|min:5|max:100',
+            'phone' => 'require|min:5|max:50',
             'status' => 'require|number',
-            'cate' => 'require|number'
         ];
         $msg = [
-            'content.require' => '通知内容必须填写',
-            'content.min' => '通知内容不能少于5个字',
-            'content.max' => '通知内容不能大于100个字',
+            'phone.require' => '电话必须填写',
+            'phone.min' => '电话不能少于5个字',
+            'phone.max' => '电话不能大于50个字',
             'status.require' => '状态必须填写',
             'status.number' => '状态填写错误',
-            'cate.require' => '分类必须填写',
-            'cate.number' => '分类填写错误'
         ];
 
         $validate = new Validate($rule,$msg);
@@ -197,5 +190,4 @@ class Marquee
             return json(['code' => 0, 'data', 'msg' => '出错啦']);
         }
     }
-
 }

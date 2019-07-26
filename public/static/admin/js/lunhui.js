@@ -52,8 +52,8 @@ var lunhui = {
 	},
 
     //状态
-    marquee_status : function(id,cate,url,sign1='禁用',sign2='开启'){
-        $.post(url,{id:id,cate:cate},function(data){
+    marquee_status : function(id,url,sign1='禁用',sign2='开启'){
+        $.post(url,{id:id},function(data){
             if(data.code==1){
                 var a='<span class="label label-danger">'+data.msg+'</span>'
                 $('#zt'+id).html(a);
@@ -69,6 +69,23 @@ var lunhui = {
             }
         });
         return false;
+    },
+    marquee_cate_status : function(id,cate,url,sign1='禁用',sign2='开启'){
+        $.post(url,{id:id,cate:cate},function(data){
+            if(data.code==11){
+                var a='<span class="label label-info">'+data.msg+'</span>'
+                $('#zd'+id).html(a);
+                layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
+                location.replace(location.href);
+                return false;
+            }else if(data.code==10){
+                var b='<span class="label label-info">'+data.msg+'</span>'
+                $('#zd'+id).html(b);
+                layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
+                location.replace(location.href);
+                return false;
+            }
+        });
+        return false;
     }
-
 }

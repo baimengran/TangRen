@@ -347,7 +347,7 @@ class Community
                 } else {
                     //软删除点赞
                     Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => time()]);
-                    $community->praise = $community['praise'] - 1;
+                    $community->praise = $community['praise']>0? $community['praise']- 1:0;
                     $explain = '点赞以取消';
                 }
 
@@ -467,7 +467,7 @@ class Community
                 } else {
                     //软删除收藏
                     Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => time()]);
-                    $module->collect = $module['collect'] - 1;
+                    $module->collect = $module['collect']>0?$module['collect'] - 1:0;
                     $explain = '以取消收藏';
                 }
 

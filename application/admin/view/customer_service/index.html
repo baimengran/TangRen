@@ -4,7 +4,7 @@
     <!-- Panel Other -->
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>系统通知列表</h5>
+            <h5>客服列表</h5>
         </div>
         <div class="ibox-content">
             <!--搜索框开始-->
@@ -13,22 +13,10 @@
                     <div class="col-sm-2" style="width: 130px">
                         <div class="input-group">
                             <a href="{:url('create')}">
-                                <button class="btn btn-outline btn-primary" type="button">添加系统通知</button>
+                                <button class="btn btn-outline btn-primary" type="button">添加客服</button>
                             </a>
                         </div>
                     </div>
-                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
-                        <div class="col-sm-3">
-                            <div class="input-group">
-                                <input type="text" id="key" class="form-control" name="key" value="{$val}"
-                                       placeholder="输入需查询的系统通知"/>
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary"><i
-                                            class="fa fa-search"></i> 搜索</button>
-                                </span>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
             <!--搜索框结束-->
@@ -39,9 +27,8 @@
                         <thead>
                         <tr class="long-tr">
                             <th width="5%">ID</th>
-                            <th width="50%">通知内容</th>
-                            <th width="10%">分类</th>
-                            <th width="5%">状态</th>
+                            <th width="50%">客服电话</th>
+                            <th width="10%">显示状态</th>
                             <th width="15%">操作</th>
                         </tr>
                         </thead>
@@ -50,21 +37,10 @@
 
                         </script>
                         <tbody id="list-content">
-                        {volist name="marquees" id="data"}
+                        {volist name="customers" id="data"}
                         <tr class="long-td">
                             <td>{$data.id}</td>
-                            <td>{$data.content}</td>
-                            <td>
-                                {if condition="$data.cate==0"}
-                                <a href="javascript:;" onclick="marquee_cate_status({$data.id},'cate');">
-                                    <div id="zd{$data.id}"><span class="label label-info">置顶跑马灯</span></div>
-                                </a>
-                                {else /}
-                                <a href="javascript:;" onclick="marquee_cate_status({$data.id},'cate');;">
-                                    <div id="zd{$data.id}"><span class="label label-info">系统通知</span></div>
-                                </a>
-                                {/if}
-                            </td>
+                            <td>{$data.phone}</td>
                             <td>
                                 {if condition="$data.status==0"}
                                 <a href="javascript:;" onclick="marquee_status({$data.id});">
@@ -87,7 +63,7 @@
 
                         </tbody>
                     </table>
-                    <div id="AjaxPage" style="text-align:right;">{$marquees->render()}</div>
+                    <div id="AjaxPage" style="text-align:right;">{$customers->render()}</div>
 
                 </div>
             </div>

@@ -310,7 +310,7 @@ class UsedProduct extends Controller
                 } else {
                     //软删除点赞
                     Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => time()]);
-                    $usedProduct->praise = $usedProduct['praise'] - 1;
+                    $usedProduct->praise = $usedProduct['praise']>0?$usedProduct['praise'] - 1:0;
                     $explain = '点赞以取消';
                 }
 

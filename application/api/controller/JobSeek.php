@@ -307,7 +307,7 @@ class JobSeek
                 } else {
                     //软删除点赞
                     Db::name('member_praise')->where('id', $praise['id'])->update(['delete_time' => time()]);
-                    $job->praise = $job['praise'] - 1;
+                    $job->praise = $job['praise']>0?$job['praise'] - 1:0;
                     $explain = '点赞以取消';
                 }
             } else {

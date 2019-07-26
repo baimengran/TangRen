@@ -35,6 +35,7 @@ class My
 
         //实例化收藏模型
         $modules = new MemberCollectModel();
+        try {
         //查询当前用户收藏的内容
         $modules = $modules::where('user_id', $id)->order('create_time', 'desc')->paginate(20);
 
@@ -48,32 +49,48 @@ class My
             $moduleValues = $module->module->toArray();
 
             if ($module['module_type'] == 'dining_list_model') {
-                $keys = ['id', 'logo', 'class', 'name', 'content', 'time','day', 'phone',
+                $keys = ['id', 'logo', 'class', 'name', 'content', 'time', 'day', 'phone',
                     'address', 'all', 'service', 'hygiene', 'taste', 'label', 'status',
-                    'home','collect', 'create_time', 'update_time','exits_status'];
+                    'home', 'collect', 'create_time', 'update_time', 'exits_status'];
                 //重新组合数组key和value
                 $moduleValues = array_combine($keys, $moduleValues);
-                $moduleValues['cate'] = 'dining';
+                $moduleValues['cate'] = 5;
                 $moduleValues['hidden'] = 0;
-                $moduleValues['image']['path']=$moduleValues['logo'];
+                $moduleValues['image']['path'] = $moduleValues['logo'];
             }
             if ($module['module_type'] == 'hotel_list_model') {
-                $keys = ['id', 'logo', 'class', 'name', 'content', 'time','day', 'phone',
+                $keys = ['id', 'logo', 'class', 'name', 'content', 'time', 'day', 'phone',
                     'address', 'all', 'status', 'hygiene', 'ambient', 'service', 'label',
-                    'collect', 'create_time', 'update_time','exits_status'];
+                    'collect', 'create_time', 'update_time', 'exits_status'];
                 $moduleValues = array_combine($keys, $moduleValues);
-                $moduleValues['cate'] = 'hotel';
+                $moduleValues['cate'] = 6;
                 $moduleValues['hidden'] = 0;
-                $moduleValues['image']['path']=$moduleValues['logo'];
+                $moduleValues['image']['path'] = $moduleValues['logo'];
             }
             if ($module['module_type'] == 'taxi_list_model') {
-                $keys = ['id', 'logo', 'class', 'name', 'content', 'time','day', 'phone',
+                $keys = ['id', 'logo', 'class', 'name', 'content', 'time', 'day', 'phone',
                     'address', 'speed', 'quality', 'service', 'all', 'label', 'status',
-                    'collect', 'create_time', 'update_time','exits_status'];
+                    'collect', 'create_time', 'update_time', 'exits_status'];
                 $moduleValues = array_combine($keys, $moduleValues);
-                $moduleValues['cate'] = 'taxi';
+                $moduleValues['cate'] = 7;
                 $moduleValues['hidden'] = 0;
-                $moduleValues['image']['path']=$moduleValues['logo'];
+                $moduleValues['image']['path'] = $moduleValues['logo'];
+            }
+
+
+            if ($module['module_type'] == 'used_product_model') {
+
+                $moduleValues['cate'] = 1;
+            }
+            if ($module['module_type'] == 'job_seek_model') {
+                $moduleValues['cate'] = 3;
+            }
+
+            if ($module['module_type'] == 'community_model') {
+                $moduleValues['cate'] = 4;
+            }
+            if ($module['module_type'] == 'rent_house_model') {
+                $moduleValues['cate'] = 2;
             }
 
             if (array_key_exists('region_id', $moduleValues)) {
@@ -86,21 +103,21 @@ class My
                 $re['status'] = $region['region_status'];
                 $re['delete_time'] = $region['delete_time'];
                 $re['type'] = 'region';
-                $moduleValues['cate'] = $re;
+                $moduleValues['region'] = $re;
             }
             if (array_key_exists('topic_id', $moduleValues)) {
                 $topic_id = $moduleValues['topic_id'];
                 //获取话题
                 $topic = Db::name('topic_cate')->where('id', $topic_id)->find();
                 $topic['type'] = 'topic';
-                $moduleValues['cate'] = $topic;
+                $moduleValues['topic'] = $topic;
             }
             if (array_key_exists('profession_id', $moduleValues)) {
                 $profession_id = $moduleValues['profession_id'];
                 //获取行业
                 $profession = Db::name('profession_cate')->where('id', $profession_id)->find();
                 $profession['type'] = 'profession';
-                $moduleValues['cate'] = $profession;
+                $moduleValues['profession'] = $profession;
             }
             if (array_key_exists('user_id', $moduleValues)) {
 
@@ -129,73 +146,55 @@ class My
                 }
                 $moduleValues['image'] = $images;
             }
-            $moduleValues['user_collect']=0;
-            $data['data'][] = $moduleValues;
-        }
+            //获取点赞数据
 
-        return $data;
-//        return $id;
-        try {
-            //获取当前用户收藏id
-            $modules = Db::name('member_collect')->where('user_id', $id)
-//                ->where('module_type','community')
+            $module_type = substr($module['module_type'], 0, -6);
+            $praise = Db::name('member_praise')->where('user_id', 'eq', $id)
+                ->where('module_id', 'eq', $moduleValues['id'])
+                ->where('module_type', 'eq', $module_type)
                 ->where('delete_time', null)
-                ->select();
-
-//            //获取用户以收藏数据
-            $community = CommunityModel::with('user,topic,communityFile')
-                ->where('id', 'in', $module_ids)
-                ->paginate(20);
-            $data['total'] = $community->total();
-            $data['per_page'] = $community->listRows();
-            $data['current_page'] = $community->currentPage();
-            $data['last_page'] = $community->lastPage();
-            $data['data'] = [];
-            foreach ($community as $val) {
-                //获取点赞数据
-                $praise = Db::name('member_praise')->where('user_id', 'eq', getUserId())
-                    ->where('module_id', 'eq', $val['id'])
-                    ->where('module_type', 'eq', 'community')
-                    ->find();
+                ->find();
 //                return $praise;
-                //获取收藏数据
-                $collect = Db::name('member_collect')->where('user_id', 'eq', getUserId())
-                    ->where('module_id', 'eq', $val['id'])
-                    ->where('module_type', 'eq', 'community')
-                    ->where('delete_time', null)
-                    ->find();
+            //获取收藏数据
+            $collect = Db::name('member_collect')->where('user_id', 'eq', $id)
+                ->where('module_id', 'eq', $moduleValues['id'])
+                ->where('module_type', 'eq', $module['module_type'])
+                ->where('delete_time', null)
+                ->find();
 
 //                $data[]=$community;
-                if (!$praise) {
-                    //如果是空，证明没点攒
+            if (!$praise) {
+                //如果是空，证明没点攒
+                $praise = 1;
+            } else {
+                //如果存在，证明以软删除点赞
+                if ($praise['delete_time']) {
                     $praise = 1;
                 } else {
-                    //如果存在，证明以软删除点赞
-                    if ($praise['delete_time']) {
-                        $praise = 1;
-                    } else {
-                        $praise = 0;
-                    }
+                    $praise = 0;
                 }
-                if (!$collect) {
-                    //如果是空，证明没点攒
+            }
+            if (!$collect) {
+                //如果是空，证明没点攒
+                $collect = 1;
+            } else {
+                //如果存在，证明以软删除点赞
+                if ($collect['delete_time']) {
                     $collect = 1;
                 } else {
-                    //如果存在，证明以软删除点赞
-                    if ($collect['delete_time']) {
-                        $collect = 1;
-                    } else {
-                        $collect = 0;
-                    }
+                    $collect = 0;
                 }
-
-                $val['user_praise'] = $praise;
-                $val['user_collect'] = $collect;
-                $data['data'][] = $val;
             }
 
+            $moduleValues['user_praise'] = $praise;
+            $moduleValues['user_collect'] = $collect;
 
-            return jsone('查询成功', 200, $data);
+
+//            $moduleValues['user_collect']=0;
+            $data['data'][] = $moduleValues;
+        }
+        return jsone('查询成功', 200, $data);
+
         } catch (Exception $e) {
             throw new BannerMissException();
         }

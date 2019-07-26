@@ -4,24 +4,24 @@
     <!-- Panel Other -->
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>系统通知列表</h5>
+            <h5>社区列表</h5>
         </div>
         <div class="ibox-content">
             <!--搜索框开始-->
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="col-sm-2" style="width: 130px">
-                        <div class="input-group">
-                            <a href="{:url('create')}">
-                                <button class="btn btn-outline btn-primary" type="button">添加系统通知</button>
-                            </a>
-                        </div>
-                    </div>
+                    <!--<div class="col-sm-2" style="width: 130px">-->
+                        <!--<div class="input-group">-->
+                            <!--<a href="{:url('create')}">-->
+                                <!--<button class="btn btn-outline btn-primary" type="button">添加系统通知</button>-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
                         <div class="col-sm-3">
                             <div class="input-group">
                                 <input type="text" id="key" class="form-control" name="key" value="{$val}"
-                                       placeholder="输入需查询的系统通知"/>
+                                       placeholder="输入需查询的社区动态"/>
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn btn-primary"><i
                                             class="fa fa-search"></i> 搜索</button>
@@ -39,10 +39,12 @@
                         <thead>
                         <tr class="long-tr">
                             <th width="5%">ID</th>
-                            <th width="50%">通知内容</th>
-                            <th width="10%">分类</th>
-                            <th width="5%">状态</th>
-                            <th width="15%">操作</th>
+                            <th width="10%">用户</th>
+                            <th width="10%">话题</th>
+                            <th width="10%">内容</th>
+                            <th width="10%">置顶状态</th>
+                            <th width="10%">精华</th>
+                            <th width="10%">首页推荐</th>
                         </tr>
                         </thead>
 
@@ -50,44 +52,48 @@
 
                         </script>
                         <tbody id="list-content">
-                        {volist name="marquees" id="data"}
+                        {volist name="communities" id="data"}
                         <tr class="long-td">
                             <td>{$data.id}</td>
-                            <td>{$data.content}</td>
+                            <td>{$data.user.nickname}</td>
+                            <td>{$data.topic.name}</td>
+                            <td>{$data.body}</td>
                             <td>
-                                {if condition="$data.cate==0"}
+                            {if condition="$data.sticky_status==0"}
+                                置顶中
+                            {else /}
+                                未置顶
+                                {/if}
+                            </td>
+                            <td>
+                                {if condition="$data.essence==0"}
                                 <a href="javascript:;" onclick="marquee_cate_status({$data.id},'cate');">
-                                    <div id="zd{$data.id}"><span class="label label-info">置顶跑马灯</span></div>
+                                    <div id="zd{$data.id}"><span class="label label-info">精华</span></div>
                                 </a>
                                 {else /}
                                 <a href="javascript:;" onclick="marquee_cate_status({$data.id},'cate');;">
-                                    <div id="zd{$data.id}"><span class="label label-info">系统通知</span></div>
+                                    <div id="zd{$data.id}"><span class="label label-danger">普通</span></div>
                                 </a>
                                 {/if}
                             </td>
                             <td>
-                                {if condition="$data.status==0"}
+                                {if condition="$data.recommend_status==0"}
                                 <a href="javascript:;" onclick="marquee_status({$data.id});">
-                                    <div id="zt{$data.id}"><span class="label label-info">开启</span></div>
+                                    <div id="zt{$data.id}"><span class="label label-info">首页推荐</span></div>
                                 </a>
                                 {else /}
                                 <a href="javascript:;" onclick="marquee_status({$data.id});">
-                                    <div id="zt{$data.id}"><span class="label label-danger">禁用</span></div>
+                                    <div id="zt{$data.id}"><span class="label label-danger">不推荐</span></div>
                                 </a>
                                 {/if}
                             </td>
-                            <td>
-                                <a href="javascript:;" onclick="edit({$data.id})" class="btn btn-primary btn-xs btn-outline">
-                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
-                                <a href="javascript:;" onclick="del({$data.id})" class="btn btn-danger btn-xs btn-outline">
-                                    <i class="fa fa-trash-o"></i> 删除</a>
-                            </td>
+
                         </tr>
                         {/volist}
 
                         </tbody>
                     </table>
-                    <div id="AjaxPage" style="text-align:right;">{$marquees->render()}</div>
+                    <div id="AjaxPage" style="text-align:right;">{$communities->render()}</div>
 
                 </div>
             </div>
