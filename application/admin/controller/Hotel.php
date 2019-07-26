@@ -328,6 +328,7 @@ class Hotel extends Controller
     {
         //执行查询操作
         $list= Db::table('think_hotel_img')
+            ->where('hotel_id',$id)
             ->where('img_status',0)
             ->paginate(10);
 
@@ -346,7 +347,6 @@ class Hotel extends Controller
     //添加详情图片
     public function add_detailed($id)
     {
-
         //加载视图
         $this->assign('data', $id);
         // 模板输出
@@ -410,7 +410,43 @@ class Hotel extends Controller
     public function update_detailed(\think\Request $request)
     {
         $post = $request->post();
-        dump($post);die;
+
+        $res = Db::name('hotel_img')
+            ->update([
+                'hotel_images' =>$post['photo'],
+                'hotel_img_id' =>$post['hotel_img_id']
+            ]);
+
+        if($res){
+            return $arr = ['code'=>'1','msg'=>'修改成功'];
+        }else{
+            return $arr = ['code'=>'2','msg'=>'修改失败'];
+        }
+    }
+
+    //删除详情图片
+    public function del_detailed($id)
+    {
+        //判断有无这个数据
+        $res = Db::table('think_hotel_img')->where('hotel_img_id',$id)->find();
+
+        if(!$res){
+            return $arr = ['code'=>'2','msg'=>'删除失败'];
+        }
+        //执行删除
+        $res = Db::name('hotel_img')
+            ->update([
+                'img_status'   =>1,
+                'hotel_img_id' =>$id
+            ]);
+
+        if($res){
+             return $arr = ['code'=>'1','msg'=>'删除成功'];
+        }else{
+             return $arr = ['code'=>'2','msg'=>'删除失败'];
+        }
+
+
     }
 
 

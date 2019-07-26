@@ -81,8 +81,8 @@
                             </td>
                             <td >
                                 <div style="width:180px;height:50px;">
-                                <a href="{:url('detailed_taxi')}" onclick="detailed({$vo.dining_id})" class="btn btn-primary btn-xs btn-outline">
-                                    <i class="fa fa-paste"></i> 详情</a>&nbsp;&nbsp;
+                                    <a href="javascript:;" onclick="detailed({$vo.dining_id})" class="btn btn-primary btn-xs btn-outline">
+                                        <i class="fa fa-paste"></i> 详情</a>&nbsp;&nbsp;
                                 <a href="javascript:;" onclick="edit_article({$vo.dining_id})" class="btn btn-primary btn-xs btn-outline">
                                     <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
                                 <a href="javascript:;" onclick="del_article({$vo.dining_id})" class="btn btn-danger btn-xs btn-outline">
@@ -151,7 +151,7 @@
 
     //详情列表
     function detailed(id){
-        location.href = './detailed/id/'+id+'.html';
+        location.href = './detailed_hotel/id/'+id+'.html';
     }
 
 </script>

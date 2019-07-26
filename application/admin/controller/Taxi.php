@@ -350,17 +350,130 @@ class Taxi extends Controller
 
     }
 
-    //管理详情图片
-    public function detailed_taxi($id)
+    //酒店详情列表
+    public function detailed_hotel($id)
     {
-        //根据id查询出详情图
-        $list = Db::table('think_taxi_img')->where('taxi_id',1)->select();
+        //执行查询操作
+        $list= Db::table('think_taxi_img')
+            ->where('taxi_img_id',$id)
+            ->where('img_status',0)
+            ->paginate(10);
 
-        print_r($list);die;
-        $data = ['list'=>$list,];
-        //加载视图
-        $this->assign('list',$data);
+        //统计多少数据
+        $count= Db::table('think_taxi_img')
+            ->where('img_status',0)
+            ->select();
+
+        $count = count($list);
+        $date = ['list'=>$list,'count'=>$count];
+        //将数据传至页面
+        $this->assign('list',$date);
         return $this->fetch('taxi/detailed');
+    }
+
+    //添加详情图片
+    public function add_detailed($id)
+    {
+        //加载视图
+        $this->assign('data', $id);
+        // 模板输出
+        return $this->fetch('taxi/add_detailed');
+    }
+
+    //接收详情图片
+    public function store(\think\Request $request)
+    {
+        $post = $request->post();
+
+        $rule =   [
+            'taxi_id'  => 'require',
+        ];
+        $message  = [
+            'taxi_id.require'=> '叫车ID不能为空',
+        ];
+
+        //实例化验证器
+        $result=$this->validate($post,$rule,$message);
+
+        //判断有无错误
+        if(true !== $result){
+            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            // 验证失败 输出错误信息
+            return json_encode($date,320);
+        }
+        $date = ['taxi_id'=>$post['taxi_id'],'taxi_images'=>$post['photo'],'img_status'=>0];
+        //执行添加操作
+        $res = Db::table('think_taxi_img')->insert($date);
+
+        if($res){
+            return $arr = ['code'=>1,'msg'=>'添加成功'];
+        }else{
+            return $arr = ['code'=>2,'msg'=>'添加失败'];
+        }
+
+        //加载视图
+        $this->assign('data');
+        // 模板输出
+        return $this->fetch('taxi/add_detailed');
+    }
+
+    //修改详情图片
+    public function edit_detailed($id)
+    {
+        if(!$id){
+            return $arr = ['code'=>'2','msg'=>'修改失败'];
+        }
+
+        //查询出这条数据(图片)
+        $data = Db::table('think_taxi_img')->where('taxi_img_id',$id)->find();
+
+        //加载视图
+        $this->assign('data', $data);
+        // 模板输出
+        return $this->fetch('taxi/edit_detailed');
+    }
+
+    //接收修改
+    public function update_detailed(\think\Request $request)
+    {
+        $post = $request->post();
+
+        $res = Db::name('taxi_img')
+            ->update([
+                'taxi_images' =>$post['photo'],
+                'taxi_img_id' =>$post['taxi_img_id']
+            ]);
+
+        if($res){
+            return $arr = ['code'=>'1','msg'=>'修改成功'];
+        }else{
+            return $arr = ['code'=>'2','msg'=>'修改失败'];
+        }
+    }
+
+    //删除详情图片
+    public function del_detailed($id)
+    {
+        //判断有无这个数据
+        $res = Db::table('think_taxi_img')->where('taxi_img_id',$id)->find();
+
+        if(!$res){
+            return $arr = ['code'=>'2','msg'=>'删除失败'];
+        }
+        //执行删除
+        $res = Db::name('taxi_img_id')
+            ->update([
+                'img_status'   =>1,
+                'taxi_img_id' =>$id
+            ]);
+
+        if($res){
+            return $arr = ['code'=>'1','msg'=>'删除成功'];
+        }else{
+            return $arr = ['code'=>'2','msg'=>'删除失败'];
+        }
+
+
     }
 
 }

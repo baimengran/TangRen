@@ -76,11 +76,14 @@ class Turns extends Controller
         return $this->fetch();
     }
     // 修改提交页面
-    public function update_turns(Request $request)
+    public function update_turns(\think\Request $request)
     {
+
         $post = $request->post();
+
         $data['turns_img'] = $post['photo'];
         $data['turns_class'] = $post['title'];
+
         $res = Db::name('turns_list')->where('turns_id',$post['id'])->update($data);
 
         if($res){
