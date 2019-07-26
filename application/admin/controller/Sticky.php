@@ -29,7 +29,7 @@ class Sticky extends Base
                 return view('index', [
                     'val' => $key,
                     'stickies' => $coupon,
-                    'empty' => '<tr><td colspan="4" align="center"><span>暂无数据</span></td></tr>'
+                    'empty' => '<tr><td colspan="5" align="center"><span>暂无数据</span></td></tr>'
                 ]);
             }
         } catch (\Exception $e) {

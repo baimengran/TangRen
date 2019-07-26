@@ -27,7 +27,7 @@ class Community
                 return view('index', [
                     'val' => $key,
                     'communities' => $community,
-                    'empty' => '<tr><td colspan="4" align="center"><span>暂无数据</span></td></tr>'
+                    'empty' => '<tr><td colspan="7" align="center"><span>暂无数据</span></td></tr>'
                 ]);
             }
         } catch (\Exception $e) {

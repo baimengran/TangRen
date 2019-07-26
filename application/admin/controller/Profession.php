@@ -29,7 +29,7 @@ class Profession extends Base
             return view('profession/index', [
                 'professions' => $profession,
                 'val' => $key,
-                'empty' => '<tr><td colspan="4" align="center"><span>暂无数据</span></td></tr>',
+                'empty' => '<tr><td colspan="3" align="center"><span>暂无数据</span></td></tr>',
             ]);
         } catch (Exception $e) {
             return view('error/500');

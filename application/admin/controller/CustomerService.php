@@ -47,25 +47,26 @@ class CustomerService
     {
         $form = input('post.');
         $rule = [
-            'phone' => 'require|min:5|max:50',
+            'phone' => 'require|min:5|max:50|unique:customer_service',
             'status' => 'require|number',
         ];
         $msg = [
             'phone.require' => '电话必须填写',
+            'phone.unique' => '电话以存在',
             'phone.min' => '电话不能少于5个字',
             'phone.max' => '电话不能大于50个字',
             'status.require' => '状态必须填写',
             'status.number' => '状态填写错误',
         ];
 
-        $validate = new Validate($rule,$msg);
+        $validate = new Validate($rule, $msg);
         if (!$validate->check($form)) {
             return json(['code' => 0, 'data', 'msg' => $validate->getError()]);
         }
         $form['create_time'] = time();
         $form['update_time'] = time();
         try {
-            $marquee_id = Db::name('marquee')->insert($form);
+            $marquee_id = Db::name('customer_service')->insert($form);
             if ($marquee_id) {
                 return json(['code' => 1, 'data', 'msg' => '创建成功']);
             } else {
@@ -86,12 +87,12 @@ class CustomerService
 
         $id = input('param.id');
         try {
-            $data = Db::name('marquee')->where('id', $id)->find();
+            $data = Db::name('customer_service')->where('id', $id)->find();
             if ($data) {
-                return view('edit', ['marquee' => $data]);
+                return view('edit', ['customer' => $data]);
             }
             return view('error/500');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return view('error/500');
         }
     }
@@ -106,28 +107,28 @@ class CustomerService
         if (request()->isAjax()) {
             $form = input('post.');
             $rule = [
-                'content' => 'require|min:5|max:100',
+                'phone' => 'require|min:5|max:50|unique:customer_service',
                 'status' => 'require|number',
-                'cate' => 'require|number'
             ];
             $msg = [
-                'content.require' => '通知内容必须填写',
-                'content.min' => '通知内容不能少于5个字',
-                'content.max' => '通知内容不能大于100个字',
+                'phone.require' => '电话必须填写',
+                'phone.unique' => '电话以存在',
+                'phone.min' => '电话不能少于5个字',
+                'phone.max' => '电话不能大于50个字',
                 'status.require' => '状态必须填写',
                 'status.number' => '状态填写错误',
-                'cate.require' => '分类必须填写',
-                'cate.number' => '分类填写错误'
             ];
 
-            $validate = new Validate($rule,$msg);
-            if (!$validate->check($form)) {
+            $validate = new Validate($rule, $msg);
+            $validate->scene('edit',['phone'=>'require|min:5|max:50']);
+            if (!$validate->scene('edit')->check($form)) {
                 return json(['code' => 0, 'data', 'msg' => $validate->getError()]);
             }
+            $form['update_time'] = time();
             try {
 
-                $result = Db::name('marquee')->where('id', $form['id'])->update($form);
-                return json(['code' => 1, 'data' => '', 'msg' => '置顶编辑成功']);
+                $result = Db::name('customer_service')->where('id', $form['id'])->update($form);
+                return json(['code' => 1, 'data' => '', 'msg' => '客服编辑成功']);
             } catch (\Exception $e) {
                 throw new BannerMissException(['code' => 0]);
             }
@@ -145,7 +146,7 @@ class CustomerService
         if (request()->isAjax()) {
             $id = input('get.id');
             try {
-                $id = Db::name('marquee')->delete($id);
+                $id = Db::name('customer_service')->delete($id);
                 if ($id) {
                     return json(['code' => 1, 'data' => '', 'msg' => '删除成功']);
                 } else {
@@ -165,25 +166,15 @@ class CustomerService
     public function status()
     {
         $id = input('param.id');
-        $cate = input('param.cate');
 
         try {
-            $status = Db::name('marquee')->where(array('id' => $id))->field('status,cate')->find();//判断当前状态情况
-            if ($cate == 'cate') {
+            $status = Db::name('customer_service')->where(array('id' => $id))->value('status');//判断当前状态情况
 
-                if ($status['cate'] == 0) {
-                    $flag = Db::name('marquee')->where(array('id' => $id))->setField(['cate' => 1]);
-                    return json(['code' => 11, 'data' => $flag['data'], 'msg' => '以更改为系统消息']);
-                } else {
-                    $flag = Db::name('marquee')->where(array('id' => $id))->setField(['cate' => 0]);
-                    return json(['code' => 10, 'data' => $flag['data'], 'msg' => '以更改为置顶跑马灯']);
-                }
-            }
-            if ($status['status'] == 0) {
-                $flag = Db::name('marquee')->where(array('id' => $id))->setField(['status' => 1]);
+            if ($status == 0) {
+                $flag = Db::name('customer_service')->where(array('id' => $id))->setField(['status' => 1]);
                 return json(['code' => 1, 'data' => $flag['data'], 'msg' => '已禁止']);
             } else {
-                $flag = Db::name('marquee')->where(array('id' => $id))->setField(['status' => 0]);
+                $flag = Db::name('customer_service')->where(array('id' => $id))->setField(['status' => 0]);
                 return json(['code' => 0, 'data' => $flag['data'], 'msg' => '已开启']);
             }
         } catch (\Exception $e) {

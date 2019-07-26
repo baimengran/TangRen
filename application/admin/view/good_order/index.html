@@ -1,0 +1,97 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>订单列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->           
+            <div class="row">
+                <div class="col-sm-12">
+                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input type="text" id="key" class="form-control" name="key" value="{$val}" placeholder="输入需查询的用户名称" />
+                                <span class="input-group-btn"> 
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button> 
+                                </span>
+                            </div>
+                        </div>
+                    </form>                         
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th width="5%">ID</th>
+                                <th width="10%">用户</th>
+                                <th width="10%">商品名称</th>
+                                <th width="15%">商品图片</th>
+                                <th width="10%">商品价格(积分)</th>
+                                <th width="5%">商品数量</th>
+                                <th width="25%">下单时间</th>
+                                <th width="25%">状态</th>
+                            </tr>
+                        </thead>
+
+                        <script id="list-template" type="text/html">
+
+                        </script>
+                        <tbody id="list-content">
+
+                        {volist name="goods" id="data" empty='$empty'}
+                        <tr class="long-td">
+                            <td>{$data.order_id}</td>
+                            <td>{$data.user.nickname}</td>
+                            <td>{$data.goodFraction.goods_name}</td>
+
+                            <td><img src="{:url(ROOT.'/'.$data.goodFraction.goods_img,'','')}" style="height: 30px" onerror="this.src='public/static/admin/images/no_img.jpg'"/></td>
+                            <!--onerror="this.src='public/static/admin/images/no_img.jpg'"-->
+                            <td>{$data.goodFraction.goods_fraction}</td>
+                            <td>1</td>
+                            <td>{$data.order_time|date='Y-m-d',###}</td>
+                            <td>
+                                {if condition="$data.logistics==0"}
+                                <a href="javascript:;" onclick="region_status({$data.order_id});">
+                                    <div id="zt{$data.order_id}"><span class="label label-info">已发货</span></div>
+                                </a>
+                                {else /}
+                                <a href="javascript:;" onclick="region_status({$data.order_id});">
+                                    <div id="zt{$data.order_id}"><span class="label label-danger">未发货</span></div>
+                                </a>
+                                {/if}
+                            </td>
+
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style="text-align:right;">{$goods->render()}</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 加载动画 -->
+
+
+{include file="public/footer" /}
+<script>
+    //文章状态
+    function region_status(id){
+        lunhui.status(id,'{:url("status")}');
+    }
+</script>
+
+</body>
+</html>
