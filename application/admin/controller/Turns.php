@@ -64,6 +64,10 @@ class Turns extends Controller
 
         }
 
+        $turns = new TurnsModel();
+        $data = $turns->find($id);
+        $this->assign('data',$data);
+
         return $this->fetch();
     }
 

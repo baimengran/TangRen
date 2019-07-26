@@ -72,7 +72,6 @@ class Taxi extends Controller
             //实例化验证器
             $result = $this->validate($post, $rule, $message);
 
-
             //判断有无错误
             if (true !== $result) {
                 $date = ['errcode' => 1, 'errMsg' => 'error', 'ertips' => $result];
@@ -94,7 +93,6 @@ class Taxi extends Controller
             }else if($post['taxi_label_two']){
                 $label = $post['taxi_label_two'];
             }
-
             $post['taxi_label'] =json_encode($label,320);
 
             //每周营业时间
@@ -107,7 +105,6 @@ class Taxi extends Controller
             //添加数据到数据库
             $taxiModel = new TaxiModel();
             $res = $taxiModel->add_taxi($post);
-
 
             if($res){
                 $arr = ['code'=>1,'msg'=>'添加成功'];
@@ -470,7 +467,6 @@ class Taxi extends Controller
      */
     public function del_detailed($id)
     {
-
         //判断有无这个数据
         $res = Db::table('think_taxi_img')->where('taxi_img_id',$id)->find();
         die('111');

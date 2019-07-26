@@ -8,7 +8,9 @@ class TurnsModel extends Model
 {
     public function count()
     {
-        //查询出轮播图信息
+        
+
+        //查询出轮播图信息量
         $turns = Db::table('think_turns_list')->where('turns_status',0)->count();
 
         return $turns;

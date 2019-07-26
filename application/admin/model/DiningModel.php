@@ -56,6 +56,7 @@ class DiningModel extends Model
     //添加数据方法
     public function add_taxi($post)
     {
+//        print_r($post);die;
         $data = [
             'dining_logo'     => $post['dining_logo'],
             'dining_class'    => $post['dining_class'],
@@ -67,6 +68,7 @@ class DiningModel extends Model
             'dining_address'  => $post['dining_address'],
             'dining_label'    => $post['dining_label'],
         ];
+
         $res = Db::table('think_dining_list')->insert($data);
         return $res;
     }
