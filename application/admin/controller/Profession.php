@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\api\exception\BannerMissException;
 use think\Db;
 use think\Exception;
 use think\exception\HttpException;
@@ -31,7 +32,7 @@ class Profession extends Base
                 'empty' => '<tr><td colspan="4" align="center"><span>暂无数据</span></td></tr>',
             ]);
         } catch (Exception $e) {
-            throw new HttpException(500);
+            return view('error/500');
         }
     }
 
@@ -61,8 +62,8 @@ class Profession extends Base
         if (!$validate->check($form)) {
             return json(['code' => 0, 'data', 'msg' => $validate->getError()]);
         }
-        $form['create_time']=time();
-        $form['update_time']=time();
+        $form['create_time'] = time();
+        $form['update_time'] = time();
         try {
             $id = Db::name('profession_cate')->insert($form);
             if ($id) {
@@ -71,7 +72,7 @@ class Profession extends Base
                 return json(['code' => 1, 'data', 'msg' => '添加失败，稍候再试吧']);
             }
         } catch (Exception $e) {
-            return json(['code'=>0,'data','msg'=>'出错啦']);
+            throw new BannerMissException(['code' => 0,]);
         }
     }
 
@@ -82,6 +83,7 @@ class Profession extends Base
     public function status()
     {
         $id = input('param.id');
+
         $status = Db::name('profession_cate')->where(array('id' => $id))->value('status');//判断当前状态情况
         if ($status == 0) {
             $flag = Db::name('profession_cate')->where(array('id' => $id))->setField(['status' => 1]);
@@ -90,6 +92,5 @@ class Profession extends Base
             $flag = Db::name('profession_cate')->where(array('id' => $id))->setField(['status' => 0]);
             return json(['code' => 0, 'data' => $flag['data'], 'msg' => '已开启']);
         }
-
     }
 }

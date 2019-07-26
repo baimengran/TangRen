@@ -2,39 +2,34 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2019/7/25
- * Time: 11:04
+ * Date: 2019/7/26
+ * Time: 0:26
  */
 
 namespace app\admin\controller;
 
 
-use app\admin\model\CouponModel;
-use app\api\exception\BannerMissException;
 use think\Db;
-use think\Exception;
-use think\Loader;
-use think\Validate;
 
-class Coupon extends Base
+class Marquee
 {
     public function index()
     {
         try {
             $key = input('key');
-            $coupon = Db::name('coupon');
+            $coupon = Db::name('marquee');
             if ($coupon) {
-                $coupon->where('title', 'like', '%' . $key . '%');
+                $coupon->where('content', 'like', '%' . $key . '%');
             }
             $coupon = $coupon->order('')->paginate(20);
             if ($coupon) {
                 return view('index', [
                     'val' => $key,
-                    'coupons' => $coupon,
+                    'marquees' => $coupon,
                     'empty' => '<tr><td colspan="4" align="center"><span>暂无数据</span></td></tr>'
                 ]);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return view('error/500');
         }
     }
@@ -54,24 +49,20 @@ class Coupon extends Base
         $form = input('post.');
 
 
-        $validate = Loader::validate('Coupon');
+        $validate = Loader::validate('StickyValidate');
         if (!$validate->check($form)) {
             return json(['code' => 0, 'data', 'msg' => $validate->getError()]);
         }
-        $create = strtotime($form['activity_create_time']);
-        $end = strtotime($form['activity_end_time']);
-        $form['activity_create_time'] = $create;
-        $form['activity_end_time'] = $end;
         $form['create_time'] = time();
         $form['update_time'] = time();
         try {
-            $region_id = Db::name('coupon')->insert($form);
+            $region_id = Db::name('sticky')->insert($form);
             if ($region_id) {
                 return json(['code' => 1, 'data', 'msg' => '创建成功']);
             } else {
                 return json(['code' => 1, 'data', 'msg' => '添加失败，稍候再试吧']);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new BannerMissException(['code' => 0]);
         }
     }
@@ -83,13 +74,11 @@ class Coupon extends Base
     public function edit()
     {
 
-        $coupon = new CouponModel();
+
         $id = input('param.id');
-        $data = $coupon->where('id', $id)->find();
+        $data = Db::name('sticky')->where('id', $id)->find();
         if ($data) {
-            $data['activity_create_time'] = date('Y-m-d H:i:s', $data['activity_create_time']);
-            $data['activity_end_time'] = date('Y-m-d H:i:s', $data['activity_end_time']);
-            return view('edit', ['coupon' => $data]);
+            return view('edit', ['sticky' => $data]);
         }
         return view('error/500');
     }
@@ -102,20 +91,15 @@ class Coupon extends Base
     {
 
         if (request()->isAjax()) {
+            $form = input('post.');
+            $validate = Loader::validate('StickyValidate');
+            if (!$validate->check($form)) {
+                return json(['code' => 0, 'data', 'msg' => $validate->getError()]);
+            }
             try {
-                $form = input('post.');
-                $validate = Loader::validate('Coupon');
-                if (!$validate->check($form)) {
-                    return json(['code' => 0, 'data', 'msg' => $validate->getError()]);
-                }
-                $create = strtotime($form['activity_create_time']);
-                $end = strtotime($form['activity_end_time']);
-                $form['activity_create_time'] = $create;
-                $form['activity_end_time'] = $end;
-                $form['update_time'] = time();
-                $coupon = new CouponModel($form['id']);
-                $result = $coupon->update($form);
-                return json(['code' => 1, 'data' => '', 'msg' => '优惠卷编辑成功']);
+
+                $result = Db::name('sticky')->where('id', $form['id'])->update($form);
+                return json(['code' => 1, 'data' => '', 'msg' => '置顶编辑成功']);
             } catch (\Exception $e) {
                 throw new BannerMissException(['code' => 0]);
             }
@@ -133,7 +117,7 @@ class Coupon extends Base
         if (request()->isAjax()) {
             $id = input('get.id');
             try {
-                $id = Db::name('coupon')->delete($id);
+                $id = Db::name('sticky')->delete($id);
                 if ($id) {
                     return json(['code' => 1, 'data' => '', 'msg' => '删除成功']);
                 } else {
@@ -153,16 +137,19 @@ class Coupon extends Base
     public function status()
     {
         $id = input('param.id');
+        $cate = input('param.cate');
+
         try {
-            $status = Db::name('coupon')->where(array('id' => $id))->value('status');//判断当前状态情况
+            $status = Db::name('marquee')->where(array('id' => $id))->value('status');//判断当前状态情况
+            
             if ($status == 0) {
-                $flag = Db::name('coupon')->where(array('id' => $id))->setField(['status' => 1]);
+                $flag = Db::name('marquee')->where(array('id' => $id))->setField(['status' => 1]);
                 return json(['code' => 1, 'data' => $flag['data'], 'msg' => '已禁止']);
             } else {
-                $flag = Db::name('coupon')->where(array('id' => $id))->setField(['status' => 0]);
+                $flag = Db::name('marquee')->where(array('id' => $id))->setField(['status' => 0]);
                 return json(['code' => 0, 'data' => $flag['data'], 'msg' => '已开启']);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return json(['code' => 0, 'data', 'msg' => '出错啦']);
         }
     }

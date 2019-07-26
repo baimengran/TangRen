@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\api\exception\BannerMissException;
 use think\Db;
 use think\Exception;
 use think\exception\HttpException;
@@ -31,7 +32,7 @@ class Topic extends Base
                 'empty' => '<tr><td colspan="4" align="center"><span>暂无数据</span></td></tr>',
             ]);
         } catch (Exception $e) {
-            throw new HttpException(500);
+            return view('error/500');
         }
     }
 
@@ -71,7 +72,7 @@ class Topic extends Base
                 return json(['code' => 1, 'data', 'msg' => '添加失败，稍候再试吧']);
             }
         } catch (Exception $e) {
-            throw new HttpException(500);
+            throw new BannerMissException(['code'=>0]);
         }
     }
 

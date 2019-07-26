@@ -42,7 +42,7 @@
                 </div>
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" name="add" id="add" method="post" action="{:url('admin/coupon/update')}">
-
+                        <input type="hidden" name="id" value="{$coupon['id']}">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">优惠卷标题：</label>
                             <div class="input-group col-sm-4">

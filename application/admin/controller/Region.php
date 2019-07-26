@@ -36,7 +36,7 @@ class Region extends Base
                 ]);
             }
         } catch (Exception $e) {
-            throw new HttpException(500);
+            return view('error/500');
         }
     }
 
@@ -76,7 +76,7 @@ class Region extends Base
                 return json(['code' => 1, 'data', 'msg' => '添加失败，稍候再试吧']);
             }
         } catch (Exception $e) {
-            return json(['code'=>0,'data','msg'=>'出错啦']);
+            throw new BannerMissException(['code'=>0]);
         }
     }
 
