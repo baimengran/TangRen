@@ -306,6 +306,7 @@ class Taxi extends Controller
      */
     public function status_taxi($id)
     {
+        print_r($id);die;
         //判断有无这条信息
         $data = Db::name('taxi_list')->where('taxi_id',$id)->find();
 
