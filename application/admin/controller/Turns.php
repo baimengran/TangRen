@@ -61,10 +61,14 @@ class Turns extends Controller
                 $arr = ['code'=>2,'msg'=>'添加失败'];
                 return $arr;
             }
-
         }
 
-        return $this->fetch();
+        $turns = new TurnsModel();
+        $data = $turns->region();
+
+        $this->assign('data',$data);
+
+        return $this->fetch('turns/add_turns',$data);
     }
 
     //修改轮播图

@@ -25,6 +25,7 @@ class Dining extends Controller
 
         //将数据传至页面
         $this->assign('list',$date);
+
         return $this->fetch();
     }
 
@@ -86,6 +87,7 @@ class Dining extends Controller
             }else if($post['taxi_label_two']){
                 $label = $post['taxi_label_two'];
             }
+
             $post['dining_label'] =json_encode($label,320);
 
             //每周营业时间
@@ -94,6 +96,8 @@ class Dining extends Controller
             $post['dining_time'] = $post['taxi_day_one'].':'.$post['taxi_day_ones'].'-'.$post['taxi_day_two'].':'.$post['taxi_day_twos'];
             //图片logo
             $post['dining_logo'] = $post['photo'];
+
+
 
             //添加数据到数据库
             $diningModel = new DiningModel();
@@ -107,7 +111,6 @@ class Dining extends Controller
                 return json_encode($arr,320);
             }
         }
-
         //查询出地区
         $diningModel = new DiningModel();
         $taxi_class = $diningModel->select_class();
