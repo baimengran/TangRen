@@ -2,78 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb684b8e-68f3-42ef-8ea5-311b6ecf6be4" name="默认的" comment="">
-      <change afterPath="$PROJECT_DIR$/application/api/controller/Pay.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/aa/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/aa/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Community.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Community.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Dining.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Dining.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/GoodOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/GoodOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Hotel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Hotel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Profession.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Profession.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Region.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Region.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Taxi.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Taxi.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Topic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Turns.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Turns.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/model/GoodOrderModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/model/GoodOrderModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/model/HotelModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/model/HotelModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/model/TaxiModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/model/TaxiModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/model/TurnsModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/model/TurnsModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/dining/add_detailed.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/dining/add_detailed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/dining/add_dining.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/dining/add_dining.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/dining/detailed.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/dining/detailed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/dining/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/dining/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/dining/edit_detailed.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/dining/edit_detailed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/dining/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/dining/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/error/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/error/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/good_order/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/good_order/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/hotel/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/hotel/add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/hotel/add_detailed.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/hotel/add_detailed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/hotel/detailed.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/hotel/detailed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/hotel/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/hotel/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/hotel/edit_detailed.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/hotel/edit_detailed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/hotel/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/hotel/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/profession/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/profession/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/public/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/public/header.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/region/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/region/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/sticky/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/sticky/add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/sticky/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/integral/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/taxi/add_detailed.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/taxi/add_detailed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/taxi/add_taxi.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/taxi/add_taxi.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/taxi/detailed.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/taxi/detailed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/taxi/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/taxi/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/taxi/edit_detailed.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/taxi/edit_detailed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/taxi/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/taxi/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/topic/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/topic/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/topic/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/topic/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/turns/add_turns.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/turns/add_turns.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/turns/edit_turns.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/turns/edit_turns.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/turns/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/turns/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/controller/Coupon.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/controller/Coupon.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/controller/My.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/controller/My.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/controller/UsedComment.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/controller/UsedComment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/exception/ExceptionHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/exception/ExceptionHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/api/validate/RentHouse.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/api/validate/RentHouse.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Dining.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/controller/Dining.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Hotel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/controller/Hotel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Pay.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Personal.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/controller/Personal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Taxi.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/controller/Taxi.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Turns.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/controller/Turns.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/model/DiningModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/model/DiningModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/model/DiningcommentModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/model/DiningcommentModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/model/HotelModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/model/HotelModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/model/HotelcommentModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/model/HotelcommentModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/model/TaxiModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/model/TaxiModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/index/model/TaxicommentModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/model/TaxicommentModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/mysql_config.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/mysql_config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/20190711-190404-1.sql.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/public/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/admin/js/lunhui.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/admin/js/lunhui.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -128,7 +57,7 @@
         <entry file="file://$PROJECT_DIR$/application/admin/common.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="826">
-              <caret line="86" column="7" lean-forward="true" selection-start-line="86" selection-start-column="7" selection-end-line="86" selection-end-column="7" />
+              <caret line="86" column="7" selection-start-line="86" selection-start-column="7" selection-end-line="86" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -158,11 +87,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Auth.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Auth.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/extend/com/Auth.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="95">
-              <caret line="35" column="7" lean-forward="true" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+              <caret line="35" column="7" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" column="14" lean-forward="true" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -254,7 +192,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/application/admin/view/dining/index.html" />
         <option value="$PROJECT_DIR$/application/admin/view/dining/add_dining.html" />
         <option value="$PROJECT_DIR$/application/admin/view/dining/add_detailed.html" />
         <option value="$PROJECT_DIR$/application/api/controller/UsedComment.php" />
@@ -305,6 +242,7 @@
         <option value="$PROJECT_DIR$/application/admin/controller/Taxi.php" />
         <option value="$PROJECT_DIR$/application/admin/controller/Hotel.php" />
         <option value="$PROJECT_DIR$/application/admin/controller/Dining.php" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -328,7 +266,7 @@
       <path value="$PROJECT_DIR$/vendor/setasign/fpdi" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="372" />
     <option name="y" value="35" />
     <option name="width" value="983" />
@@ -550,15 +488,16 @@
       <workItem from="1564991066813" duration="41000" />
       <workItem from="1564993415803" duration="2100000" />
       <workItem from="1565053527366" duration="5488000" />
-      <workItem from="1565140269155" duration="1634000" />
+      <workItem from="1565140269155" duration="1675000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="672942000" />
+    <option name="totallyTimeSpent" value="672983000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.4983165" visible="true" weight="0.22617246" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -650,9 +589,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/admin/database.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/model/IdeaModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
@@ -941,7 +877,7 @@
     <entry file="file://$PROJECT_DIR$/application/admin/common.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="826">
-          <caret line="86" column="7" lean-forward="true" selection-start-line="86" selection-start-column="7" selection-end-line="86" selection-end-column="7" />
+          <caret line="86" column="7" selection-start-line="86" selection-start-column="7" selection-end-line="86" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -960,7 +896,14 @@
     <entry file="file://$PROJECT_DIR$/extend/com/Auth.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
-          <caret line="35" column="7" lean-forward="true" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+          <caret line="35" column="7" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="14" lean-forward="true" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
         </state>
       </provider>
     </entry>
