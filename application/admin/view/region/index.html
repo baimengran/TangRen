@@ -37,6 +37,7 @@
                                 <th width="25%">ID</th>
                                 <th width="25%">区域名称</th>
                                 <th width="25%">状态</th>
+                                <th width="15%">操作</th>
                             </tr>
                         </thead>
 
@@ -60,7 +61,10 @@
                                 </a>
                                 {/if}
                             </td>
-
+                            <td>
+                                <a href="javascript:;" onclick="edit({$data.region_id})" class="btn btn-primary btn-xs btn-outline">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                            </td>
                         </tr>
                         {/volist}
 
@@ -80,6 +84,15 @@
 
 {include file="public/footer" /}
 <script>
+    //编辑文章
+    function edit(id){
+        location.href = './edit/id/'+id+'.html';
+    }
+
+    //删除文章
+    // function del(id){
+    //     lunhui.confirm(id,'{:url("destroy")}');
+    // }
     //文章状态
     function region_status(id){
         lunhui.status(id,'{:url("status")}');

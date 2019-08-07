@@ -112,4 +112,6 @@ return [
     //异常处理
     'exception_handle'=> 'app\api\exception\ExceptionHandler',
 
+    'default_filter'=>'strip_tags',
+
 ];

@@ -22,7 +22,7 @@ class Community
             if ($key) {
                 $community->where('body', 'like', '%' . $key . '%');
             }
-            $community = $community->order('recommend_status asc, sticky_status asc')->paginate(20);
+            $community = $community->order('recommend_status asc, essence asc')->paginate(20);
             if ($community) {
                 return view('index', [
                     'val' => $key,
@@ -44,7 +44,7 @@ class Community
         $id = input('param.id');
         $cate = input('param.cate');
 
-//        try {
+        try {
             $status = Db::name('community')->where(array('id' => $id))->field('recommend_status,essence')->find();//判断当前状态情况
             if ($cate == 'cate') {
 
@@ -63,8 +63,8 @@ class Community
                 $flag = Db::name('community')->where(array('id' => $id))->setField(['recommend_status' => 0]);
                 return json(['code' => 0, 'data' => $flag['data'], 'msg' => '已推荐']);
             }
-//        } catch (\Exception $e) {
-//            return json(['code' => 0, 'data', 'msg' => '出错啦']);
-//        }
+        } catch (\Exception $e) {
+            return json(['code' => 0, 'data', 'msg' => '出错啦']);
+        }
     }
 }

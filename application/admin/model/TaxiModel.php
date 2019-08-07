@@ -9,6 +9,7 @@ class TaxiModel extends Model
     public function index()
     {
         $date = Db::table('think_taxi_list')
+            ->where('exits_status',0)
             ->paginate(10);
 
         return $date;

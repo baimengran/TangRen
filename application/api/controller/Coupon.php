@@ -30,7 +30,7 @@ class Coupon
                     $coupon->save(['expire' => 1]);
                 }
             }
-            $coupons = CouponModel::all();
+            $coupons = CouponModel::where('status',0)->order('expire asc,create_time desc')->paginate(20);
             foreach ($coupons as $k => $coupon) {
                 $data[$k]['id'] = $coupon['id'];
                 $data[$k]['title'] = $coupon['title'];

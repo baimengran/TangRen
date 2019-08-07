@@ -13,6 +13,7 @@ use think\Model;
 
 class GoodOrderModel extends Model
 {
+
     protected $name = 'goods_order';
     protected $pk='order_id';
 
@@ -24,5 +25,9 @@ class GoodOrderModel extends Model
     public function user()
     {
         return $this->belongsTo('MemberModel','id');
+    }
+
+    public function address(){
+        return $this->belongsTo('AddressPhone','address_id');
     }
 }

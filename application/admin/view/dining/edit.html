@@ -1,6 +1,6 @@
 {include file="public/header" /}
-<link rel="stylesheet" type="text/css" href="/static/admin/webupload/webuploader.css">
-<link rel="stylesheet" type="text/css" href="/static/admin/webupload/style.css">
+<link rel="stylesheet" type="text/css" href="__ADMIN__/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="__ADMIN__/webupload/style.css">
 <style>
     .file-item{float: left; position: relative; width: 110px;height: 110px; margin: 0 20px 20px 0; padding: 4px;}
     .file-item .info{overflow: hidden;}
@@ -31,11 +31,17 @@
                         <input type="hidden" name="id" value="{$data.taxi.dining_id}">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">地区：</label>
-                            <select class="col-sm-4 control-label" name="dining_class">
-                                {volist name="data['region']" id="vo"}
-                                <option value="{$vo}">{$vo}</option>
-                                {{/volist}}
-                            </select>
+                            <div class="input-group col-sm-4">
+                                <select class="form-control m-b chosen-select" name="dining_class">
+                                    <option value="">==请选择==</option>
+                                    {volist name="data['region']" id="vo"}
+                                    <option value="{$vo}"
+                                            {if condition="$vo==$data['taxi']['dining_class']" }selected {/if}>
+                                    {$vo}
+                                    </option>
+                                    {{/volist}}
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">名称：</label>
@@ -49,18 +55,25 @@
                                 <input id="taxi_content" type="text" value="{$data.taxi.dining_content}" class="form-control" name="dining_content" placeholder="介绍">
                             </div>
                         </div>
-                        <div class="form-group" >
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">每周营业时间：</label>
                             <div style="position: relative;left:98px;bottom:-2px;">——</div>
                             <select class="col-sm-1 control-label" name="taxi_time_one" style="bottom:18px;">
                                 {volist name="data['week']" id="vo"}
-                                <option value="{$vo}">{$vo}</option>
+                                <option value="{$vo}" {if condition="$vo==substr($data['taxi']['dining_day'],0,6)"
+                                        }selected{
+                                /if}>
+                                {$vo}
+                                </option>
                                 {{/volist}}
                             </select>
 
-                            <select class="col-sm-1 control-label" name="taxi_time_two" style="left:43px;bottom:18.5px;">
+                            <select class="col-sm-1 control-label" name="taxi_time_two"
+                                    style="left:43px;bottom:18.5px;">
                                 {volist name="data['week']" id="vo"}
-                                <option value="{$vo}">{$vo}</option>
+                                <option value="{$vo}" {if condition="$vo==substr(trim($data['taxi']['dining_day']),9)" }
+                                        selected {/if}>{$vo}
+                                </option>
                                 {{/volist}}
                             </select>
                         </div>
@@ -68,27 +81,40 @@
                             <label class="col-sm-3 control-label">当天营业时间：</label>
                             <div style="position: relative;width:50px;height:1px;left:370px;bottom: 20px;">——</div>
                             <div>
-                                <select class="col-sm-0.5 control-label" name="taxi_day_one" style="left:0px;bottom:0px;">
+                                <select class="col-sm-0.5 control-label" name="taxi_day_one"
+                                        style="left:0px;bottom:0px;">
                                     {volist name="data['day']" id="vo"}
-                                    <option value="{$vo}">{$vo}</option>
+                                    <option value="{$vo}"
+                                            {if condition="$vo==substr(trim($data.taxi.dining_time),0,2)"}selected{/if}>
+                                    {$vo}
+                                    </option>
                                     {{/volist}}
                                 </select>
                                 <select class="col-sm-0.5 control-label" name="taxi_day_ones">
                                     {volist name="data['minute']" id="vo"}
-                                    <option value="{$vo}">{$vo}</option>
+                                    <option value="{$vo}"
+                                            {if condition="$vo==substr(trim($data.taxi.dining_time),3,2)"}selected{/if}>
+                                    {$vo}
+                                    </option>
                                     {{/volist}}
                                 </select>
                             </div>
                             <div style="position: relative;width:201px;left:407px;bottom:29px;">
                                 <select class="col-sm-0.5 control-label" name="taxi_day_two">
                                     {volist name="data['day']" id="vo"}
-                                    <option value="{$vo}">{$vo}</option>
+                                    <option value="{$vo}"
+                                            {if condition="$vo==substr(trim($data.taxi.dining_time),6,2)"}selected{/if}>
+                                    {$vo}
+                                    </option>
                                     {{/volist}}
                                 </select>
 
                                 <select class="col-sm-0.5 control-label" name="taxi_day_twos">
                                     {volist name="data['minute']" id="vo"}
-                                    <option value="{$vo}">{$vo}</option>
+                                    <option value="{$vo}"
+                                            {if condition="$vo==substr(trim($data.taxi.dining_time),9)"}selected{/if}>
+                                    {$vo}
+                                    </option>
                                     {{/volist}}
                                 </select>
                             </div>
@@ -108,23 +134,29 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">标签1：</label>
                             <div class="input-group col-sm-4">
-                                <input id="taxi_label"   type="text" class="form-control" name="taxi_label" placeholder="WIFI">
+                                <input id="taxi_label"   type="text" class="form-control"
+                                       name="taxi_label" value="{$data.taxi.label0}"
+                                       placeholder="WIFI">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">标签2：</label>
                             <div class="input-group col-sm-4">
-                                <input id="taxi_label_two" type="text" class="form-control" name="taxi_label_two" placeholder="24小时服务">
+                                <input id="taxi_label_two" type="text" class="form-control"
+                                       name="taxi_label_two" value="{$data.taxi.label1}"
+                                       placeholder="24小时服务">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label">主图：</label>
                             <div class="input-group col-sm-4">
-                                <input type="hidden" id="data_photo" name="photo" >
+                                <input type="hidden" id="data_photo" name="photo" value="{$data.taxi.dining_logo}">
                                 <div id="fileList" class="uploader-list" style="float:right"></div>
                                 <div id="imgPicker" style="float:left">选择图片</div>
-                                <img id="img_data" height="100px" style="float:left;margin-left: 50px;margin-top: -10px;" src="/public/uploads/images/{$data.taxi.dining_logo}"/>
+                                <img id="img_data" height="100px" style="float:left;margin-left: 50px;margin-top: -10px;"
+                                     src="{$data.taxi.dining_logo}"/>
                             </div>
                         </div>
 
@@ -143,7 +175,7 @@
 </div>
 {include file="public/footer" /}
 
-<script type="text/javascript" src="/static/admin/webupload/webuploader.min.js"></script>
+<script type="text/javascript" src="__ADMIN__/webupload/webuploader.min.js"></script>
 
 <script type="text/javascript">
     var $list = $('#fileList');
@@ -163,7 +195,7 @@
         },
 
         'onUploadSuccess': function(file, data, response) {
-            $("#data_photo").val(data._raw);
+            $("#data_photo").val('/public/uploads/images/' +data._raw);
             $("#img_data").attr('src', '/public/uploads/images/' + data._raw).show();
         }
     });

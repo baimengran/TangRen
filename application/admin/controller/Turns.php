@@ -6,7 +6,7 @@ use think\Controller;
 use think\Db;
 use think\Request;
 
-class Turns extends Controller
+class Turns extends Base
 {
     //轮播图列表页
     public function index()
@@ -31,24 +31,26 @@ class Turns extends Controller
         $post = $request->post();
 
         $rule =   [
-            'title' => 'require|number'
+            'title' => 'require|number',
+            'photo'=>'require'
         ];
         $message  = [
             'title.require' => '轮播图类型不能为空',
             'title.number'  => '轮播图类型错误',
+            'photo.require'=>'请上传图片'
         ];
 
         if(!empty($post)){
             if($post['title'] > 7){
-                return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'类型不能大于7','retData'=>$post['title']],320);
+                return $err = json(['code'=>0,'msg'=>'类型不能大于7','retData'=>$post['title']]);
             }
             //实例化验证器
             $result=$this->validate($post,$rule,$message);
             //判断有无错误
             if(true !== $result){
-                $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+                $date = ['code'=> 0,'errMsg'=>'error','msg'=>$result];
                 // 验证失败 输出错误信息
-                return json_encode($date,320);
+                return json($date);
             }
 
             $data = ['turns_class' => $post['title'], 'turns_img' => $post['photo'] ];

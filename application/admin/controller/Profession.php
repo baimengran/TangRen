@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\ProfessionCateModel;
 use app\api\exception\BannerMissException;
 use think\Db;
 use think\Exception;
@@ -73,6 +74,60 @@ class Profession extends Base
             }
         } catch (Exception $e) {
             throw new BannerMissException(['code' => 0,]);
+        }
+    }
+
+    /**
+     *  编辑区域
+     * damin/region/edit?id=1
+     */
+    public function edit()
+    {
+        try {
+            $topic = new ProfessionCateModel();
+//        return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
+            $id = input('param.id');
+            $data = $topic->where('id', $id)->find();
+            return view('edit', ['profession' => $data]);
+        }catch(\Exception $e){
+            return view('error/500');
+        }
+    }
+
+    /**
+     * 更新区域
+     * @return \think\response\Json
+     */
+    public function update()
+    {
+
+
+//        return json(['code'=>1,'data'=>input('region_id')]);
+        if (request()->isAjax()) {
+//            try {
+            $param = input('post.');
+            $rule = [
+                'name' => 'require|unique:profession_cate',
+                'status' => 'require'
+            ];
+
+            $msg = [
+                'name.require' => '行业名称必须填写',
+                'name.unique' => '行业名称已经存在',
+                'status' => '行业状态必须填写',
+            ];
+            $validate = new Validate($rule, $msg);
+            $validate->scene('edit', ['name' => 'require', 'status' => 'require']);
+            if (!$validate->check($param)) {
+                return json(['code' => 0, 'data', 'msg' => $validate->getError()]);
+            }
+
+            $region = new ProfessionCateModel($param['id']);
+            $result = $region->update($param);
+            return json(['code' => 1, 'data' => '', 'msg' => '行业编辑成功']);
+//            } catch (Exception $e) {
+//                return json(['code' => 0, 'data' => '', 'msg' => '出错啦']);
+//            }
         }
     }
 

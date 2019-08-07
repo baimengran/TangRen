@@ -37,7 +37,7 @@ class UsedComment
             ]);
         }
         try {
-            $comments = UsedCommentModel::where('used_id', 'eq', $id)->order('create_time', 'desc')->paginate(2);
+            $comments = UsedCommentModel::where('used_id', 'eq', $id)->order('create_time', 'desc')->paginate(20);
             $data['total'] = $comments->total();
             $data['per_page'] = $comments->listRows();
             $data['current_page'] = $comments->currentPage();

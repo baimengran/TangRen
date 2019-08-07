@@ -31,12 +31,14 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">地区：</label>
-                            <select class="col-sm-4 control-label" name="taxi_class">
-
+                            <div class="input-group col-sm-4">
+                            <select class="form-control m-b chosen-select" name="taxi_class">
+                                <option value="">==请选择==</option>
                                 {volist name="list['region']" id="vo"}
                                 <option value="{$vo}">{$vo}</option>
                                 {{/volist}}
                             </select>
+                        </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">名称：</label>
@@ -127,7 +129,7 @@
                                 <input type="hidden" id="data_photo" name="photo" >
                                 <div id="fileList" class="uploader-list" style="float:right"></div>
                                 <div id="imgPicker" style="float:left">选择图片</div>
-                                <img id="img_data" height="100px" style="float:left;margin-left: 50px;margin-top: -10px;" src="/public/static/admin/images/no_img.jpg"/>
+                                <img id="img_data" height="100px" style="float:left;margin-left: 50px;margin-top: 10px;" src="/public/static/admin/images/no_img.jpg"/>
                             </div>
                         </div>
 
@@ -168,7 +170,7 @@
         },
 
         'onUploadSuccess': function(file, data, response) {
-            $("#data_photo").val(data._raw);
+            $("#data_photo").val('/public/uploads/images/'+data._raw);
             $("#img_data").attr('src', '/public/uploads/images/' + data._raw).show();
         }
     });
@@ -206,7 +208,6 @@
         }
 
         function complete(data){
-            console.log(data);
             if(data.code == 1){
                 layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
 

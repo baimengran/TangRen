@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\TopicCateModel;
 use app\api\exception\BannerMissException;
 use think\Db;
 use think\Exception;
@@ -69,13 +70,65 @@ class Topic extends Base
             if ($id) {
                 return json(['code' => 1, 'data', 'msg' => '创建成功']);
             } else {
-                return json(['code' => 1, 'data', 'msg' => '添加失败，稍候再试吧']);
+                return json(['code' => 0, 'data', 'msg' => '添加失败，稍候再试吧']);
             }
         } catch (Exception $e) {
             throw new BannerMissException(['code'=>0]);
         }
     }
+    /**
+     *  编辑区域
+     * damin/region/edit?id=1
+     */
+    public function edit()
+    {
+        try {
+            $topic = new TopicCateModel();
+//        return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
+            $id = input('param.id');
+            $data = $topic->where('id', $id)->find();
+            return view('edit', ['topic' => $data]);
+        }catch(\Exception $e){
+            return view('error/500');
+        }
+    }
 
+    /**
+     * 更新区域
+     * @return \think\response\Json
+     */
+    public function update()
+    {
+
+
+//        return json(['code'=>1,'data'=>input('region_id')]);
+        if (request()->isAjax()) {
+            try {
+                $param = input('post.');
+                $rule = [
+                    'name' => 'require|unique:topic_cate',
+                    'status' => 'require'
+                ];
+
+                $msg = [
+                    'name.require' => '话题名称必须填写',
+                    'name.unique' => '话题名称已经存在',
+                    'status' => '话题状态必须填写',
+                ];
+                $validate = new Validate($rule, $msg);
+                $validate->scene('edit', ['name' => 'require', 'status' => 'require']);
+                if (!$validate->check($param)) {
+                    return json(['code' => 0, 'data', 'msg' => $validate->getError()]);
+                }
+
+                $region = new TopicCateModel($param['id']);
+                $result = $region->update($param);
+                return json(['code' => 1, 'data' => '', 'msg' => '话题编辑成功']);
+            } catch (Exception $e) {
+                return json(['code' => 0, 'data' => '', 'msg' => '出错啦']);
+            }
+        }
+    }
     /**
      * [article_state 话题状态]
      * @return [type] [descriptio]

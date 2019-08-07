@@ -5,15 +5,19 @@ use app\admin\model\DiningModel;
 use think\Controller;
 use think\Db;
 
-class Dining extends Controller
+class Dining extends Base
 {
     //美食列表
     public function index()
     {
-        //执行查询操作
         $list= Db::table('think_dining_list')
-            ->where('exits_status',0)
-            ->paginate(10);
+            ->where('exits_status',0);
+        if($key = input('key')){
+            $list = $list->where('dining_name','like','%'.$key.'%');
+        }
+        //执行查询操作
+
+            $list = $list->order('dining_home,dining_status')->paginate(20);
 
         //统计多少数据
         $count= Db::table('think_dining_list')
@@ -45,7 +49,9 @@ class Dining extends Controller
             'taxi_day_ones' => 'require',
             'taxi_day_two'  => 'require',
             'taxi_day_twos' => 'require',
+            'dining_phone'=>'require',
             'dining_address'  => 'require',
+            'photo'=>'require'
         ];
         $message  = [
             'dining_class.require'      => '地区不能为空',
@@ -60,6 +66,7 @@ class Dining extends Controller
             'taxi_day_twos.require'   => '每天结束营业时间不能为空',
             'dining_phone.require'      => '联系电话不能为空',
             'dining_address.require'    => '具体地址不能为空',
+            'photo.require'=>'主图不能为空'
         ];
         if(!empty($post)) {
 
@@ -68,14 +75,14 @@ class Dining extends Controller
 
             //判断有无错误
             if (true !== $result) {
-                $date = ['errcode' => 1, 'errMsg' => 'error', 'ertips' => $result];
+                $date = ['code' => 0, 'errMsg' => 'error', 'msg' => $result];
                 // 验证失败 输出错误信息
-                return json_encode($date, 320);
+                return json($date);
             }
 
             //判断标签是否有值
             if (!$post['taxi_label'] && !$post['taxi_label_two']) {
-                return $err = json_encode(['errCode' => '0', 'msg' => 'success', 'ertips' => '22标签不能为空'], 320);
+                return $err = json(['code' => '0', 'msg' => '标签不能为空']);
             }
 
             //处理标签
@@ -160,6 +167,27 @@ class Dining extends Controller
         $day= $diningModel->select_day();
         $minute= $diningModel->select_minute();
 
+        //正则规则匹配中文英文额下划线
+        $reg = '/[\x{4e00}-\x{9fa5}0-9a-zA-Z_]/u';
+        //将字符串转数组
+        $label = explode(',', $data['dining_label']);
+        $str = [];
+        foreach ($label as $k => $v) {
+            //去掉[]和“”
+            preg_match_all($reg, $label[$k], $str[$k]);
+        }
+
+        foreach ($label as $k => $v) {
+            //组装数据
+            $data['label' . $k] = implode('', $str[$k][0]);
+        }
+        if (!array_key_exists('label0', $data)) {
+            $data['label0'] = null;
+        }
+        if (!array_key_exists('label1', $data)) {
+            $data['label1'] = null;
+        }
+
         $data = ['region'=>$region,'week'=>$week,'day'=>$day,'minute'=>$minute,'taxi'=>$data];
 
         //加载视图
@@ -185,6 +213,7 @@ class Dining extends Controller
             'taxi_day_ones' => 'require',
             'taxi_day_two'  => 'require',
             'taxi_day_twos' => 'require',
+            'dining_phone'=>'require',
             'dining_address'  => 'require',
             'photo'           => 'require',
         ];
@@ -209,14 +238,14 @@ class Dining extends Controller
 
         //判断有无错误
         if (true !== $result) {
-            $date = ['errcode' => 1, 'errMsg' => 'error', 'ertips' => $result];
+            $date = ['code' => 0, 'errMsg' => 'error', 'msg' => $result];
             // 验证失败 输出错误信息
-            return json_encode($date, 320);
+            return json($date);
         }
 
         //判断标签是否有值
-        if (!$post['taxi_label'] && !$post['taxi_label_two'] && !$post['taxi_label_three']) {
-            return $err = json_encode(['errCode' => '0', 'msg' => 'success', 'ertips' => '标签不能为空'], 320);
+        if (!$post['taxi_label'] && !$post['taxi_label_two'] ) {
+            return $err = json(['code' => '0',  'msg' => '标签不能为空']);
         }
 
         //处理标签
@@ -289,44 +318,48 @@ class Dining extends Controller
     public function status_dining($id)
     {
         //判断有无这条信息
-        $data = Db::name('dining_list')->where('dining_id',$id)->find();
+        $data = Db::name('dining_list')
+            ->where('exits_status',0)
+            ->where('dining_id', $id)->find();
 
-        if(!$data){
-            return $arr = ['code'=>3,'msg'=>'没有这条数据'];
+        if (!$data) {
+            return $arr = ['code' => 3, 'msg' => '没有这条数据'];
         }
         //判断当前状态
-        if($data['dining_status'] == 0){
+        if ($data['dining_status'] == 1) {
             //查询推荐总数是否大于4 大于4则不能再推荐
-            $count = Db::name('dining_list')->where('dining_status',0)->count();
-//            if($count >= 4){
-//                $arr = ['code'=>3,'msg'=>'不能在推荐'];
-//
-//                return $arr;
-//            }
+            $count = Db::name('dining_list')
+                ->where('exits_status',0)
+                ->where('dining_status', 0)->count();
+            if ($count >= 4) {
+                $arr = ['code' => 3, 'msg' => '不能再推荐'];
+//                return json_encode($arr,320);
+                return $arr;
+            }
             //修改推荐状态为不推荐
             $res = Db::name('dining_list')
                 ->update([
-                    'dining_status'   =>1,
-                    'dining_id'      =>$id
+                    'dining_status' => 0,
+                    'dining_id' => $id
                 ]);
 
-            if($res){
-                return $arr = ['code'=>1,'msg'=>'未推荐'];
-            }else{
-                return $arr = ['code'=>2,'msg'=>'已推荐'];
+            if ($res) {
+                return $arr = ['code' => 2, 'msg' => '已推荐'];
+            } else {
+                return $arr = ['code' => 1, 'msg' => '未推荐'];
             }
 
-        }else{
+        } else {
             //修改推荐状态为推荐
             $res = Db::name('dining_list')
                 ->update([
-                    'dining_status'   =>0,
-                    'dining_id'      =>$id
+                    'dining_status' => 1,
+                    'dining_id' => $id
                 ]);
-            if($res){
-                return $arr = ['code'=>2,'msg'=>'已推荐'];
-            }else{
-                return $arr = ['code'=>1,'msg'=>'未推荐'];
+            if ($res) {
+                return $arr = ['code' => 1, 'msg' => '未推荐'];
+            } else {
+                return $arr = ['code' => 2, 'msg' => '已推荐'];
             }
         }
 
@@ -338,44 +371,48 @@ class Dining extends Controller
     public function status_home($id)
     {
         //判断有无这条信息
-        $data = Db::name('dining_list')->where('dining_id',$id)->find();
+        $data = Db::name('dining_list')
+            ->where('exits_status',0)
+            ->where('dining_id', $id)->find();
 
-        if(!$data){
-            return $arr = ['code'=>3,'msg'=>'没有这条数据'];
+        if (!$data) {
+            return $arr = ['code' => 3, 'msg' => '没有这条数据'];
         }
         //判断当前状态
-        if($data['dining_home'] == 0){
+        if ($data['dining_home'] == 1) {
             //查询推荐总数是否大于4 大于4则不能再推荐
-            $count = Db::name('dining_list')->where('dining_status',0)->count();
-//            if($count >= 4){
-//                $arr = ['code'=>3,'msg'=>'不能在推荐'];
-//
-//                return $arr;
-//            }
+            $count = Db::name('dining_list')
+                ->where('exits_status',0)
+                ->where('dining_home', 0)->count();
+            if ($count >= 4) {
+                $arr = ['code' => 3, 'msg' => '不能再推荐'];
+//                return json_encode($arr,320);
+                return $arr;
+            }
             //修改推荐状态为不推荐
             $res = Db::name('dining_list')
                 ->update([
-                    'dining_home'   =>1,
-                    'dining_id'      =>$id
+                    'dining_home' => 0,
+                    'dining_id' => $id
                 ]);
 
-            if($res){
-                return $arr = ['code'=>1,'msg'=>'未推荐'];
-            }else{
-                return $arr = ['code'=>2,'msg'=>'已推荐'];
+            if ($res) {
+                return $arr = ['code' => 2, 'msg' => '首页已推荐'];
+            } else {
+                return $arr = ['code' => 1, 'msg' => '首页未推荐'];
             }
 
-        }else{
+        } else {
             //修改推荐状态为推荐
             $res = Db::name('dining_list')
                 ->update([
-                    'dining_home'   =>0,
-                    'dining_id'      =>$id
+                    'dining_home' => 1,
+                    'dining_id' => $id
                 ]);
-            if($res){
-                return $arr = ['code'=>2,'msg'=>'已推荐'];
-            }else{
-                return $arr = ['code'=>1,'msg'=>'未推荐'];
+            if ($res) {
+                return $arr = ['code' => 1, 'msg' => '首页未推荐'];
+            } else {
+                return $arr = ['code' => 2, 'msg' => '首页已推荐'];
             }
         }
 
@@ -399,6 +436,7 @@ class Dining extends Controller
         $date = ['list'=>$list,'count'=>$count];
         //将数据传至页面
         $this->assign('list',$date);
+        $this->assign('id', $id);
         return $this->fetch('dining/detailed');
     }
 
@@ -419,9 +457,11 @@ class Dining extends Controller
 
         $rule =   [
             'dining_id'  => 'require',
+            'photo'=>'require'
         ];
         $message  = [
             'dining_id.require'      => '美食ID不能为空',
+            'photo.require'=>'请上传图片'
         ];
 
         //实例化验证器
@@ -429,18 +469,18 @@ class Dining extends Controller
 
         //判断有无错误
         if(true !== $result){
-            $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>$result];
+            $date = ['code'=> 0,'msg'=>$result];
             // 验证失败 输出错误信息
-            return json_encode($date,320);
+            return json($date);
         }
         $date = ['dining_id'=>$post['dining_id'],'dining_images'=>$post['photo'],'dining_status'=>0];
         //执行添加操作
         $res = Db::table('think_dining_images')->insert($date);
 
         if($res){
-            return $arr = ['code'=>1,'msg'=>'添加成功'];
+            return $arr = ['code'=>1,'msg'=>'添加成功','id' => $post['dining_id']];
         }else{
-            return $arr = ['code'=>2,'msg'=>'添加失败'];
+            return $arr = ['code'=>2,'msg'=>'添加失败','id' => $post['dining_id']];
         }
 
         //加载视图
@@ -450,7 +490,7 @@ class Dining extends Controller
     }
 
     //修改详情图片
-    public function edit_detailed($id)
+    public function edit_detailed($id,$dining_id)
     {
         if(!$id){
             return $arr = ['code'=>'2','msg'=>'修改失败'];
@@ -461,6 +501,7 @@ class Dining extends Controller
 
         //加载视图
         $this->assign('data', $data);
+        $this->assign('id',$dining_id);
         // 模板输出
         return $this->fetch('dining/edit_detailed');
     }
@@ -477,9 +518,9 @@ class Dining extends Controller
             ]);
 
         if($res){
-            return $arr = ['code'=>'1','msg'=>'修改成功'];
+            return $arr = ['code'=>'1','msg'=>'修改成功','dining_id'=>$post['id']];
         }else{
-            return $arr = ['code'=>'2','msg'=>'修改失败'];
+            return $arr = ['code'=>'2','msg'=>'修改失败','dining_id'=>$post['id']];
         }
     }
 

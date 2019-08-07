@@ -26,7 +26,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>编辑区域</h5>
+                    <h5>编辑话题</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -41,13 +41,13 @@
                 </div>
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" name="edit" id="edit" method="post"
-                          action="{:url('admin/region/update')}">
-                        <input type="hidden" name="region_id" value="{$region.region_id}">
+                          action="{:url('admin/topic/update')}">
+                        <input type="hidden" name="id" value="{$topic.id}">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">区域名：</label>
+                            <label class="col-sm-3 control-label">话题名：</label>
                             <div class="input-group col-sm-4">
-                                <input id="title" type="text" class="form-control" name="region_name"
-                                       value="{$region.region_name}">
+                                <input id="name" type="text" class="form-control" name="name"
+                                       value="{$topic.name}">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -56,10 +56,10 @@
                             <label class="col-sm-3 control-label">状&nbsp;态：</label>
                             <div class="col-sm-6">
                                 <div class="radio i-checks">
-                                    <input type="radio" name='region_status' value="0" {if
-                                           condition="$region['region_status'] eq 0 " }checked{/if}/>开启&nbsp;&nbsp;
-                                    <input type="radio" name='region_status' value="1" {if
-                                           condition="$region['region_status'] eq 1 " }checked{/if}/>关闭
+                                    <input type="radio" name='status' value="0" {if
+                                           condition="$topic['status'] eq 0 " }checked{/if}/>开启&nbsp;&nbsp;
+                                    <input type="radio" name='status' value="1" {if
+                                           condition="$topic['status'] eq 1 " }checked{/if}/>关闭
                                 </div>
                             </div>
                         </div>
@@ -82,48 +82,7 @@
 
 <script type="text/javascript" src="__ADMIN__/webupload/webuploader.min.js"></script>
 
-<script type="text/javascript">
-    var $list = $('#fileList');
-    //上传图片,初始化WebUploader
-    var uploader = WebUploader.create({
 
-        auto: true,// 选完文件后，是否自动上传。
-        swf: '/static/admin/js/webupload/Uploader.swf',// swf文件路径
-        server: "{:url('Upload/upload')}",// 文件接收服务端。
-        duplicate: true,// 重复上传图片，true为可重复false为不可重复
-        pick: '#imgPicker',// 选择文件的按钮。可选。
-
-        accept: {
-            title: 'Images',
-            extensions: 'gif,jpg,jpeg,bmp,png',
-            mimeTypes: 'image/jpg,image/jpeg,image/png'
-        },
-
-        'onUploadSuccess': function (file, data, response) {
-            $("#data_photo").val(data._raw);
-            $("#img_data").attr('src', '/uploads/images/' + data._raw).show();
-        }
-    });
-
-    uploader.on('fileQueued', function (file) {
-        $list.html('<div id="' + file.id + '" class="item">' +
-            '<h4 class="info">' + file.name + '</h4>' +
-            '<p class="state">正在上传...</p>' +
-            '</div>');
-    });
-
-    // 文件上传成功
-    uploader.on('uploadSuccess', function (file) {
-        $('#' + file.id).find('p.state').text('上传成功！');
-    });
-
-    // 文件上传失败，显示上传出错。
-    uploader.on('uploadError', function (file) {
-        $('#' + file.id).find('p.state').text('上传出错!');
-    });
-
-
-</script>
 <script type="text/javascript">
 
     $(function () {
@@ -134,8 +93,8 @@
         });
 
         function checkForm() {
-            if ('' == $.trim($('#title').val())) {
-                layer.msg('区域名称不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+            if ('' == $.trim($('#name').val())) {
+                layer.msg('话题名称不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
                     layer.close(index);
                 });
                 return false;
@@ -147,7 +106,7 @@
             if (data.code == 1) {
                 layer.msg(data.msg, {icon: 6, time: 1500, shade: 0.1}, function (index) {
                     layer.close(index);
-                    window.location.href = "{:url('region/index')}";
+                    window.location.href = "{:url('topic/index')}";
                 });
             } else {
                 layer.msg(data.msg, {icon: 5, time: 1500, shade: 0.1}, function (index) {

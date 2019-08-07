@@ -31,11 +31,14 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">地区：</label>
-                            <select class="col-sm-4 control-label" name="dining_class">
-                                {volist name="list['region']" id="vo"}
-                                <option value="{$vo}">{$vo}</option>
-                                {{/volist}}
-                            </select>
+                            <div class="input-group col-sm-4">
+                                <select class="form-control m-b chosen-select" name="dining_class">
+                                    <option value="">==请选择==</option>
+                                    {volist name="list['region']" id="vo"}
+                                    <option value="{$vo}">{$vo}</option>
+                                    {{/volist}}
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">名称：</label>
@@ -167,7 +170,7 @@
         },
 
         'onUploadSuccess': function(file, data, response) {
-            $("#data_photo").val(data._raw);
+            $("#data_photo").val('/public/uploads/images/' +data._raw);
             $("#img_data").attr('src', '/public/uploads/images/' + data._raw).show();
         }
     });

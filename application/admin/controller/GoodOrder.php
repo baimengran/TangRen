@@ -28,7 +28,7 @@ class GoodOrder
             if ($key) {
                 $user_ids = Db::name('member')->where('nickname', 'like', '%' . $key . '%')->column('id');
 //                dump($user_ids);die;
-                $user_ids ? $orders = $orders->where('id', 'in', $user_ids) : false;
+                $orders = $orders->where('id', 'in', $user_ids);
             }
 
             $orders = $orders->order('logistics asc')->paginate(20);

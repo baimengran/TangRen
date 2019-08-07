@@ -32,7 +32,10 @@ class TurnsModel extends Model
     public function paginate($page)
     {
         //查询出轮播图信息
-        $turns = Db::table('think_turns_list')->where('turns_status',0)->paginate($page);
+        $turns = Db::table('think_turns_list')
+            ->where('turns_status',0)
+            ->order('turns_class asc')
+            ->paginate($page);
 
         return $turns;
     }

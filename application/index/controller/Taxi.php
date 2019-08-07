@@ -24,6 +24,7 @@ class Taxi extends Controller
 
         if ($search) {
             $res = Db::table('think_taxi_list')
+                ->where('exits_status',0)
                 ->where('taxi_content', 'like', '%' . $search . '%')
                 ->select();
 
@@ -185,6 +186,18 @@ class Taxi extends Controller
             ->field('a.taxi_user_id,b.nickname,b.head_img,a.comment_sati,a.comment_time,a.comment_content,a.comment_images,a.comment_all,a.comment_sati')
             ->order('a.comment_time desc')
             ->paginate(10);
+        $data['total'] = $user_comment->total();
+        $data['per_page'] = $user_comment->listRows();
+        $data['current_page'] = $user_comment->currentPage();
+        $data['last_page'] = $user_comment->lastPage();
+        $data['data'] = [];
+
+        foreach ($user_comment as $k => $v) {
+            $v['comment_time'] = date('Y年m月d日', $v['comment_time']);
+            $data['data'][] = $v;
+
+        }
+        $user_comment = $data;
 
         $date = ['taxi' => $taxi, 'user_comment' => $user_comment];
 

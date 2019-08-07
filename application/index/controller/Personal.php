@@ -63,10 +63,12 @@ class Personal extends Controller
         $rule =   [
             'id'              => 'require',
             'goods_id'        => 'require',
+            'address_id'=>'require'
         ];
         $message  = [
             'id.require'      => '用户ID不能为空',
             'goods_id.require' => '商品ID不能为空',
+            'address_id'=>'地址不能为空'
         ];
 
         //实例化验证器
@@ -88,7 +90,12 @@ class Personal extends Controller
         //查询商品所用积分
         $FractionModel = new FractionModel();
         $goods_fraction = $FractionModel->select($post['goods_id']);
+        //查询地址
+        $address = Db::name('address_phone')->where('address_id',$post['address_id'])->value('address_id');
 
+        if(!$address){
+            return $err = json_encode(['errCode'=>'1','msg'=>'eerror','ertips'=>'没有这个地址'],320);
+        }
         if(!$goods_fraction){
             return $err = json_encode(['errCode'=>'1','msg'=>'eerror','ertips'=>'没有这个商品'],320);
         }
@@ -111,7 +118,8 @@ class Personal extends Controller
                 ]);
 
             //将用户购买的商品加入到订单表中
-            $data = ['id' => $post['id'], 'goods_id' => $post['goods_id'],'order_status'=> '0','order_time'=>date('Y年m月d日',time()),'logistics'=>'1' ];
+            $data = ['id' => $post['id'], 'goods_id' => $post['goods_id'],'order_status'=> '0',
+                'order_time'=>date('Y年m月d日',time()),'logistics'=>'1','address_id'=>$post['address_id'] ];
             $order_id = Db::table('think_goods_order')->insertGetId($data);
 
             // 提交事务
@@ -142,6 +150,7 @@ class Personal extends Controller
         $address = Db::table('think_address_phone')
             ->where('id',$get['id'])
             ->where('default_address',0)
+            ->field(['address_id','city','name','phone'])
             ->find();
 
         if(!$address){
@@ -149,7 +158,7 @@ class Personal extends Controller
         }
 
         $user = Db::table('think_member')
-            ->field('id,account,nickname,nickname,password,sex,group_id,head_img,integral,money,mobile,create_time,update_time,login_num,status,closed,token,session_id')
+            ->field('id,nickname,sex,head_img,integral')
             ->where('id',$get['id'])
             ->find();
         if(!$user){
@@ -158,14 +167,17 @@ class Personal extends Controller
 
         $goods = Db::table('think_goods_fraction')
             ->where('goods_id',$get['goods_id'])
+            ->field(['goods_id','goods_name','goods_img','goods_fraction'])
             ->find();
 
         if(!$goods){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个商品'],320);
         }
 
-        $date = array_merge($user,$address,$goods);
-
+//        $date = $user;
+        $date['address']=$address;
+        $date['good']=$goods;
+//        return json($date);
         if(!$date){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'查询失败'],320);
         }
@@ -535,7 +547,7 @@ class Personal extends Controller
 
         $date = Db::table('think_integral_list')
             ->field('integral_number,rmb_number')
-            ->where('integral_status',1)
+            ->where('integral_status',0)
             ->select();
         $date = ['integral'=>$integral,'date'=>$date];
 
@@ -814,7 +826,7 @@ class Personal extends Controller
         }
 
         //将信息添加到意见表中
-        $date=['user_id'=>$post['id'],'content'=>$post['content'] ];
+        $date=['user_id'=>$post['id'],'content'=>$post['content'],'create_time'=>time(),'update_time'=>time()];
         $res = Db::table('think_idea')->insert($date);
 
         if(!$res){
@@ -822,7 +834,5 @@ class Personal extends Controller
         }
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'提交成功'],320);
     }
-
-
 
 }

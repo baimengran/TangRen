@@ -22,7 +22,8 @@ var lunhui = {
 	            if(res.code == 1){
 	                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
 	                // Ajaxpage();
-                    location.replace(location.href);
+                    // location.replace(location.href);
+                    window.location.reload();
 	            }else{
 	                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
 	            }
@@ -38,13 +39,15 @@ var lunhui = {
 	            var a='<span class="label label-danger">'+data.msg+'</span>'
 	            $('#zt'+id).html(a);
 	            layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
-                location.replace(location.href);
+                // location.replace(location.href);
+                window.location.reload();
 	            return false;
 	        }else{
 	            var b='<span class="label label-info">'+data.msg+'</span>'
 	            $('#zt'+id).html(b);
-	            layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
-                location.replace(location.href);
+	            layer.msg(data.msg,{icon:1,time:1500,shade: 0.1,});
+                // location.replace(location.href);
+                window.location.reload();
 	            return false;
 	        }
 	    });
@@ -58,13 +61,15 @@ var lunhui = {
                 var a='<span class="label label-danger">'+data.msg+'</span>'
                 $('#zt'+id).html(a);
                 layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
-                location.replace(location.href);
+                // location.replace(location.href);
+                window.location.reload();
                 return false;
             }else{
                 var b='<span class="label label-info">'+data.msg+'</span>'
                 $('#zt'+id).html(b);
-                layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
-                location.replace(location.href);
+                layer.msg(data.msg,{icon:1,time:1500,shade: 0.1,});
+                // location.replace(location.href);
+                window.location.reload();
                 return false;
             }
         });
@@ -75,17 +80,79 @@ var lunhui = {
             if(data.code==11){
                 var a='<span class="label label-info">'+data.msg+'</span>'
                 $('#zd'+id).html(a);
-                layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
-                location.replace(location.href);
+                layer.msg(data.msg,{icon:1,time:1500,shade: 0.1,});
+                // location.replace(location.href);
+                window.location.reload();
                 return false;
             }else if(data.code==10){
                 var b='<span class="label label-info">'+data.msg+'</span>'
                 $('#zd'+id).html(b);
-                layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
-                location.replace(location.href);
+                layer.msg(data.msg,{icon:1,time:1500,shade: 0.1,});
+                // location.replace(location.href);
+                window.location.reload();
                 return false;
             }
         });
         return false;
-    }
+    },
+
+    //叫车状态
+    taxi_status : function(id,url,sign1='禁用',sign2='开启'){
+        $.post(url,{id:id},function(data){
+            if(data.code==1){
+                var a='<span class="label label-danger">'+data.msg+'</span>'
+                $('#zt'+id).html(a);
+                layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
+                location.replace(location.href);
+                // window.location.reload();
+                return false;
+            }else if(data.code==3){
+                var a='<span class="label label-danger">'+data.msg+'</span>'
+                $('#zt'+id).html(a);
+                layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
+                // location.replace(location.href);
+                // window.location.reload();
+                return false;
+            }
+            else{
+                console.log(11111);
+                var c='<span class="label label-info">'+data.msg+'</span>'
+                $('#zt'+id).html(c);
+                layer.msg(data.msg,{icon:1,time:1500,shade: 0.1,});
+                location.replace(location.href);
+                // window.location.reload();
+                return false;
+            }
+        });
+        return false;
+    },
+    //首页美食状态
+    home_status : function(id,url,sign1='禁用',sign2='开启'){
+        $.post(url,{id:id},function(data){
+            if(data.code==1){
+                var a='<span class="label label-danger">'+data.msg+'</span>'
+                $('#zd'+id).html(a);
+                layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
+                location.replace(location.href);
+                // window.location.reload();
+                return false;
+            }else if(data.code==3){
+                var a='<span class="label label-danger">'+data.msg+'</span>'
+                $('#zd'+id).html(a);
+                layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
+                // location.replace(location.href);
+                // window.location.reload();
+                return false;
+            }
+            else{
+                var c='<span class="label label-info">'+data.msg+'</span>'
+                $('#zd'+id).html(c);
+                layer.msg(data.msg,{icon:1,time:1500,shade: 0.1,});
+                location.replace(location.href);
+                // window.location.reload();
+                return false;
+            }
+        });
+        return false;
+    },
 }

@@ -76,7 +76,7 @@ class Region extends Base
                 return json(['code' => 1, 'data', 'msg' => '添加失败，稍候再试吧']);
             }
         } catch (Exception $e) {
-            throw new BannerMissException(['code'=>0]);
+            throw new BannerMissException(['code' => 0]);
         }
     }
 
@@ -86,7 +86,6 @@ class Region extends Base
      */
     public function edit()
     {
-        return json(['code' => 0, 'data', 'msg' => '没有这种功能']);
         $region = new RegionListModel();
 //        return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         $id = input('param.id');
@@ -100,11 +99,28 @@ class Region extends Base
      */
     public function update()
     {
-        return json(['code' => 0, 'data', 'msg' => '没有这种功能']);
+
+
 //        return json(['code'=>1,'data'=>input('region_id')]);
         if (request()->isAjax()) {
             try {
                 $param = input('post.');
+                $rule = [
+                    'region_name' => 'require|unique:region_list',
+                    'region_status' => 'require'
+                ];
+
+                $msg = [
+                    'region_name.require' => '区域名称必须填写',
+                    'region_name.unique' => '区域名称已经存在',
+                    'region_status' => '区域状态必须填写',
+                ];
+                $validate = new Validate($rule, $msg);
+                $validate->scene('edit', ['require_name' => 'require', 'region_status' => 'require']);
+                if (!$validate->check($param)) {
+                    return json(['code' => 0, 'data', 'msg' => $validate->getError()]);
+                }
+
                 $region = new RegionListModel($param['region_id']);
                 $result = $region->update($param);
                 return json(['code' => 1, 'data' => '', 'msg' => '区域编辑成功']);
@@ -132,11 +148,12 @@ class Region extends Base
                     return json(['code' => 0, 'data' => '', 'msg' => '删除失败']);
                 }
             } catch (Exception $e) {
-                return json(['code'=>0,'data','msg'=>'出错啦']);
+                return json(['code' => 0, 'data', 'msg' => '出错啦']);
             }
         }
 
     }
+
 
     /**
      * [article_state 文章状态]
@@ -149,13 +166,13 @@ class Region extends Base
             $status = Db::name('region_list')->where(array('region_id' => $id))->value('region_status');//判断当前状态情况
             if ($status == 0) {
                 $flag = Db::name('region_list')->where(array('region_id' => $id))->setField(['region_status' => 1]);
-                return json(['code' => 1, 'data' => $flag['data'], 'msg' => '已禁止']);
+                return ['code' => 1, 'data' => $flag['data'], 'msg' => '已禁止'];
             } else {
                 $flag = Db::name('region_list')->where(array('region_id' => $id))->setField(['region_status' => 0]);
-                return json(['code' => 0, 'data' => $flag['data'], 'msg' => '已开启']);
+                return ['code' => 0, 'data' => $flag['data'], 'msg' => '已开启'];
             }
         } catch (Exception $e) {
-            return json(['code'=>0,'data','msg'=>'出错啦']);
+            return ['code' => 0, 'data', 'msg' => '出错啦'];
         }
     }
 }

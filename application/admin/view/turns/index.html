@@ -45,9 +45,18 @@
                             {volist name="list['list']" id="vo"}
                             <tr class="long-td">
                                 <td>{$vo.turns_id}</td>
-                                <td><img width="100" src="/public/uploads/images/{$vo.turns_img}"  /></td>
+                                <td><img width="100" src="{$vo.turns_img}"  /></td>
                                 <!--<td>{$vo.turns_url}</td>-->
-                                <td>{$vo.turns_class}</td>
+                                {switch $vo.turns_class}
+                                {case value="0"}<td>首页</td>{/case}
+                                {case value="1"}<td>招聘</td>{/case}
+                                {case value="2"}<td>出租</td>{/case}
+                                {case value="3"}<td>买卖</td>{/case}
+                                {case value="4"}<td>美食</td>{/case}
+                                {case value="5"}<td>叫车</td>{/case}
+                                {case value="6"}<td>酒店</td>{/case}
+                                {case value="7"}<td>社区</td>{/case}
+                                {/switch}
                                 <!--<td>-->
                                     <!--{if condition="$vo.turns_status==0"}-->
                                     <!--<a href="javascript:;" onclick="used_state();">-->

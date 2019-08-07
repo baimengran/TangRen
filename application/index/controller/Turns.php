@@ -33,7 +33,9 @@ class Turns extends Controller
         }
 
         //查询轮播图
-        $date = Db::table('think_turns_list')->where('turns_class',$post['turns_class'])->select();
+        $date = Db::table('think_turns_list')->where('turns_class',$post['turns_class'])
+            ->where('turns_status',0)
+            ->select();
 
         //执行函数返回值
         $date = ['errcode'=> 0,'errMsg'=>'success','ertips'=>'查询成功','retData'=>$date];

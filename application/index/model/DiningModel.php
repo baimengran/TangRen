@@ -43,6 +43,7 @@ class DiningModel extends Model
         $date = Db::table('think_dining_list')
             ->field('dining_id,dining_logo,dining_name,dining_all')
             ->where('dining_status',0)
+            ->where('exits_status',0)
             ->select();
         if(!$date){
             return $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'暂时没有精品推荐'];
@@ -78,6 +79,7 @@ class DiningModel extends Model
         //查询区域分类下的酒店
         $date = Db::table('think_dining_list')
             ->where('dining_class',$get)
+            ->where('exits_status',0)
             ->paginate(25);
 
         if(!$date){
@@ -142,6 +144,7 @@ class DiningModel extends Model
     {
         $date = Db::table('think_dining_list')
             ->where('dining_id',$id)
+            ->where('exits_status',0)
             ->select();
         return $date;
     }
@@ -154,6 +157,7 @@ class DiningModel extends Model
     {
         $date = Db::table('think_hotel_list')
             ->where('hotel_id',$id)
+            ->where('exits_status',0)
             ->select();
         return $date;
     }
@@ -166,6 +170,7 @@ class DiningModel extends Model
     {
         $date = Db::table('think_taxi_list')
             ->where('taxi_id',$id)
+            ->where('exits_status',0)
             ->select();
         return $date;
     }

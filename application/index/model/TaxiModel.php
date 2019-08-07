@@ -43,6 +43,7 @@ class TaxiModel extends Model
         $date = Db::table('think_taxi_list')
             ->field('taxi_id,taxi_logo,taxi_name,taxi_all')
             ->where('taxi_status',0)
+            ->where('exits_status',0)
             ->select();
         if(!$date){
             return $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'暂时没有优选汽车'];
@@ -77,6 +78,7 @@ class TaxiModel extends Model
         //查询区域分类下的汽车公司
         $date = Db::table('think_taxi_list')
             ->where('taxi_class',$get)
+            ->where('exits_status',0)
             ->paginate(25);
 //        print_r($date);die;
         if(!$date){

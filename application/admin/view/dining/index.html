@@ -50,7 +50,7 @@
                         {volist name="list['list']" id="vo"}
                         <tr class="long-td">
                             <td style="width:2%">{$vo.dining_id}</td>
-                            <td style="width:12%"><img width="100" style="height:50px;" src="/public/uploads/images/{$vo.dining_logo}"  /></td>
+                            <td style="width:12%"><img width="100" style="height:50px;" src="{$vo.dining_logo}"  /></td>
                             <td style="width:2%">{$vo.dining_class}</td>
                             <td style="width:2%">{$vo.dining_name}</td>
                             <td style="width:2%">{$vo.dining_time}</td>
@@ -60,7 +60,7 @@
                             <td style="width:2%">
                                 {if condition="$vo.dining_status==0"}
                                 <a href="javascript:;" onclick="used_state({$vo.dining_id});">
-                                    <div id=""><span class="label label-info">已推荐</span></div>
+                                    <div id="zt{$vo.dining_id}"><span class="label label-info">已推荐</span></div>
                                 </a>
                                 {else /}
                                 <a href="javascript:;" onclick="used_state({$vo.dining_id});">
@@ -71,11 +71,11 @@
                             <td style="width:2%">
                                 {if condition="$vo.dining_home==0"}
                                 <a href="javascript:;" onclick="home_state({$vo.dining_id});">
-                                    <div id=""><span class="label label-info">首页已推荐</span></div>
+                                    <div id="zd{$vo.dining_id}"><span class="label label-info">首页已推荐</span></div>
                                 </a>
                                 {else /}
                                 <a href="javascript:;" onclick="home_state({$vo.dining_id});">
-                                    <div id="zt{$vo.dining_id}"><span class="label label-danger">首页未推荐</span></div>
+                                    <div id="zd{$vo.dining_id}"><span class="label label-danger">首页未推荐</span></div>
                                 </a>
                                 {/if}
                             </td>
@@ -143,12 +143,12 @@
 
     //审核状态
     function used_state(id){
-        lunhui.status(id,'{:url("status_dining")}','已推荐','未推荐');
+        lunhui.taxi_status(id,'{:url("status_dining")}','已推荐','未推荐');
     }
 
     //审核状态
     function home_state(id){
-        lunhui.status(id,'{:url("status_home")}','已推荐','未推荐');
+        lunhui.home_status(id,'{:url("status_home")}','已推荐','未推荐');
     }
 
     //详情列表

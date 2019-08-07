@@ -1,0 +1,98 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>意见反馈列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <!--<form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">-->
+                        <!--<div class="col-sm-3">-->
+                            <!--<div class="input-group">-->
+                                <!--<input type="text" id="key" class="form-control" name="key" value="{$val}"-->
+                                       <!--placeholder="输入需查询的优惠卷名称"/>-->
+                                <!--<span class="input-group-btn"> -->
+                                    <!--<button type="submit" class="btn btn-primary"><i-->
+                                            <!--class="fa fa-search"></i> 搜索</button>-->
+                                <!--</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr class="long-tr">
+                            <th width="5%">ID</th>
+                            <th width="10%">用户昵称</th>
+                            <th width="20%">反馈内容</th>
+                            <th width="5%">状态</th>
+                            <th width="15%">提交时间</th>
+                        </tr>
+                        </thead>
+
+                        <script id="list-template" type="text/html">
+
+                        </script>
+                        <tbody id="list-content">
+                        {volist name="ideas" id="data"}
+                        <tr class="long-td">
+                            <td>{$data.eid}</td>
+                            <td>{$data.user.nickname}</td>
+                            <td>{$data.content}</td>
+                            <td>
+                                {if condition="$data.status==0"}
+                                <a href="javascript:;" >
+                                    <div id="zt{$data.eid}"><span class="label label-info">以阅</span></div>
+                                </a>
+                                {else /}
+                                <a href="javascript:;" onclick="status({$data.eid});">
+                                    <div id="zt{$data.eid}"><span class="label label-danger">未阅</span></div>
+                                </a>
+                                {/if}
+                            </td>
+                            <td>{$data.create_time}</td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style="text-align:right;">{$ideas->render()}</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 加载动画 -->
+
+
+{include file="public/footer" /}
+<script>
+    //编辑文章
+    function edit(id){
+        location.href = './edit/id/'+id+'.html';
+    }
+
+    //删除文章
+    function del(id){
+        lunhui.confirm(id,'{:url("destroy")}');
+    }
+    //文章状态
+    function status(id) {
+        lunhui.status(id, '{:url("status")}');
+    }
+</script>
+
+</body>
+</html>

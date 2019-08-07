@@ -54,6 +54,12 @@ class My
                     'home', 'collect', 'create_time', 'update_time', 'exits_status'];
                 //重新组合数组key和value
                 $moduleValues = array_combine($keys, $moduleValues);
+
+
+                    $moduleValues['label'] = json_decode(
+                        $moduleValues['label']
+                    );
+
                 $moduleValues['cate'] = 5;
                 $moduleValues['hidden'] = 0;
                 $moduleValues['image']['path'] = $moduleValues['logo'];
@@ -63,6 +69,9 @@ class My
                     'address', 'all', 'status', 'hygiene', 'ambient', 'service', 'label',
                     'collect', 'create_time', 'update_time', 'exits_status'];
                 $moduleValues = array_combine($keys, $moduleValues);
+                $moduleValues['label'] = json_decode(
+                    $moduleValues['label']
+                );
                 $moduleValues['cate'] = 6;
                 $moduleValues['hidden'] = 0;
                 $moduleValues['image']['path'] = $moduleValues['logo'];
@@ -72,6 +81,9 @@ class My
                     'address', 'speed', 'quality', 'service', 'all', 'label', 'status',
                     'collect', 'create_time', 'update_time', 'exits_status'];
                 $moduleValues = array_combine($keys, $moduleValues);
+                $moduleValues['label'] = json_decode(
+                    $moduleValues['label']
+                );
                 $moduleValues['cate'] = 7;
                 $moduleValues['hidden'] = 0;
                 $moduleValues['image']['path'] = $moduleValues['logo'];

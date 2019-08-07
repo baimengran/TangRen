@@ -1,0 +1,147 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="__ADMIN__/webupload/style.css">
+<style>
+    .file-item {
+        float: left;
+        position: relative;
+        width: 110px;
+        height: 110px;
+        margin: 0 20px 20px 0;
+        padding: 4px;
+    }
+
+    .file-item .info {
+        overflow: hidden;
+    }
+
+    .uploader-list {
+        width: 100%;
+        overflow: hidden;
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" name="add" id="add" method="post" action="{:url('admin/integral/update')}">
+                        <input type="hidden" name="integral_id" value="{$sticky['integral_id']}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">积分数量：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="day_num" type="text" class="form-control" name="integral_number"
+                                       value="{$sticky['integral_number']}" placeholder="输入积分数量">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">所需金额：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="integral" type="text" class="form-control" name="rmb_number"
+                                       value="{$sticky['rmb_number']}" placeholder="输入金额">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状&nbsp;态：</label>
+                            <div class="col-sm-6">
+                                <div class="radio i-checks">
+                                    <input type="radio" name='integral_status' value="0" {if condition="$sticky['integral_status'] eq 0" }
+                                           checked="checked" {/if}/>开启&nbsp;&nbsp;
+                                    <input type="radio" name='integral_status' value="1" {if condition="$sticky['integral_status'] eq 1" }
+                                           checked="checked" {/if}/>关闭
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i>
+                                    返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}
+
+<script type="text/javascript" src="__ADMIN__/webupload/webuploader.min.js"></script>
+
+<script>
+
+    $(function () {
+        $('#add').ajaxForm({
+            beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
+            success: complete, // 这是提交后的方法
+            dataType: 'json'
+        });
+
+        function checkForm() {
+            if ('' == $.trim($('#day_num').val())) {
+                layer.msg('积分数量不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            if ('' == $.trim($('#integral').val())) {
+                layer.msg('金额不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+
+        function complete(data) {
+            console.log(data);
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 6, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                    window.location.href = "{:url('integral/index')}";
+                });
+            } else {
+                console.log(1)
+                layer.msg(data.msg, {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+
+    });
+
+
+    //IOS开关样式配置
+    var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+    var config = {
+        '.chosen-select': {},
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+
+
+</script>
+</body>
+</html>

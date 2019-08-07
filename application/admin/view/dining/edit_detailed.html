@@ -29,6 +29,7 @@
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" name="title" id="add" method="post" action="{:url('admin/dining/update_detailed')}">
                         <input type="hidden" name="dining_img_id" value="{$data.dining_img_id}">
+                        <input type="hidden" name="id" value="{$id}">
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">详情图片：</label>
@@ -36,7 +37,7 @@
                                 <input type="hidden" id="data_photo" name="photo" >
                                 <div id="fileList" class="uploader-list" style="float:right"></div>
                                 <div id="imgPicker" style="float:left">选择图片</div>
-                                <img id="img_data" height="100px" style="float:left;margin-left: 50px;margin-top: -10px;" src="/public/static/admin/images/{$data.dining_images}"/>
+                                <img id="img_data" height="100px" style="float:left;margin-left: 50px;margin-top: -10px;" src="{$data.dining_images}"/>
                             </div>
                         </div>
 
@@ -77,7 +78,7 @@
         },
 
         'onUploadSuccess': function(file, data, response) {
-            $("#data_photo").val(data._raw);
+            $("#data_photo").val('/public/uploads/images/' +data._raw);
             $("#img_data").attr('src', '/public/uploads/images/' + data._raw).show();
         }
     });
@@ -126,7 +127,7 @@
                 layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
 
                     layer.close(index);
-                    window.location.href="{:url('hotel/index')}";
+                    window.location.href="/admin/dining/detailed_hotel/id/"+data.dining_id+".html";
                 });
             }else{
                 layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1}, function(index){

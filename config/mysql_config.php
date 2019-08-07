@@ -2,9 +2,12 @@
 
 return [
 
-    'wx_AppID'     => 'wx49a560f7feac0feb',
+    'wx_AppID'=>'wx1e4ad97fb7f4dd29',
+//    'wx_AppID'     => 'wx49a560f7feac0feb',
     'wx_AppSecret' => 'bbd0796a4b64055f9b18f92c5a2728d9',
     'wx_LoginUrl'  => 'https://api.weixin.qq.com/sns/jscode2session',
+    'mch_id'=>'1546694011 ',
+    'pay_key'=>'t6AN8eruevOcJdQ2jNWJKSAi3J0vg4Gn',
 
     //用户登录表
     'User_login' =>'think_user_login',

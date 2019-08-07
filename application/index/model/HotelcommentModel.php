@@ -46,7 +46,7 @@ class HotelcommentModel extends Model
             'images'            => $post['path'],
             'comment_all'       => $post['comment_all'],
             'comment_sati'       => $post['comment_sati'],
-            'comment_time'      => date('Y年m月d日',time()),
+            'comment_time'      => time(),
         ];
 
         $res = Db::table('think_hotel_user')->insertGetId($data);

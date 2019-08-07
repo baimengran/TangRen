@@ -10,22 +10,15 @@
             <!--搜索框开始-->
             <div class="row">
                 <div class="col-sm-12">
+
                     <div  class="col-sm-2" style="width: 100px">
                         <div class="input-group" >
-                            <!--{volist name="list['list']" id="vo"}-->
-                            <!--<a href="{:url('add_detailed')}"><button class="btn btn-outline btn-primary" type="button">添加酒店</button></a>-->
+                            <a href="{:url('add_detailed',['id'=>$id])}">
+                                <button class="btn btn-outline btn-primary" type="button">添加酒店</button>
+                            </a>
                         </div>
                     </div>
-                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
-                        <div class="col-sm-3">
-                            <div class="input-group">
-                                <input type="text" id="key" class="form-control" name="key" value="" placeholder="输入需查询的文章名称" />
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button>
-                                </span>
-                            </div>
-                        </div>
-                    </form>
+
                 </div>
             </div>
             <!--搜索框结束-->
@@ -45,12 +38,11 @@
                         <tr class="long-td">
                             <td>{$vo.hotel_img_id}</td>
                             <td>{$vo.hotel_id}</td>
-                            <td ><img width="100" style="height:50px;" src="/public/uploads/images/{$vo.hotel_images}"  /></td>
+                            <td ><img width="100" style="height:50px;" src="{$vo.hotel_images}"  /></td>
 
                             <td style="width:13%">
-                                <a href="{:url('add_detailed',['id'=>$vo.hotel_id])}" onclick="edit_article({$vo.hotel_id})" class="btn btn-primary btn-xs btn-outline">
-                                    <i class="fa fa-paste"></i> 添加</a>&nbsp;&nbsp;
-                                <a href="javascript:location.href='/admin/hotel/edit_detailed.html?id={$vo.hotel_img_id}'"  class="btn btn-primary btn-xs btn-outline">
+
+                                <a href="javascript:location.href='/admin/hotel/edit_detailed.html?id={$vo.hotel_img_id}&hotel_id={$vo.hotel_id}'"  class="btn btn-primary btn-xs btn-outline">
                                     <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
                                 <a href="javascript:;" onclick="del_article({$vo.hotel_img_id})" class="btn btn-danger btn-xs btn-outline">
                                     <i class="fa fa-trash-o"></i> 删除</a>

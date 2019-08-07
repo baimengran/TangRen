@@ -30,7 +30,9 @@ class ExceptionHandler extends Handle
 
     public function render(Exception $e)
     {
-
+        if (config('app_debug')) {
+            return parent::render($e);
+        }
         if ($e instanceof HttpException) {
 
             $this->code = $e->getStatusCode();

@@ -50,7 +50,7 @@ class TaxicommentModel extends Model
             'comment_all'       => $post['comment_all'],
             'comment_images'    => $post['path'],
             'comment_sati'      => $post['comment_sati'],
-            'comment_time'      => date('Y年m月d日',time()),
+            'comment_time'      => time(),
         ];
 
         $res = Db::table('think_taxi_user')->insertGetId($data);

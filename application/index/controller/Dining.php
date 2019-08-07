@@ -21,6 +21,7 @@ class Dining extends Controller
         $date = Db::table('think_dining_list')
             ->field('dining_id,dining_logo,dining_name,dining_all')
             ->where('dining_home', 0)
+            ->where('exits_status',0)
             ->limit(4)
             ->select();
 
@@ -92,7 +93,18 @@ class Dining extends Controller
                 ->order('a.comment_time desc')
                 ->paginate(10);
         }
+        $data['total'] = $date->total();
+        $data['per_page'] = $date->listRows();
+        $data['current_page'] = $date->currentPage();
+        $data['last_page'] = $date->lastPage();
+        $data['data'] = [];
 
+        foreach ($date as $k => $v) {
+            $v['comment_time'] = date('Y年m月d日', $v['comment_time']);
+            $data['data'][] = $v;
+
+        }
+        $date = $data;
         return $err = json_encode(['errCode' => '0', 'msg' => 'success', 'ertips' => '查询成功', 'retData' => $date], 320);
 
     }
@@ -170,6 +182,7 @@ class Dining extends Controller
         if ($search) {
             $res = Db::table('think_dining_list')
                 ->where('dining_content', 'like', '%' . $search . '%')
+                ->where('exits_status',0)
                 ->select();
 
             $date = ['dining' => $res];
@@ -304,6 +317,18 @@ class Dining extends Controller
             ->where('a.dining_id', $post['dining_id'])
             ->order('a.comment_time desc')
             ->paginate(10);
+        $data['total'] = $user_comment->total();
+        $data['per_page'] = $user_comment->listRows();
+        $data['current_page'] = $user_comment->currentPage();
+        $data['last_page'] = $user_comment->lastPage();
+        $data['data'] = [];
+
+        foreach ($user_comment as $k => $v) {
+            $v['comment_time'] = date('Y年m月d日', $v['comment_time']);
+            $data['data'][] = $v;
+
+        }
+        $user_comment = $data;
 
         $date = ['dining' => $dining, 'user_comment' => $user_comment];
 
@@ -360,7 +385,11 @@ class Dining extends Controller
         $taxi_all = round(($post['comment_service'] + $post['comment_hygiene'] + $post['comment_taste']) / 3);
         //定义综合评分
         $post['comment_all'] = $taxi_all;
+        //计算出此次评价满意度评分
+        $comment_sati = round(($post['comment_service'] + $post['comment_taste'] + $post['comment_hygiene']) / 3);
 
+        //定义满意度评分
+        $post['comment_sati'] = $comment_sati;
         //获取图片参数
         if (!isset($post['path'])) {
             $post['path'] = '';
@@ -368,23 +397,6 @@ class Dining extends Controller
             $post['path'] = $post['path'];
         }
 
-        //判断有无图片,有则上传
-//        if($files = request()->file('comment_images')){
-//            if(count($_FILES['comment_images']['name']) >= 10){
-//                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片不能超过9张'],320);
-//            }
-//            $aa = uploadImage(
-//                $files,
-//                '/uploads/dining/'
-//            );
-//            //判断图片是否上传成功
-//            if(!isset($aa['0'])){
-//                return json_encode($date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'图片没有上传成功'],320);
-//            }
-//            $post['comment_images'] = implode(",", $aa);
-//        }else{
-//            $post['comment_images'] = '';
-//        }
 
         //将数据填入数据库
         $DiningcommentModel = new DiningcommentModel();

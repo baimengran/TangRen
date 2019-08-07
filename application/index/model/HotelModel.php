@@ -44,6 +44,7 @@ class HotelModel extends Model
         $date = Db::table('think_hotel_list')
             ->field('hotel_id,hotel_logo,hotel_name,hotel_all')
             ->where('hotel_status',0)
+            ->where('exits_status',0)
             ->select();
         if(!$date){
             return $date = ['errcode'=> 1,'errMsg'=>'error','ertips'=>'暂时没有优选酒店'];
@@ -77,6 +78,7 @@ class HotelModel extends Model
         //查询区域分类下的酒店
         $date = Db::table('think_hotel_list')
             ->where('hotel_class',$get)
+            ->where('exits_status',0)
             ->paginate(25);
 
         if(!$date){

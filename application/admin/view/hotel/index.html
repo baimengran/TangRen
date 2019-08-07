@@ -49,7 +49,7 @@
                         {volist name="list['list']" id="vo"}
                         <tr class="long-td">
                             <td>{$vo.hotel_id}</td>
-                            <td ><img width="100" style="height:50px;" src="/public/uploads/images/{$vo.hotel_logo}"  /></td>
+                            <td ><img width="100" style="height:50px;" src="{$vo.hotel_logo}"  /></td>
                             <td>{$vo.hotel_class}</td>
                             <td>{$vo.hotel_name}</td>
                             <td>{$vo.hotel_time}</td>
@@ -131,7 +131,7 @@
 
     //审核状态
     function used_state(id){
-        lunhui.status(id,'{:url("status_hotel")}','已推荐','未推荐');
+        lunhui.taxi_status(id,'{:url("status_hotel")}','已推荐','未推荐');
     }
 
     //详情列表
