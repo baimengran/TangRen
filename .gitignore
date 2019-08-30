@@ -4,3 +4,4 @@
 /runtime
 public/uploads/
 config/
+.env
