@@ -20,6 +20,7 @@ class IntegralPay
 {
     public function index(Request $request)
     {
+
         if (!$token = $request->post('authorization')) {
             return jsone('请登录后重试', 401);
         }
