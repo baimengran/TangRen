@@ -94,14 +94,16 @@ class JobComment
             ]);
 
             //保存图片
-            $path = explode(',', $data['path']);
-            $data = [];
-            foreach ($path as $k => $value) {
-                $data[$k]['path'] = $value;
-            }
+            if($data['path']){
+                $path = explode(',', $data['path']);
+                $data = [];
+                foreach ($path as $k => $value) {
+                    $data[$k]['path'] = $value;
+                }
 
-            if (count($data)) {
-                $jobComment->commentImage()->saveAll($data);
+                if (count($data)) {
+                    $jobComment->commentImage()->saveAll($data);
+                }
             }
 
             $review = $jobComment->job()->find($jobComment['job_id']);
@@ -112,6 +114,6 @@ class JobComment
         } catch (Exception $e) {
             throw new BannerMissException();
         }
-        return jsone('创建成功', 201, $data);
+        return jsone('发布成功', 201, $data);
     }
 }

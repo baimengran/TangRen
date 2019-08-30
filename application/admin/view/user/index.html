@@ -12,7 +12,7 @@
                 <div class="col-sm-12">   
                 <div  class="col-sm-2" style="width: 100px">
                     <div class="input-group" >  
-                        <a href="{:url('userAdd')}"><button class="btn btn-outline btn-primary" type="button">添加用户</button></a> 
+                        <a href="{:url('userAdd')}"><button class="btn btn-outline btn-primary" type="button">添加用户</button></a>
                     </div>
                 </div>                                            
                     <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
@@ -38,10 +38,11 @@
                                 <th>ID</th>
                                 <th>管理员名称</th>
                                 <th>头像</th>
-                                <th>管理员角色</th>
+                                <!--<th>管理员角色</th>-->
                                 <th>登录次数</th>
                                 <th>上次登录ip</th>
                                 <th>上次登录时间</th>
+                                <th>前台显示名称</th>
                                 <th>真实姓名</th>
                                 <th>状态</th>
                                 <th>操作</th>
@@ -54,15 +55,15 @@
                                 <td>{{d[i].id}}</td>
                                 <td>{{d[i].username}}</td>
                                 <td>
-                                    <img src="/uploads/face/{{d[i].portrait}}" class="img-circle" style="width:35px;height:35px" onerror="this.src='/static/admin/images/head_default.gif'"/>                                  
+                                    <img src="{{d[i].portrait}}" class="img-circle" style="width:35px;height:35px" onerror="this.src='/public/static/admin/images/head_default.gif'"/>
                                 </td>
-                                <td>{{d[i].title}}</td>                                  
                                 <td>{{d[i].loginnum}}</td>
                                 <td>{{d[i].last_login_ip}}</td>
                                 <td>{{d[i].last_login_time}}</td>
+                                <td>{{d[i].reception}}</td>
                                 <td>{{d[i].real_name}}</td>                                 
                                 <td>
-                                    {{# if(d[i].id!==1){ }}
+                                    {{# if(d[i].id!=1){ }}
                                         {{# if(d[i].status==1){ }}
                                             <a class="red" href="javascript:;" onclick="user_state({{d[i].id}});">
                                                 <div id="zt{{d[i].id}}"><span class="label label-info">开启</span></div>
@@ -75,7 +76,7 @@
                                     {{# } }}
                                 </td>
                                 <td>
-                                    {{# if(d[i].id!==1){ }}
+                                    {{# if(d[i].id!=1){ }}
                                         <a href="javascript:;" onclick="userEdit({{d[i].id}})" class="btn btn-primary btn-outline btn-xs">
                                             <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
                                         <a href="javascript:;" onclick="userDel({{d[i].id}})" class="btn btn-danger btn-outline btn-xs">

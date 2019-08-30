@@ -55,17 +55,17 @@ class User extends Base
             $param['password'] = md5(md5($param['password']) . config('auth_key'));
             $user = new UserModel();
             $flag = $user->insertUser($param);
-            $accdata = array(
-                'uid'=> $user['id'],
-                'group_id'=> $param['groupid'],
-            );
-            $group_access = Db::name('auth_group_access')->insert($accdata);
+//            $accdata = array(
+//                'uid'=> $user['id'],
+//                'group_id'=> $param['groupid'],
+//            );
+//            $group_access = Db::name('auth_group_access')->insert($accdata);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         }
 
         $role = new UserType();
         $this->assign('role',$role->getRole());
-        return $this->fetch();
+        return $this->fetch('user_add');
     }
 
 
@@ -87,7 +87,7 @@ class User extends Base
                 $param['password'] = md5(md5($param['password']) . config('auth_key'));
             }
             $flag = $user->editUser($param);
-            $group_access = Db::name('auth_group_access')->where('uid', $user['id'])->update(['group_id' => $param['groupid']]);
+//            $group_access = Db::name('auth_group_access')->where('uid', $user['id'])->update(['group_id' => $param['groupid']]);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         }
 
@@ -97,7 +97,7 @@ class User extends Base
             'user' => $user->getOneUser($id),
             'role' => $role->getRole()
         ]);
-        return $this->fetch();
+        return $this->fetch('user_edit');
     }
 
 

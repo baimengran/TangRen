@@ -9,6 +9,7 @@ use think\exception\Handle;
 use think\exception\HttpException;
 use think\Log;
 use think\Request;
+use think\Response;
 
 /**
  * Created by PhpStorm.
@@ -34,13 +35,13 @@ class ExceptionHandler extends Handle
             return parent::render($e);
         }
         if ($e instanceof HttpException) {
-
             $this->code = $e->getStatusCode();
             $this->errmsg = 'error';
             $this->errcode = 1;
             $this->ertips = '请求异常';
 
             if ($e->getStatusCode() == 404) {
+//
                 header("Location:" . url('admin/error/index'));
                 return $this->send();
                 die;
@@ -49,7 +50,6 @@ class ExceptionHandler extends Handle
                 header("Location:" . url('admin/error/error'));
                 return $this->send();
                 die;
-
             }
         } else if ($e instanceof BaseException) {
 
@@ -66,7 +66,7 @@ class ExceptionHandler extends Handle
             //系统异常
             $this->code = 500;
             $this->errmsg = 'error';
-            $this->errcode = 999;//未知错误，不想让客户端知道
+            $this->errcode = 1;//未知错误，不想让客户端知道
             $this->ertips = '服务器内部错误';
             $this->recordErrorLog($e);
             return $this->send();

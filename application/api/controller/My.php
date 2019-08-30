@@ -35,7 +35,7 @@ class My
 
         //实例化收藏模型
         $modules = new MemberCollectModel();
-        try {
+//        try {
         //查询当前用户收藏的内容
         $modules = $modules::where('user_id', $id)->order('create_time', 'desc')->paginate(20);
 
@@ -44,7 +44,8 @@ class My
         $data['current_page'] = $modules->currentPage();
         $data['last_page'] = $modules->lastPage();
         foreach ($modules as $module) {
-
+//           return json($module);die;
+//            dump($module->module);die;
             //转数组
             $moduleValues = $module->module->toArray();
 
@@ -80,6 +81,7 @@ class My
                 $keys = ['id', 'logo', 'class', 'name', 'content', 'time', 'day', 'phone',
                     'address', 'speed', 'quality', 'service', 'all', 'label', 'status',
                     'collect', 'create_time', 'update_time', 'exits_status'];
+
                 $moduleValues = array_combine($keys, $moduleValues);
                 $moduleValues['label'] = json_decode(
                     $moduleValues['label']
@@ -103,6 +105,15 @@ class My
             }
             if ($module['module_type'] == 'rent_house_model') {
                 $moduleValues['cate'] = 2;
+            }
+            if($module['module_type']=='exposure_model'){
+                $moduleValues['cate']=8;
+            }
+            if($module['module_type']=='hot_subject_model'){
+                $moduleValues['cate']=9;
+            }
+            if($module['module_type']=='recommend_model'){
+                $moduleValues['cate']=10;
             }
 
             if (array_key_exists('region_id', $moduleValues)) {
@@ -134,20 +145,33 @@ class My
             if (array_key_exists('user_id', $moduleValues)) {
 
                 //获取用户
-                $user_id = $moduleValues['user_id'];
-                $user = Db::name('member')->where('id', $user_id)->find();
-                $moduleValues['user'] = $user;
+                if ($module['module_type'] == 'exposure_model'
+                    || $module['module_type'] == 'hot_subject_model' || $module['module_type'] == 'recommend_model') {
+                    $user_id = $moduleValues['user_id'];
+                    $user = Db::name('admin')->field('id,reception,portrait')->where('id', $user_id)->find();
+                    $moduleValues['user'] = $user;
+                } else {
+                    $user_id = $moduleValues['user_id'];
+                    $user = Db::name('member')->where('id', $user_id)->find();
+                    $moduleValues['user'] = $user;
+                }
             }
 
             //截取数据表名
             $tableName = substr($module['module_type'], 0, strpos($module['module_type'], '_'));
             $field = $tableName . '_id';
 //                $lists[] = $tableName;
-            if ($module['module_type'] == 'community_model') {
+            if ($module['module_type'] == 'community_model'||$module['module_type'] == 'exposure_model'
+                ||$module['module_type'] == 'hot_subject_model'||$module['module_type'] == 'recommend_model') {
                 $tableName = $tableName . '_file';
+                $field = 'community_id';
             } else {
                 $tableName = $tableName . '_image';
             }
+            if($module['module_type'] == 'exposure_model'){
+                $field = 'exposure_id';
+            }
+
             //获取图片
 //            return $moduleValues;
             if (array_key_exists('id', $moduleValues) && !array_key_exists('hidden', $moduleValues)) {
@@ -207,9 +231,9 @@ class My
         }
         return jsone('查询成功', 200, $data);
 
-        } catch (Exception $e) {
-            throw new BannerMissException();
-        }
+//        } catch (Exception $e) {
+//            throw new BannerMissException();
+//        }
 
     }
 

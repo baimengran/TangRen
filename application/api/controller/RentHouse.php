@@ -175,7 +175,7 @@ class RentHouse extends Controller
             $sticky_end_time = 0;
         }
 
-//        try {
+        try {
         $rent = RentHouseModel::create([
             'user_id' => $data['user_id'],
             'region_id' => $data['region_id'],
@@ -187,13 +187,15 @@ class RentHouse extends Controller
             'phone' => $data['phone'],
         ]);
         //保存图片
-        $path = explode(',', $data['path']);
-        $data = [];
-        foreach ($path as $k => $value) {
-            $data[$k]['path'] = $value;
-        }
-        if (count($data)) {
-            $rent->rentImage()->saveAll($data);
+        if($data['path']){
+            $path = explode(',', $data['path']);
+            $data = [];
+            foreach ($path as $k => $value) {
+                $data[$k]['path'] = $value;
+            }
+            if (count($data)) {
+                $rent->rentImage()->saveAll($data);
+            }
         }
 //            if (array_key_exists('path', $data)) {
 //                $path = [];
@@ -204,10 +206,10 @@ class RentHouse extends Controller
 //            }
 
         $data = $rent->with('user,regionList,rentImage')->find($rent->id);
-        return jsone('创建成功', 201, $data);
-//        } catch (Exception $e) {
-//            throw new BannerMissException();
-//        }
+        return jsone('发布成功', 201, $data);
+        } catch (Exception $e) {
+            throw new BannerMissException();
+        }
     }
 
     /**

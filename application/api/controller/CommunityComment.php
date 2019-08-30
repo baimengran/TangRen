@@ -29,20 +29,20 @@ class CommunityComment
         }
 
         try {
-            $comments = CommunityCommentModel::where('community_id', 'eq', $id)->order('create_time', 'desc')->paginate(20);
+            $comments = CommunityCommentModel::where('community_id', 'eq', $id)->where('delete_time',0)->order('create_time', 'desc')->paginate(20);
             $data['total'] = $comments->total();
             $data['per_page'] = $comments->listRows();
             $data['current_page'] = $comments->currentPage();
             $data['last_page'] = $comments->lastPage();
             $data['data'] = [];
             foreach ($comments as $comment) {
-                $user = Db::name('member')->where('id', 'eq', $comment['user_id'])->select();
+                $user = Db::name('member')->where('id', 'eq', $comment['user_id'])->find();
                 $commentImage = Db::name('community_comment_image')->where('comment_id', 'eq', $comment['id'])->select();
-                $community = CommunityModel::where('id', 'eq', $comment['community_id'])->select();
+                $community = CommunityModel::where('id', 'eq', $comment['community_id'])->find();
 
-                $comment['user'] = $user[0];
+                $comment['user'] = $user;
                 $comment['image'] = $commentImage;
-                $comment['community'] = $community[0];
+                $comment['community'] = $community;
                 $data['data'][] = $comment;
             }
 
@@ -82,15 +82,18 @@ class CommunityComment
             ]);
 
             //保存图片
-            $path = explode(',', $data['path']);
-            $data = [];
-            foreach ($path as $k => $value) {
-                $data[$k]['path'] = $value;
+            if($data['path']){
+                $path = explode(',', $data['path']);
+                $data = [];
+                foreach ($path as $k => $value) {
+                    $data[$k]['path'] = $value;
+                }
+
+                if (count($data)) {
+                    $communityComment->commentImage()->saveAll($data);
+                }
             }
 
-            if (count($data)) {
-                $communityComment->commentImage()->saveAll($data);
-            }
 
             $review = $communityComment->community()->find($communityComment['community_id']);
             Db::name('community')->where('id', 'eq', $review->id)->update(['review' => $review->review + 1]);

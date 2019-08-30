@@ -184,6 +184,7 @@ class Taxi extends Controller
             ->where('taxi_id', $post['taxi_id'])
             ->join('think_member b', 'a.id=b.id')
             ->field('a.taxi_user_id,b.nickname,b.head_img,a.comment_sati,a.comment_time,a.comment_content,a.comment_images,a.comment_all,a.comment_sati')
+            ->where('delete_time',0)
             ->order('a.comment_time desc')
             ->paginate(10);
         $data['total'] = $user_comment->total();

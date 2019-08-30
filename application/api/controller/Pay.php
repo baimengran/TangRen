@@ -11,10 +11,11 @@ namespace app\api\controller;
 
 
 use app\admin\model\MemberModel;
+use app\admin\model\OrderModel;
 use think\Db;
 use think\Loader;
 use think\Request;
-Loader::import('WxPay.WxPay.Exception');
+
 class Pay
 {
     protected $body;            //商品描述
@@ -43,10 +44,14 @@ class Pay
         $this->body = $order_desc;
         $this->out_trade_no = $order_code;
         $this->total_fee = $total_fee*100;
-        $this->notify_url = url('/index/Pay/notify');
+        $this->notify_url = url('/api/Pay/notify');
         $this->open_id = Db::name('user_login')->where('user_token',$token)->value('openid');
         $this->pay_key = config('pay_key');
-
+        try {
+           $order =  OrderModel::where('id', $order_id)->save(['no' => $order_code]);
+        }catch(\Exception $e){
+            return jsone('订单生成错误',400);
+        }
         return json(['code' => 1, 'data' => $this->unifiedorder(), 'out_trade_no' => $this->out_trade_no]);
     }
 
@@ -56,12 +61,13 @@ class Pay
         $notify_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
         if ($notify_data['result_code'] == 'SUCCESS' && $notify_data['return_code'] == 'SUCCESS') {
             //TODO::回调没做，
-            $orderInfo = (new \app\api\model\Order())->where(['order_code' => $notify_data['out_trade_no']])->find();
-            if ($orderInfo['status'] != 1) {
+            $orderInfo = (new \app\admin\model\OrderModel())->where(['no' => $notify_data['out_trade_no']])->find();
+            if ($orderInfo['refund_status'] != 0) {
                 return false;
             }
             $orderInfo->save([
-                'status' => 2,
+                'payment_method' => 'WeChat',
+                'payment_no'=>$notify_data['transaction_id'],
                 'pay_time' => time(),
             ]);
         }
@@ -198,7 +204,7 @@ class Pay
         } else {
             $error = curl_errno($ch);
             curl_close($ch);
-            throw new WxPayException("curl出错，错误码:$error");
+            return jsone('curl出错，错误码:'.$error,400);
         }
     }
 }

@@ -18,12 +18,12 @@ class Taxi extends Base
         $key = input('key');
         $list = Db::table('think_taxi_list')
             ->where('exits_status', 0);
-        if($key){
-            $list = $list->where('taxi_name','like','%'.$key.'%');
+        if ($key) {
+            $list = $list->where('taxi_name', 'like', '%' . $key . '%');
         }
         //执行查询操作
 
-           $list = $list ->order('taxi_status')
+        $list = $list->order('taxi_status')
             ->paginate(20);
 
         //统计多少数据
@@ -57,7 +57,7 @@ class Taxi extends Base
             'taxi_day_ones' => 'require',
             'taxi_day_two' => 'require',
             'taxi_day_twos' => 'require',
-            'taxi_phone'=>'require',
+            'taxi_phone' => 'require',
             'taxi_address' => 'require',
             'photo' => 'require',
 
@@ -103,7 +103,7 @@ class Taxi extends Base
             } else if ($post['taxi_label_two']) {
                 $label = $post['taxi_label_two'];
             }
-            $post['taxi_label'] = json_encode($label,320);
+            $post['taxi_label'] = json_encode($label, 320);
 
             //每周营业时间
             $post['taxi_day'] = $post['taxi_time_one'] . '到' . $post['taxi_time_two'];
@@ -228,9 +228,9 @@ class Taxi extends Base
             'taxi_day_ones' => 'require',
             'taxi_day_two' => 'require',
             'taxi_day_twos' => 'require',
-            'taxi_phone'=>'require',
+            'taxi_phone' => 'require',
             'taxi_address' => 'require',
-            'photo'=>'require'
+            'photo' => 'require'
         ];
         $message = [
             'taxi_class.require' => '地区不能为空',
@@ -245,7 +245,7 @@ class Taxi extends Base
             'taxi_day_twos.require' => '每天结束营业时间不能为空',
             'taxi_phone.require' => '联系电话不能为空',
             'taxi_address.require' => '具体地址不能为空',
-            'photo.require'=>'请上传图片'
+            'photo.require' => '请上传图片'
         ];
 
         //实例化验证器
@@ -313,16 +313,24 @@ class Taxi extends Base
         if (!$data) {
             return $arr = ['code' => 2, 'msg' => '没有这条数据'];
         }
+        Db::startTrans();
+        try {
+            $data['exits_status'] = time();
+            $res = Db::table('think_taxi_list')
+                ->where(['taxi_id' => $id])
+                ->update($data);
+            $module = Db::name('member_collect')->where('module_id', $id)
+                ->where('module_type', 'taxi_list_model')->update(['delete_time' => time()]);
 
-        $data['exits_status'] = time();
-        $res = Db::table('think_taxi_list')
-            ->where(['taxi_id' => $id])
-            ->update($data);
-
-        if ($res) {
-            return $arr = ['code' => 1, 'msg' => '删除成功'];
-        } else {
-            return $arr = ['code' => 2, 'msg' => '删除失败'];
+            if ($res) {
+                Db::commit();
+                return $arr = ['code' => 1, 'msg' => '删除成功'];
+            } else {
+                return $arr = ['code' => 2, 'msg' => '删除失败'];
+            }
+        } catch (\Exception $e) {
+            Db::rollback();
+            return json(['code' => 2, 'msg' => '删除失败']);
         }
     }
 
@@ -334,7 +342,7 @@ class Taxi extends Base
 
         //判断有无这条信息
         $data = Db::name('taxi_list')
-            ->where('exits_status',0)
+            ->where('exits_status', 0)
             ->where('taxi_id', $id)->find();
 
         if (!$data) {
@@ -344,7 +352,7 @@ class Taxi extends Base
         if ($data['taxi_status'] == 1) {
             //查询推荐总数是否大于4 大于4则不能再推荐
             $count = Db::name('taxi_list')
-                ->where('exits_status',0)
+                ->where('exits_status', 0)
                 ->where('taxi_status', 0)->count();
             if ($count >= 4) {
                 $arr = ['code' => 3, 'msg' => '不能再推荐'];
@@ -425,11 +433,11 @@ class Taxi extends Base
 
         $rule = [
             'taxi_id' => 'require',
-            'photo'=>'require'
+            'photo' => 'require'
         ];
         $message = [
             'taxi_id.require' => '叫车ID不能为空',
-            'photo'=>'请上传图片'
+            'photo' => '请上传图片'
         ];
 
         //实例化验证器
@@ -437,7 +445,7 @@ class Taxi extends Base
 
         //判断有无错误
         if (true !== $result) {
-            $date = ['code' => 0, 'msg' =>  $result];
+            $date = ['code' => 0, 'msg' => $result];
             // 验证失败 输出错误信息
             return json($date);
         }
@@ -460,7 +468,7 @@ class Taxi extends Base
     /**
      * 修改叫车详情
      */
-    public function edit_detailed($id,$taxi_id)
+    public function edit_detailed($id, $taxi_id)
     {
         if (!$id) {
             return $arr = ['code' => '2', 'msg' => '修改失败'];
@@ -469,8 +477,8 @@ class Taxi extends Base
         $data = Db::table('think_taxi_img')->where('taxi_img_id', $id)->find();
 
         //加载视图
-        $this->assign('data',$data);
-        $this->assign('id',$taxi_id);
+        $this->assign('data', $data);
+        $this->assign('id', $taxi_id);
         // 模板输出
         return $this->fetch('taxi/edit_detailed');
     }
@@ -489,9 +497,9 @@ class Taxi extends Base
             ]);
 
         if ($res) {
-            return $arr = ['code' => '1', 'msg' => '修改成功', 'id' => $post['taxi_img_id'],'taxi_id'=>$post['id']];
+            return $arr = ['code' => '1', 'msg' => '修改成功', 'id' => $post['taxi_img_id'], 'taxi_id' => $post['id']];
         } else {
-            return $arr = ['code' => '2', 'msg' => '修改失败', 'id' => $post['taxi_img_id'],'taxi_id'=>$post['id']];
+            return $arr = ['code' => '2', 'msg' => '修改失败', 'id' => $post['taxi_img_id'], 'taxi_id' => $post['id']];
         }
     }
 

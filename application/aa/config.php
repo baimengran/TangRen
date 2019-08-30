@@ -30,9 +30,9 @@ return [
     ],
     'sql_explain' => false,     // 是否需要进行SQL性能分析  
     'extra_config_list' => ['database', 'route', 'validate'],//各模块公用配置
-    'app_debug' => false,
+    'app_debug' => true,
 	'default_module' => 'admin',//默认模块	
-    //'default_filter' => ['strip_tags', 'htmlspecialchars'],
+    'default_filter' => ['strip_tags', 'htmlspecialchars'],
 
     //默认错误跳转对应的模板文件
     'dispatch_error_tmpl' => APP_PATH.'admin/view/public/error.tpl',
@@ -94,7 +94,7 @@ return [
     // +----------------------------------------------------------------------
     // | 数据库设置
     // +----------------------------------------------------------------------
-    'data_backup_path'     => '../data/',   //数据库备份路径必须以 / 结尾；
+    'data_backup_path'     => 'data/',   //数据库备份路径必须以 / 结尾；
     'data_backup_part_size' => '20971520',  //该值用于限制压缩后的分卷最大长度。单位：B；建议设置20M
     'data_backup_compress' => '1',          //压缩备份文件需要PHP环境支持gzopen,gzwrite函数        0:不压缩 1:启用压缩
     'data_backup_compress_level' => '9',    //压缩级别   1:普通   4:一般   9:最高
@@ -112,6 +112,5 @@ return [
     //异常处理
     'exception_handle'=> 'app\api\exception\ExceptionHandler',
 
-    'default_filter'=>'strip_tags',
 
 ];

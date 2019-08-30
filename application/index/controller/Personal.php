@@ -147,37 +147,33 @@ class Personal extends Controller
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'用户ID不能为空'],320);
         }
 
+        $goods = Db::table('think_goods_fraction')
+            ->where('goods_id',$get['goods_id'])
+            ->field(['goods_id','goods_name','goods_img','goods_fraction'])
+            ->find();
         $address = Db::table('think_address_phone')
             ->where('id',$get['id'])
             ->where('default_address',0)
             ->field(['address_id','city','name','phone'])
             ->find();
-
-        if(!$address){
-            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个地址'],320);
-        }
-
         $user = Db::table('think_member')
             ->field('id,nickname,sex,head_img,integral')
             ->where('id',$get['id'])
             ->find();
-        if(!$user){
-            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个用户'],320);
-        }
-
-        $goods = Db::table('think_goods_fraction')
-            ->where('goods_id',$get['goods_id'])
-            ->field(['goods_id','goods_name','goods_img','goods_fraction'])
-            ->find();
-
-        if(!$goods){
-            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个商品'],320);
-        }
-
-//        $date = $user;
         $date['address']=$address;
         $date['good']=$goods;
-//        return json($date);
+        if(!$goods){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个商品','retData'=>$date],320);
+        }
+
+        if(!$address){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个地址','retData'=>$date],320);
+        }
+
+        if(!$user){
+            return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'没有这个用户','retData'=>$date],320);
+        }
+//        $date = $user;
         if(!$date){
             return $err = json_encode(['errCode'=>'1','msg'=>'error','ertips'=>'查询失败'],320);
         }
@@ -546,7 +542,7 @@ class Personal extends Controller
             ->select();
 
         $date = Db::table('think_integral_list')
-            ->field('integral_number,rmb_number')
+            ->field('integral_id,integral_number,rmb_number')
             ->where('integral_status',0)
             ->select();
         $date = ['integral'=>$integral,'date'=>$date];
@@ -601,7 +597,7 @@ class Personal extends Controller
         //修改任务表,执行签到逻辑
         $task_sign = $FractionModel->update_task($post,$post['sign']);
 
-        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'签到成功','retData'=>$task_sign],320);
+        return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'签到成功，积分+3','retData'=>$task_sign],320);
     }
 
 

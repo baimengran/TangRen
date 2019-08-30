@@ -198,7 +198,7 @@ class JobSeek
         } catch (Exception $e) {
             throw new BannerMissException();
         }
-        return jsone('创建成功', 201, $data);
+        return jsone('发布成功', 201, $data);
     }
 
     /**

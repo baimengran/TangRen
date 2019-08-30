@@ -90,14 +90,17 @@ class RentComment
             $rentComment->save();
 
             //保存图片
-            $path = explode(',', $data['path']);
-            $data = [];
-            foreach ($path as $k => $value) {
-                $data[$k]['path'] = $value;
+            if($data['path']){
+                $path = explode(',', $data['path']);
+                $data = [];
+                foreach ($path as $k => $value) {
+                    $data[$k]['path'] = $value;
+                }
+                if (count($data)) {
+                    $rentComment->commentImage()->saveAll($data) ;
+                }
             }
-            if (count($data)) {
-                $rentComment->commentImage()->saveAll($data) ;
-            }
+
 
             $review = $rentComment->rent()->find($rentComment['rent_id']);
 
@@ -106,7 +109,7 @@ class RentComment
         } catch (Exception $e) {
             throw new BannerMissException();
         }
-        return jsone('创建成功', 201, $data);
+        return jsone('发布成功', 201, $data);
     }
 
 }

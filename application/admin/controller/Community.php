@@ -12,7 +12,7 @@ namespace app\admin\controller;
 use app\admin\model\CommunityModel;
 use think\Db;
 
-class Community
+class Community extends Base
 {
     public function index()
     {
@@ -22,7 +22,7 @@ class Community
             if ($key) {
                 $community->where('body', 'like', '%' . $key . '%');
             }
-            $community = $community->order('recommend_status asc, essence asc')->paginate(20);
+            $community = $community->order('essence asc')->paginate(20);
             if ($community) {
                 return view('index', [
                     'val' => $key,

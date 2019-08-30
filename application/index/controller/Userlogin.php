@@ -57,7 +57,10 @@ class Userlogin extends Controller
         $FractionModel = new FractionModel();
         $user_task = $FractionModel->select_task($user['id'],$today);
 
-        $date = array_merge($openid,$user,$user_task);
+        $login_time = [
+            'login_time'=>Db::name('member')->where('id',$user['id'])->value('create_time')
+        ];
+        $date = array_merge($openid,$user,$user_task,$login_time);
 
         return $err = json_encode(['errCode'=>'0','msg'=>'success','ertips'=>'登录成功','retData'=>$date],320);
 

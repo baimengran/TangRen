@@ -26,7 +26,7 @@ class Coupon extends Base
             if ($coupon) {
                 $coupon->where('title', 'like', '%' . $key . '%');
             }
-            $coupon = $coupon->order('')->paginate(20);
+            $coupon = $coupon->order('create_time desc')->paginate(20);
             if ($coupon) {
                 return view('index', [
                     'val' => $key,

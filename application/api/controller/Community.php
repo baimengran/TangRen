@@ -10,10 +10,12 @@ namespace app\api\controller;
 
 
 use app\admin\model\CommunityModel;
+use app\admin\model\ExposureModel;
 use app\admin\model\JobSeekModel;
 use app\admin\model\MemberCollectModel;
 use app\admin\model\MemberModel;
 use app\admin\model\MemberPraiseModel;
+use app\admin\model\RecommendModel;
 use app\admin\model\RentHouseModel;
 use app\admin\model\UsedProductModel;
 use app\admin\model\UserTaskModel;
@@ -46,6 +48,11 @@ class Community
             $recommend_status = 1;
         }
 
+        $user_id = getUserId();
+        if(!$user_id){
+            return jsone('请登录后重试',422);
+        }
+
         $topic = input('topic_id');
 //        if($topic = request()->get('topic_id')){
 //            throw new BannerMissException([
@@ -68,55 +75,56 @@ class Community
                     $updates[] = $val;
                 }
             }
-            //批量更新过期置顶数据
+//            //批量更新过期置顶数据
             $communitySticky->saveAll($updates);
 
             $community = new CommunityModel();
             if ($search) {
-                $comm = Db::name('community')->where('body', 'like', '%' . $search . '%')->buildSql();
-                $commSticky = Db::name('community')->where('recommend_status', $recommend_status)->union($comm)->buildSql();
-                $community = $community->table($commSticky . 'a')->order('sticky_status asc ,create_time desc')->paginate(20);
+                $comm = Db::name('community')->where('recommend_status', $recommend_status)->buildSql();
+                $commSticky = Db::name('community')->where('sticky_status', 0)->union($comm)->buildSql();
+                $community = $community->table($commSticky . 'a')->where('body','like','%'.$search.'%')
+                    ->order('create_time desc')->paginate(20);
             } else {
                 switch ($order) {
                     case 1:
                         //热门
                         $comm = Db::name('community')->where('recommend_status', $recommend_status)->buildSql();
                         $commSticky = Db::name('community')->where('sticky_status', 0)->union($comm)->buildSql();
-                        $community = $community->table($commSticky . 'a')->order('sticky_status asc ,browse desc')->paginate(20);
+                        $community = $community->table($commSticky . 'a')->order('sticky_status asc ,browse desc')->paginate(10);
                         break;
                     case 2:
                         //精华
                         $comm = Db::name('community')->where('recommend_status', $recommend_status)->buildSql();
                         $commSticky = Db::name('community')->where('sticky_status', 0)->union($comm)->buildSql();
-                        $community = $community->table($commSticky . 'a')->order('sticky_status asc ,essence asc')->paginate(20);
+                        $community = $community->table($commSticky . 'a')->order('sticky_status asc ,essence asc')->paginate(10);
                         break;
                     default:
                         //最新
                         $comm = Db::name('community')->where('recommend_status', $recommend_status)->buildSql();
-                        $commSticky = Db::name('community')->where('sticky_status', 0)->union($comm)->buildSql();
-                        $community = $community->table($commSticky . 'a')->order('sticky_status asc ,create_time desc')->paginate(20);
+                        $commSticky = Db::name('community')->alias('com')->where('sticky_status', 0)->union($comm)->buildSql();
+                        $community = $community->table($commSticky . 'a')->order('sticky_status asc ,create_time desc')->paginate(10);
                 }
             }
-
 
             $data['total'] = $community->total();
             $data['per_page'] = $community->listRows();
             $data['current_page'] = $community->currentPage();
             $data['last_page'] = $community->lastPage();
             $data['data'] = [];
+
             foreach ($community as $k => $val) {
-                $member = Db::name('member')->where('id', 'eq', $val['user_id'])->select();
+                $member = Db::name('member')->where('id', 'eq', $val['user_id'])->find();
                 $usedImage = Db::name('community_file')->where('community_id', 'in', $val['id'])->select();
-                $topic = Db::name('topic_cate')->where('id', 'eq', $val['topic_id'])->select();
+//                $topic = Db::name('topic_cate')->where('id', 'eq', $val['topic_id'])->select();
 
                 //获取点赞数据
-                $praise = Db::name('member_praise')->where('user_id', 'eq', getUserId())
+                $praise = Db::name('member_praise')->where('user_id', 'eq', $user_id)
                     ->where('module_id', 'eq', $val['id'])
                     ->where('module_type', 'eq', 'community')
                     ->find();
 
                 //获取收藏数据
-                $collect = Db::name('member_collect')->where('user_id', 'eq', getUserId())
+                $collect = Db::name('member_collect')->where('user_id', 'eq', $user_id)
                     ->where('module_id', 'eq', $val['id'])
                     ->where('module_type', 'eq', 'community_model')
                     ->find();
@@ -146,8 +154,8 @@ class Community
                 $val['user_praise'] = $praise;
                 $val['user_collect'] = $collect;
 
-                $val['region'] = $topic[0];
-                $val['user'] = $member[0];
+//                $val['region'] = $topic[0];
+                $val['user'] = $member;
                 $val['community_file'] = $usedImage;
                 $data['data'][] = $val;
             }
@@ -211,7 +219,7 @@ class Community
             $community = new CommunityModel();
             $community->user_id = $data['user_id'];
             $community->body = input('post.body');
-            $community->topic_id = input('post.topic_id');
+            $community->title = input('post.title');
             $community->sticky_create_time = $sticky_create_time;
             $community->sticky_end_time = $sticky_end_time;
             $community->sticky_status = $data['sticky_id'] ? 0 : 1;
@@ -219,24 +227,27 @@ class Community
             $community->save();
 
             //保存图片
-            $path = explode(',', $data['path']);
-            $data = [];
-            foreach ($path as $k => $value) {
-                $data[$k]['path'] = $value;
+            if($data['path']){
+                $path = explode(',', $data['path']);
+                $paths = [];
+                foreach ($path as $k => $value) {
+                    $paths[$k]['path'] = $value;
+                }
+                if (count($paths)) {
+                    $community->communityFile()->saveAll($paths);
+                }
             }
-
-            if (count($data)) {
-                $community->communityFile()->saveAll($data);
-            }
-
-//
             $data = $community->with('user,communityFile,topic')->select($community->id);
             //添加积分
-            $this->addIntegral($id, 'publish');
-        } catch (Exception $e) {
+            if($this->addIntegral($id, 'publish')){
+                $explain = '发布成功，积分+5';
+            }else{
+                $explain = '发布成功';
+            }
+        } catch (\Exception $e) {
             throw new BannerMissException();
         }
-        return jsone('创建成功', 201, $data);
+        return jsone($explain, 201, $data);
     }
 
     /**
@@ -433,6 +444,18 @@ class Community
                 $module_type = 'taxi_list_model';
                 $pk = 'taxi_id';
                 break;
+            case 8:
+                //曝光
+                $module_class = new ExposureModel();
+                $module_type = 'exposure_model';
+                $pk = 'id';
+                break;
+            case 9:
+                //首页
+                $module_class = new RecommendModel();
+                $module_type = 'recommend_model';
+                $pk = 'id';
+                break;
             default:
                 throw new BannerMissException([
                     'code' => 404,
@@ -461,9 +484,13 @@ class Community
                     //将软删除恢复
                     Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => null]);
                     $module->collect = $module['collect'] + 1;
-                    $explain = '收藏成功';
+
                     //加积分
-                    $this->addIntegral($id, 'collect');
+                    if($this->addIntegral($id, 'collect')){
+                        $explain = '收藏成功，积分+5';
+                    }else{
+                        $explain = '收藏成功';
+                    }
                 } else {
                     //软删除收藏
                     Db::name('member_collect')->where('id', $collect['id'])->update(['delete_time' => time()]);
@@ -483,9 +510,13 @@ class Community
                 ]);
 //                return view();
                 $module->collect = $module['collect'] + 1;
-                $explain = '收藏成功';
+
                 //加积分
-                $this->addIntegral($id, 'collect');
+               if($this->addIntegral($id, 'collect')){
+                   $explain = '收藏成功，积分+5';
+               }else{
+                   $explain = '收藏成功';
+               }
             }
 
             $module->save();
@@ -526,6 +557,7 @@ class Community
                 //并加积分
                 $integral = MemberModel::where('id', 'eq', $id)->find();
                 $integral->update(['integral' => $integral['integral'] + 5], ['id' => $integral['id']]);
+                return 1;
             } else {
                 //与当天日期比较，大于收藏日期，进行加积分操作
                 $today = date('Ymd', time());
@@ -536,10 +568,12 @@ class Community
                     //并加积分
                     $integral = MemberModel::where('id', 'eq', $id)->find();
                     $integral->update(['integral' => $integral['integral'] + 5], ['id' => $integral['id']]);
+                    return 1;
                 }
+                return 0;
             }
         } catch (Exception $e) {
-            throw new BannerMissException();
+           throw new BannerMissException();
         }
     }
 

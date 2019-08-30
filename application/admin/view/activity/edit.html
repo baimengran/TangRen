@@ -1,0 +1,248 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="__ADMIN__/webupload/style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/bootstrap-datetimepicker.min.css">
+<style>
+    .file-item {
+        float: left;
+        position: relative;
+        width: 110px;
+        height: 110px;
+        margin: 0 20px 20px 0;
+        padding: 4px;
+    }
+
+    .file-item .info {
+        overflow: hidden;
+    }
+
+    .uploader-list {
+        width: 100%;
+        overflow: hidden;
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑优惠卷</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" name="add" id="add" method="post" action="{:url('admin/coupon/update')}">
+                        <input type="hidden" name="id" value="{$coupon['id']}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">优惠卷标题：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="title" type="text" class="form-control" name="title"
+                                       value="{$coupon['title']}" placeholder="输入优惠卷标题">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">优惠说明：</label>
+                            <div class="input-group col-sm-4">
+                                <textarea type="text" rows="5" name="description" id="remark"
+                                           placeholder="输入优惠卷说明"
+                                          class="form-control">{$coupon['description']}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">优惠金额：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="money" type="text" class="form-control" name="money"
+                                       value="{$coupon['money']}" placeholder="输入优惠卷金额">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">店铺名称：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="shop_name" type="text" class="form-control" name="shop_name"
+                                       value="{$coupon['shop_name']}"
+                                       placeholder="输入可用该优惠卷店铺名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">店铺地址：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="address" type="text" class="form-control" name="address"
+                                       value="{$coupon['address']}"
+                                       placeholder="输入可用该优惠卷店铺地址">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状&nbsp;态：</label>
+                            <div class="col-sm-6">
+                                <div class="radio i-checks">
+                                    <input type="radio" name='status' value="0" {if condition="$coupon['status'] eq 0" }
+                                           checked="checked" {/if}/>开启&nbsp;&nbsp;
+                                    <input type="radio" name='status' value="1" {if condition="$coupon['status'] eq 1" }
+                                           checked="checked" {/if}/>关闭
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">活动开始时间：</label>
+
+                            <div class='input-group col-md-4 date' id='datetimepicker1'>
+                                <input type='text' class="form-control" name="activity_create_time"
+                                       value="{$coupon['activity_create_time']}" id="create"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">活动结束时间：</label>
+                            <div class='input-group col-md-4 date' id='datetimepicker2'>
+                                <input type='text' class="form-control" name="activity_end_time"
+                                       value="{$coupon['activity_end_time']}" id="end"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i>
+                                    返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}
+
+<script type="text/javascript" src="__ADMIN__/webupload/webuploader.min.js"></script>
+<script type="text/javascript" src="__JS__/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__JS__/moment.min.js"></script>
+<script>
+
+</script>
+<script>
+    $(function () {
+        var picker1 = $('#datetimepicker1').datetimepicker({
+            format: 'yyyy-mm-dd HH:ii:ss',
+            // locale: moment.locale('zh-cn'),
+            //minDate: '2016-7-1'
+        });
+        var picker2 = $('#datetimepicker2').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            locale: moment.locale('zh-cn')
+        });
+        // //动态设置最小值
+        // picker1.on('dp.change', function (e) {
+        //     picker2.data('DateTimePicker').minDate(e.date);
+        // });
+        // //动态设置最大值
+        // picker2.on('dp.change', function (e) {
+        //     picker1.data('DateTimePicker').maxDate(e.date);
+        // });
+    });
+
+    $(function () {
+        $('#add').ajaxForm({
+            beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
+            success: complete, // 这是提交后的方法
+            dataType: 'json'
+        });
+
+        function checkForm() {
+            if ('' == $.trim($('#title').val())) {
+                layer.msg('线下活动标题不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            if ('' == $.trim($('#remark').val())) {
+                layer.msg('线下活动说明不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            if ('' == $.trim($('#money').val())) {
+                layer.msg('优惠金额不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            if ('' == $.trim($('#shop_name').val())) {
+                layer.msg('店铺名称不能为空不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            if ('' == $.trim($('#address').val())) {
+                layer.msg('店铺地址不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            if ('' == $.trim($('#create').val())) {
+                layer.msg('开始时间不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            if ('' == $.trim($('#end').val())) {
+                layer.msg('结束时间不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+
+        }
+
+        function complete(data) {
+            console.log(data);
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 6, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                    window.location.href = "{:url('activity/index')}";
+                });
+            } else {
+                console.log(1)
+                layer.msg(data.msg, {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+
+    });
+
+
+    //IOS开关样式配置
+    var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+    var config = {
+        '.chosen-select': {},
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+
+
+</script>
+</body>
+</html>

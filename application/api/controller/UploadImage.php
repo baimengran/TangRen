@@ -17,10 +17,6 @@ class UploadImage
 {
     public function upload()
     {
-        $data = [
-            'a'=>'b',
-            'c'=>'d',
-        ];
 //        return json($data);
         //验证登录状态
 //        if (!getUserId()) {

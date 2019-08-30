@@ -1,0 +1,123 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>首页推荐列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-2" style="width: 100px">
+                        <div class="input-group">
+                            <a href="{:url('create')}">
+                                <button class="btn btn-outline btn-primary" type="button">添加推荐</button>
+                            </a>
+                        </div>
+                    </div>
+                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input type="text" id="key" class="form-control" name="key" value="{$val}"
+                                       placeholder="输入需查询的推荐标题"/>
+                                <span class="input-group-btn"> 
+                                    <button type="submit" class="btn btn-primary"><i
+                                            class="fa fa-search"></i> 搜索</button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr class="long-tr">
+                            <th width="5%">ID</th>
+                            <th width="10%">标题</th>
+                            <th width="10%">点赞数量</th>
+                            <th width="10%">浏览数量</th>
+                            <th width="10%">评论数量</th>
+                            <th width="10%">收藏数量</th>
+                            <th width="10%">首页显示状态</th>
+                            <th width="10%">创建日期</th>
+                            <th width="20%">操作</th>
+                        </tr>
+                        </thead>
+
+                        <script id="list-template" type="text/html">
+
+                        </script>
+                        <tbody id="list-content">
+                        {volist name="coupons" id="data"}
+                        <tr class="long-td">
+                            <td>{$data.id}</td>
+                            <td>{$data.title}</td>
+                            <td>{$data.praise}</td>
+                            <td>{$data.browse}</td>
+                            <td>{$data.review}</td>
+                            <td>{$data.collect}</td>
+                            <td>
+                                {if condition="$data.status==0"}
+                                <a href="javascript:;" onclick="status({$data.id});">
+                                    <div id="zt{$data.id}"><span class="label label-info">开启</span></div>
+                                </a>
+                                {else /}
+                                <a href="javascript:;" onclick="status({$data.id});">
+                                    <div id="zt{$data.id}"><span class="label label-danger">禁用</span></div>
+                                </a>
+                                {/if}
+                            </td>
+                            <td>{$data.create_time|date="Y-m-d",###}</td>
+                            <td>
+                                <a href="javascript:;" onclick="detailed({$data.id})" class="btn btn-primary btn-xs btn-outline">
+                                    <i class="fa fa-paste"></i> 详情</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="edit({$data.id})" class="btn btn-primary btn-xs btn-outline">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del({$data.id})" class="btn btn-danger btn-xs btn-outline">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style="text-align:right;">{$coupons->render()}</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 加载动画 -->
+
+
+{include file="public/footer" /}
+<script>
+    //编辑文章
+    function edit(id){
+        location.href = './edit/id/'+id+'.html';
+    }
+
+    //删除文章
+    function del(id){
+        lunhui.confirm(id,'{:url("destroy")}');
+    }
+    //文章状态
+    function status(id) {
+        lunhui.status(id, '{:url("status")}');
+    }
+    function detailed(id){
+        location.href = './detailed_hot/id/'+id+'.html';
+    }
+</script>
+
+</body>
+</html>

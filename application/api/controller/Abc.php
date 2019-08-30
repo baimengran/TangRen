@@ -12,6 +12,6 @@ namespace app\api\controller;
 class Abc
 {
  public function index(){
-     return 1;
+     return config('pay_key');
  }
 }

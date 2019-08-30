@@ -16,7 +16,7 @@ class Community extends Validate
 {
 
     protected $rule = [
-        'topic_id' => 'require|number|topicId',
+        'title' => 'require|min:3|max:15',
         'user_id' => 'require|number|userId',
         'body' => 'require|max:550|min:5',
         'sticky_id' => 'require|number',
@@ -24,9 +24,9 @@ class Community extends Validate
     ];
 
     protected $message = [
-        'topic_id.require' => '话题分类必须填写',
-        'topic_id.number' => '话题分类填写错误',
-        'topic_id.topicId' => '话题分类填写错误',
+        'title.require' => '主题必须填写',
+        'title.min' => '主题不能小于3个字符',
+        'title.max' => '主题不能大于15个字符',
         'user_id.require' => '必须指定用户',
         'user_id.number' => '用户信息错误',
         'user_id.userId' => '用户信息错误',

@@ -33,6 +33,7 @@ class UsedProduct extends Controller
             }
         }
         try {
+
             //查询有置顶的动态
             $usedSticky = new UsedProductModel();
             $stickies = $usedSticky->where('sticky_status', 0)->select();
@@ -116,8 +117,9 @@ class UsedProduct extends Controller
                 $data['data'][] = $val;
             }
             return jsone('查询成功', 200, $data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new BannerMissException();
+//            return jsone('111', 200, $e->getMessage());
         }
     }
 
@@ -186,21 +188,25 @@ class UsedProduct extends Controller
             $used_Product->status = 0;
             $used_Product->save();
 
-            $path = explode(',', $data['path']);
-            $data = [];
-            foreach ($path as $k => $value) {
-                $data[$k]['path'] = $value;
-            }
             //保存图片
-            if (count($path)) {
-                $used_Product->usedImage()->saveAll($data);
+            if($data['path']){
+                $path = explode(',', $data['path']);
+                $data = [];
+                foreach ($path as $k => $value) {
+                    $data[$k]['path'] = $value;
+                }
+
+                if (count($path)) {
+                    $used_Product->usedImage()->saveAll($data);
+                }
             }
+
 
             $data = UsedProductModel::with('user,usedImage,regionList')->find($used_Product->id);
         } catch (Exception $e) {
             throw new BannerMissException();
         }
-        return jsone('创建成功', 201, $data);
+        return jsone('发布成功', 201, $data);
     }
 
     /**

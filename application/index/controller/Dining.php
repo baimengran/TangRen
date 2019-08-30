@@ -68,10 +68,12 @@ class Dining extends Controller
         //如果查询的是美食
         if ($post['model_type'] == 0) {
             $date = Db::table('think_dining_user')->alias('a')
+                ->where('delete_time',0)
                 ->join('think_member b', 'a.id=b.id', 'LEFT')
                 ->field('a.dining_user_id,a.comment_time,a.comment_content,' .
                     'a.comment_images,a.comment_all,b.nickname,b.head_img')
                 ->where('a.dining_id', $post['model_id'])
+
                 ->order('a.comment_time desc')
                 ->paginate(10);
             //如果查询的是叫车
@@ -81,6 +83,7 @@ class Dining extends Controller
                 ->where('taxi_id', $post['model_id'])
                 ->join('think_member b', 'a.id=b.id')
                 ->field('a.taxi_user_id,b.nickname,b.head_img,a.comment_sati,a.comment_time,a.comment_content,a.comment_images,a.comment_all')
+                ->where('delete_time',0)
                 ->order('a.comment_time desc')
                 ->paginate(10);
 
@@ -90,6 +93,7 @@ class Dining extends Controller
                 ->where('hotel_id', $post['model_id'])
                 ->join('think_member b', 'a.id=b.id')
                 ->field('a.hotel_user_id,b.nickname,b.head_img,a.comment_time,a.comment_content,a.images,a.comment_all')
+                ->where('delete_time',0)
                 ->order('a.comment_time desc')
                 ->paginate(10);
         }
@@ -315,6 +319,7 @@ class Dining extends Controller
             ->field('a.dining_user_id,a.comment_time,a.comment_content,' .
                 'a.comment_images,a.comment_all,a.comment_sati,a.comment_sati,b.nickname,b.head_img')
             ->where('a.dining_id', $post['dining_id'])
+            ->where('delete_time',0)
             ->order('a.comment_time desc')
             ->paginate(10);
         $data['total'] = $user_comment->total();

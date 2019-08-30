@@ -51,6 +51,7 @@ class UserModel extends Model
      */
     public function editUser($param)
     {
+
         try{
             $result =  $this->validate('UserValidate')->allowField(true)->save($param, ['id' => $param['id']]);
             if(false === $result){            

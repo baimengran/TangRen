@@ -32,7 +32,7 @@ return [
     'extra_config_list' => ['database', 'route', 'validate'],//各模块公用配置
     'app_debug' => true,
 	'default_module' => 'admin',//默认模块	
-    //'default_filter' => ['strip_tags', 'htmlspecialchars'],
+    'default_filter' => ['strip_tags', 'htmlspecialchars'],
 
     //默认错误跳转对应的模板文件
     'dispatch_error_tmpl' => APP_PATH.'admin/view/public/error.tpl',
@@ -45,7 +45,7 @@ return [
     'log'       => [       
         'type'  => 'file',// 日志记录方式，内置 file socket 支持扩展
         'path'  => LOG_PATH,// 日志保存目录
-        'level' => ['error'],// 日志记录级别
+        'level' => ['sql'],// 日志记录级别
     ],
 
 

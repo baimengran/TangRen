@@ -1,0 +1,110 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>首页推荐详情图列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div  class="col-sm-2" style="width: 100px">
+                        <div class="input-group" >
+                            <a href="{:url('add_detailed',['id'=>$id])}">
+                                <button class="btn btn-outline btn-primary" type="button">添加图片</button>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr class="long-tr">
+                            <th width="2%">ID</th>
+                            <th width="2%">首页推荐ID</th>
+                            <th width="2%">首页推荐图片</th>
+                            <th width="10%">操作</th>
+                        </tr>
+                        </thead>
+                        {volist name="list" id="vo"}
+                        <tr class="long-td">
+                            <td>{$vo.id}</td>
+                            <td>{$vo.community_id}</td>
+                            <td ><img width="100" style="height:50px;" src="{$vo.path}"  /></td>
+
+                            <td style="width:13%">
+
+                                <a href="javascript:;" onclick="edit_article({$vo.id},{$vo.community_id})" class="btn btn-primary btn-xs btn-outline">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del_article({$vo.id})" class="btn btn-danger btn-xs btn-outline">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        <tbody id="list-content"></tbody>
+                    </table>
+
+                    <div id="AjaxPage" style="text-align:right;">{$list->render()}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- 加载动画 -->
+<!--<div class="spiner-example">-->
+<!--<div class="sk-spinner sk-spinner-three-bounce">-->
+<!--<div class="sk-bounce1"></div>-->
+<!--<div class="sk-bounce2"></div>-->
+<!--<div class="sk-bounce3"></div>-->
+<!--</div>-->
+<!--</div>-->
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+    /**
+     * [Ajaxpage laypage分页]
+     * @param {[type]} curr [当前页]
+     */
+    // Ajaxpage();
+    //新增文章
+    function add_taxi(){
+        // location.href = './add_taxi/'+'.html';
+    }
+
+    //编辑详情图
+    function edit_article(id,community_id){
+        // location.href = './edit_detailed/id/'+id+'.html';
+        location.href = "/admin/recommend/edit_detailed?id="+id+"&community_id="+community_id;
+        // location.href='admin/index/index';
+    }
+
+
+    //删除文章
+    function del_article(id){
+        lunhui.confirm(id,'{:url("del_detailed")}');}
+
+    //审核状态
+    function used_state(id){
+        lunhui.status(id,'{:url("status_hotel")}','已推荐','未推荐');
+    }
+
+    //详情列表
+    function detailed(id){
+        location.href = './detailed/id/'+id+'.html';
+    }
+
+</script>
+</body>
+</html>

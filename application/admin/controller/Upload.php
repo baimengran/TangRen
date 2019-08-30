@@ -23,7 +23,7 @@ class Upload extends Base
        $file = request()->file('file');
        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads/face');
        if($info){
-            echo $info->getSaveName();
+            echo '/public/uploads/face/'.$info->getSaveName();
         }else{
             echo $file->getError();
         }

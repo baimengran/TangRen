@@ -1,0 +1,103 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>二手交易评论列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <!--<div class="col-sm-2" style="width: 130px">-->
+                        <!--<div class="input-group">-->
+                            <!--<a href="{:url('create')}">-->
+                                <!--<button class="btn btn-outline btn-primary" type="button">添加系统通知</button>-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input type="text" id="key" class="form-control" name="key" value="{$val}"
+                                       placeholder="输入需查询的二手交易评论"/>
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary"><i
+                                            class="fa fa-search"></i> 搜索</button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr class="long-tr">
+                            <th width="5%">ID</th>
+                            <th width="10%">用户</th>
+                            <th width="10%">评论内容</th>
+                            <th width="10%">评论时间</th>
+                            <th width="10%">操作</th>
+                            <!--<th width="10%">首页推荐</th>-->
+                        </tr>
+                        </thead>
+
+                        <script id="list-template" type="text/html">
+
+                        </script>
+                        <tbody id="list-content">
+                        {volist name="communities" id="data"}
+                        <tr class="long-td">
+                            <td>{$data.id}</td>
+                            <td>{$data.user.nickname}</td>
+                            <td>{$data.body}</td>
+                            <td>{$data.create_time}</td>
+                            <td>
+                                <a href="javascript:;" onclick="del({$data.id})" class="btn btn-danger btn-xs btn-outline">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style="text-align:right;">{$communities->render()}</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 加载动画 -->
+
+
+{include file="public/footer" /}
+<script>
+    //编辑文章
+    function edit(id){
+        location.href = './edit/id/'+id+'.html';
+    }
+
+    //删除文章
+    function del(id){
+        lunhui.confirm(id,'{:url("destroy")}');
+    }
+    //文章状态
+    function marquee_status(id) {
+        lunhui.marquee_status(id, '{:url("status")}');
+    }
+    //文章状态
+    function marquee_cate_status(id,cate) {
+        lunhui.marquee_cate_status(id,cate, '{:url("status")}');
+    }
+</script>
+
+</body>
+</html>
